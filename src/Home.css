@@ -1,0 +1,18 @@
+.home__container {
+  max-width: 900px;
+  padding-top: 140px;
+  margin: 0 auto;
+}
+
+.home__subheader {
+  color: #007ff4;
+  position: fixed;
+}
+
+.home__list {
+  margin-left: 160px;
+}
+
+.home__eol {
+  height: 100px;
+}

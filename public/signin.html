@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <title>Waterloo Oasis</title>
+    <style>
+     body {
+       height: 100vh;
+       width: 100vw;
+     }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img class="logo" alt="Waterloo Oasis logo" src="%PUBLIC_URL%/img/logo.png"/>
+      <h2>Stay woke about the latest shit on WaterlooWorks</h2>
+      <a href="#" onclick="auth()">Sign in with WatIAM</a>
+    </div>
+  </body>
+  <script>
+   function auth() {
+     alert('imagine you are redirected to an auth portal');
+     window.location.pathname = '/';
+   }
+  </script>
+</html>

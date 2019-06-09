@@ -1,0 +1,54 @@
+.jobtile__container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.jobtile__leftcontent {
+}
+
+.jobtile__companyname {
+  font-size: 40px;
+  color: #000000
+}
+
+.jobtile__jobtitle {
+  font-size: 20px;
+  color: grey;
+  font-weight: normal;
+  line-height: 1.75;
+}
+
+.jobtile__interactions {
+  font-size: 12px;
+  color: grey;
+}
+
+.jobtile__discussion {
+  margin-right: 10px;
+}
+
+.jobtile__rightcontent {
+  margin-top: 15px;
+  text-align: right;
+}
+
+.jobtile__status {
+  font-weight: bold;
+  line-height: 2;
+}
+.jobtile__status--1 {
+  color: limegreen;
+}
+.jobtile__status--2 {
+  color: darkorange;
+}
+.jobtile__status--3 {
+  color: red;
+}
+
+.jobtile__pay {
+  color: grey;
+  font-weight: bold;
+}
+
