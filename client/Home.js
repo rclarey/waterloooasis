@@ -6,13 +6,13 @@ import "./Home.css";
 
 function Home({ trending }) {
   return (
-    <main class="home__container">
-      <h2 class="home__subheader">Trending</h2>
-      <section class="home__list">
+    <main className="home__container">
+      <h2 className="home__subheader">Trending</h2>
+      <section className="home__list">
         {trending.map(job => (
           <JobTile key={job.id} job={job} />
         ))}
-        <div class="home__eol" />
+        <div className="home__eol" />
       </section>
     </main>
   );
