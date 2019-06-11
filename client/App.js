@@ -7,10 +7,10 @@ import fakeData from "./fakeData";
 
 function App() {
   return (
-    <>
+    <React.Fragment>
       <Nav />
       <Home trending={fakeData} />
-    </>
+    </React.Fragment>
   );
 }
 
