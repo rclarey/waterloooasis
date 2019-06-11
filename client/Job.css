@@ -1,0 +1,11 @@
+.job__header {
+  display: flex;
+}
+
+.job__logo {
+  margin-right: 30px;
+}
+
+.job__jobtile {
+  flex-grow: 1;
+}

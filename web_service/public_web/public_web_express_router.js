@@ -5,7 +5,7 @@ const publicWebExpressRouter = (() => {
   const router = expressUtils.createRouter();
 
   router.use(express.static('web_service/static'));
-  router.get('/*', (_, res) =>
+  router.get('/**/*', (_, res) =>
     res.sendFile('web_service/static/index.html', { root: '.' }),
   );
 

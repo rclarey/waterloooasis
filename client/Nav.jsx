@@ -15,9 +15,9 @@ function Nav() {
   );
 
   return (
-    <header className="nav__container">
+    <nav className="nav__container">
       <Link to="/">
-        <img height="32px" src="img/logo.png" alt="Waterloo Oasis logo" />
+        <img height="32px" src="/img/logo.png" alt="Waterloo Oasis logo" />
       </Link>
       <form className="nav__searchform" onSubmit={submitQuery}>
         <input
@@ -29,9 +29,9 @@ function Nav() {
         />
       </form>
       <Link to="/profile">
-        <img height="24px" alt="user icon" src="img/user_icon.png" />
+        <img height="24px" alt="user icon" src="/img/user_icon.png" />
       </Link>
-    </header>
+    </nav>
   );
 }
 

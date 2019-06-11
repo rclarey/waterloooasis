@@ -9,8 +9,8 @@ import './index.css';
 
 ReactDOM.render(
   <Router>
-    <App path="/" />
+    <App path="*" />
     <SignIn path="/signin" />
   </Router>,
-  document.body,
+  document.getElementById('app'),
 );
