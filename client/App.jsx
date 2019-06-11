@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
-import Home from "./Home";
-import Nav from "./Nav";
+import Home from './Home';
+import Nav from './Nav';
 
-import fakeData from "./fakeData";
+import fakeData from './fakeData';
 
 function App() {
   return (

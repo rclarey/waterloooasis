@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import JobTile from "./JobTile";
+import JobTile from './JobTile';
 
-import "./Home.css";
+import './Home.css';
 
 function Home({ trending }) {
   return (

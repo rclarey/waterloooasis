@@ -9,7 +9,7 @@
 
 .jobtile__companyname {
   font-size: 40px;
-  color: #000000
+  color: #000000;
 }
 
 .jobtile__jobtitle {
@@ -51,4 +51,3 @@
   color: grey;
   font-weight: bold;
 }
-

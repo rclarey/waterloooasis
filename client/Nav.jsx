@@ -1,10 +1,10 @@
-import React, { useCallback, useState } from "react";
-import { Link } from "@reach/router";
+import React, { useCallback, useState } from 'react';
+import { Link } from '@reach/router';
 
-import "./Nav.css";
+import './Nav.css';
 
 function Nav() {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const updateQuery = useCallback(e => setQuery(e.target.value), []);
   const submitQuery = useCallback(
     e => {

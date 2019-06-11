@@ -1,11 +1,14 @@
-import React from "react";
-import { Link } from "@reach/router";
+import React from 'react';
+import { Link } from '@reach/router';
 
-import "./JobTile.css";
+import './JobTile.css';
 
 function JobTile({ job }) {
   return (
-    <Link to={`/jobs/${job.companyCode}/${job.id}`} className="jobtile__container">
+    <Link
+      to={`/jobs/${job.companyCode}/${job.id}`}
+      className="jobtile__container"
+    >
       <div className="jobtile__leftcontent">
         <h3 className="jobtile__companyname">{job.companyName}</h3>
         <h4 className="jobtile__jobtitle">{job.jobTitle}</h4>
