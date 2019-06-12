@@ -47,8 +47,6 @@ const publicWebExpressRouter = (() => {
     });
   });
 
-  router.post('')
-
   return router;
 })();
 
