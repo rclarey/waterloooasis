@@ -18,7 +18,8 @@ const publicWebExpressRouter = (() => {
   FOR NOW PUT THIS HERE TO TEST EXTERNALLY
   */
   router.get('/api/users', (_, res) => {
-    pool.query('SELECT * FROM waterloo_oasis_dev.user', function(err, rows, fields) {
+    var select_query = "SELECT * FROM waterloo_oasis_dev.user"
+    pool.query(select_query, function(err, rows, fields) {
       if (err) throw err;
       res.send(rows);
     });
@@ -29,13 +30,24 @@ const publicWebExpressRouter = (() => {
   */
   router.post('/api/users', (req, res) => {
     console.log(req.body);
-    pool.query('SELECT * FROM waterloo_oasis_dev.user', function(err, rows, fields) {
-      if (err) throw err;
-      /* Manage your results here */
 
+    if (!("username" in req.body)) {
+      res.sendStatus(400)
+    }
+
+    var insert_query = "INSERT INTO waterloo_oasis_dev.user (username, email, hash, salt, log_rounds) VALUES(?, 'email', 'hash', 'salt', 1);"
+    pool.query(insert_query, [req.body.username], function(err, rows, fields) {
+      if (err) {
+        console.log(err)
+        res.sendStatus(400);
+      } else {
+        /* Manage your results here */
+        res.sendStatus(200)
+      }
     });
-
   });
+
+  router.post('')
 
   return router;
 })();
