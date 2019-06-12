@@ -11,6 +11,7 @@
         "classnames": "2.2.6",
         "express": "4.16.3",
         "fb-watchman": "2.0.0",
+        "fetch-suspense": "^1.1.0",
         "invariant": "2.2.4",
         "lodash": "4.17.10",
         "moment": "2.22.2",

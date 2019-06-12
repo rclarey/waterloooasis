@@ -10,7 +10,7 @@ function JobTile({ job, big = false }) {
         <h3 className="jobtile__companyname">{job.company.name}</h3>
         <h4 className="jobtile__jobtitle">{job.title}</h4>
         <div className="jobtile__interactions">
-          <span className="jobtile__discussion">●{job.discussion.length}</span>
+          <span className="jobtile__discussion">●{job.comments.length}</span>
           <span className="jobtile__squares">▊{job.squares}</span>
         </div>
       </div>

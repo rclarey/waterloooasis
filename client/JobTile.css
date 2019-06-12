@@ -8,26 +8,26 @@
 }
 
 .jobtile__companyname {
-  font-size: 40px;
   color: #000000;
+  font-size: 40px;
 }
 .jobtile--big .jobtile__companyname {
   font-size: 50px;
 }
 
 .jobtile__jobtitle {
-  font-size: 20px;
   color: grey;
+  font-size: 20px;
   font-weight: normal;
-  line-height: 1.75;
+  margin: 8px 0;
 }
 .jobtile--big .jobtile__jobtitle {
   font-size: 24px;
 }
 
 .jobtile__interactions {
-  font-size: 14px;
   color: grey;
+  font-size: 14px;
 }
 .jobtile--big .jobtile__interactions {
   font-size: 16px;

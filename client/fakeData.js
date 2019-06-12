@@ -11,10 +11,10 @@ export const job = {
   pay: 9001,
   squares: 774,
   description: `At Mercari, our mission is to create value in a global marketplace where anyone can buy & sell, and we pride ourselves in taking on a challenge. We are looking for new members to join us in achieving this goal under our values - Go Bold, All for One, and Be Professional.
-
 株式会社メルカリでは「新たな価値を生みだす世界的なマーケットプレイスを創る」というミッションを掲げ、あらゆる挑戦をしています。「Go Bold - 大胆にやろう」「All for One - 全ては成功のために」「Be Professional - プロフェッショナルであれ」という3つのバリューのもと、ミッション達成を共に目指していける仲間を募集しています。`,
-  discussion: [
+  comments: [
     {
+      id: 1,
       author: {
         name: 'FuriousRaccoon',
         trusted: false,
@@ -25,6 +25,7 @@ export const job = {
       liked: false,
       replies: [
         {
+          id: 2,
           author: {
             name: 'HissingWalrus',
             trusted: true,
@@ -34,10 +35,12 @@ export const job = {
             "Yeah. I've heard they happen on a rolling basis tho so keep that in mind.",
           likes: 5,
           liked: true,
+          replies: [],
         },
       ],
     },
     {
+      id: 3,
       author: {
         name: 'FeignedChameleon',
         trusted: false,
@@ -49,6 +52,7 @@ export const job = {
       replies: [],
     },
     {
+      id: 4,
       author: {
         name: 'VoraciousMaltese',
         trusted: false,
@@ -76,7 +80,7 @@ export const trending = [
     statusStage: 2,
     pay: 7500,
     squares: 675,
-    discussion: [],
+    comments: [],
   },
   {
     id: 3,
@@ -86,11 +90,11 @@ export const trending = [
       name: 'Google',
     },
     title: 'Software Engineering Intern',
-    status: 'Applications available',
-    statusStage: 1,
+    status: 'Coding challenge out',
+    statusStage: 2,
     pay: 7500,
     squares: 840,
-    discussion: [],
+    comments: [],
   },
   {
     id: 4,
@@ -104,7 +108,7 @@ export const trending = [
     statusStage: 1,
     pay: 8000,
     squares: 323,
-    discussion: [],
+    comments: [],
   },
   {
     id: 5,
@@ -118,6 +122,34 @@ export const trending = [
     statusStage: 3,
     pay: 7800,
     squares: 419,
-    discussion: [],
+    comments: [],
+  },
+  {
+    id: 6,
+    shortCode: 'as7qzKrA',
+    company: {
+      shortName: 'microsoft',
+      name: 'Microsoft',
+    },
+    title: 'Software Engineering Intern',
+    status: 'Applications available',
+    statusStage: 1,
+    pay: 7200,
+    squares: 219,
+    comments: [],
+  },
+  {
+    id: 7,
+    shortCode: '9HNk_-q2',
+    company: {
+      shortName: 'pagerduty',
+      name: 'PagerDuty',
+    },
+    title: 'Site Reliability Engineering Intern',
+    status: 'Interviews selections complete',
+    statusStage: 2,
+    pay: 7400,
+    squares: 253,
+    comments: [],
   },
 ];
