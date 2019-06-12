@@ -66,3 +66,23 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+# Docker stuff
+
+To run this application using docker, do the following:
+
+- Download Docker Community Edition (CE): https://www.docker.com/products/docker-desktop
+- Run Docker CE locally
+
+
+## Build the Docker image
+- Clone https://github.com/rclarey/waterloooasis.git
+- Go to root directory of project
+- Run ``docker build -t waterloooasis/backend:[VERSION] .``
+- Check that the image ``waterloooasis/backend:[VERSION]`` is corrected built:
+  - Run ``docker images | grep "waterloooasis/backend" | grep "[VERSION]"``
+  
+## Run the Docker image
+- Run ``docker run -p 3000:3000 waterloooasis/backend:[VERSION]``
+- Check that the container is up:
+  - Run ``docker container ls``
