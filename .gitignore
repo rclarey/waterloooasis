@@ -10,6 +10,8 @@
 
 # production
 /build
+/web_service/static/client_bundle.js
+/web_service/static/styles.css
 
 # misc
 .DS_Store
