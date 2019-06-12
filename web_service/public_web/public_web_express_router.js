@@ -6,12 +6,14 @@ const bodyParser = require('body-parser');
 const publicWebExpressRouter = (() => {
   const router = expressUtils.createRouter();
 
-  router.use(express.static("web_service/static"));
+  router.use(express.static('web_service/static'));
   router.use(bodyParser.urlencoded());
   router.use(bodyParser.json());
-
-  router.get("/*", (_, res) =>
-    res.sendFile("web_service/static/index.html", { root: "." }),
+  router.get('/*', (_, res) =>
+    res.sendFile('web_service/static/index.html', { root: '.' }),
+  );
+  router.get('/**/*', (_, res) =>
+    res.sendFile('web_service/static/index.html', { root: '.' }),
   );
 
   /**
