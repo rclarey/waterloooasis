@@ -12,6 +12,7 @@
 /build
 /web_service/static/client_bundle.js
 /web_service/static/styles.css
+/config/default.json
 
 # misc
 .DS_Store

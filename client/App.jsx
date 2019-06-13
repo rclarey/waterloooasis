@@ -6,7 +6,7 @@ import Job from './Job';
 import Home from './Home';
 import Nav from './Nav';
 
-import { job, trending } from './fakeData';
+import { job } from './fakeData';
 import './App.css';
 
 function App() {
@@ -14,9 +14,9 @@ function App() {
     <>
       <Nav />
       <Router className="app__content">
-        <Home path="/" trending={trending} />
+        <Home path="/" />
         <Company path="jobs/:shortName/" />
-        <Job path="jobs/:shortName/:jobCode/" job={job} />
+        <Job path="jobs/:shortName/:jobCode/" />
       </Router>
     </>
   );

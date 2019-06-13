@@ -7,9 +7,22 @@ import Spinner from './Spinner';
 
 import './Job.css';
 
-function Job({ job, shortName, jobCode }) {
+function Job({ jobCode }) {
   return (
     <main>
+      <Suspense fallback={<Spinner size={75} centre={true} />}>
+        <JobContent shortCode={jobCode} />
+      </Suspense>
+    </main>
+  );
+}
+
+function JobContent({ shortCode }) {
+  const job = useFetch(`http://localhost:3000/api/job/${shortCode}`);
+  console.log(job);
+
+  return (
+    <>
       <header className="job__header">
         <img
           className="job__logo"
@@ -22,19 +35,6 @@ function Job({ job, shortName, jobCode }) {
           <JobTile job={job} big={true} />
         </div>
       </header>
-      <Suspense fallback={<Spinner size={75} centre={true} />}>
-        <JobContent job={job} />
-      </Suspense>
-    </main>
-  );
-}
-
-function JobContent({ job }) {
-  const _ = useFetch('https://jsonplaceholder.typicode.com/photos');
-  const _2 = useFetch('https://jsonplaceholder.typicode.com/todos');
-
-  return (
-    <>
       <section className="job__infocontainer">
         <h2 className="job__subheader">Description</h2>
         <div className="job__info">
@@ -43,7 +43,7 @@ function JobContent({ job }) {
           ))}
         </div>
       </section>
-      <section>
+      <section className="job__commentsection">
         {job.comments.map(comment => (
           <Comment key={comment.id} comment={comment} />
         ))}
