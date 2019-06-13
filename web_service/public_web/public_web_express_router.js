@@ -101,7 +101,7 @@ const publicWebExpressRouter = (() => {
       }
 
       const commentq =
-        'select comment.*, user.username from comment inner join user on comment.author_id = user.id where job_id = ?;';
+        'select comment.*, user.username from comment inner join user on comment.author_id = user.id where job_id = ? order by id;';
       pool.query(commentq, [job.id], (commentErr, rows) => {
         if (commentErr) {
           console.error(commentErr);
@@ -133,7 +133,7 @@ const publicWebExpressRouter = (() => {
 
         res.json({
           ...jsonifyJob(job),
-          commentCount: comments.length,
+          commentCount: rows.length,
           comments,
         });
       });

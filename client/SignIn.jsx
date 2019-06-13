@@ -14,7 +14,7 @@ function SignIn() {
     <section className="signin__container">
       <img width="200px" alt="Waterloo Oasis logo" src="img/logo_dots.png" />
       <h2 className="signin__subheader">
-        Stay woke on that WaterlooWorks shit
+        {/* Stay woke on that WaterlooWorks shit */}
       </h2>
       <a className="signin__button" href="" onClick={mockSignIn}>
         Sign in via WatIAM
