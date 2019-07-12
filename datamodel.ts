@@ -4,6 +4,13 @@
  * Feel free to extend it / bash it / suggest something different.
  */
 
+interface StatusUpdate {
+  id: number;
+  status: string;
+  sourceString: string; // indicates whether it was user updated or pulled from WW
+  timeString: string;
+}
+
 interface Job {
   id: number; // unique identifier
   shortCode: string; // for use in URL (e.g. /jobs/facebook/87asdilhuasd)
@@ -32,10 +39,13 @@ interface Comment {
   text: string; // contents of comments
   likes: number; // number of likes
   liked: boolean; // has the current user liked this comment
+  parent: Comment;
   replies: Comment[];
+  tags: string[];
 }
 
 interface User {
+  id: number;
   name: string; // my thinking was give each user a unique random name (a la gfycat URLs if y'all familiar) so people can recognize when they're conversing with the same person / different people, and shit stays pseudonymous
   trust: number; // this could also be a binary trusted/not trusted, but it may be cool to have a trust score to distinguish a little trust from a lot of trust
   jobs: Job[]; // jobs the user is following
