@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { Link } from '@reach/router';
 
-import './Nav.css';
+import 'Nav.css';
 
 function Nav() {
   const [query, setQuery] = useState('');
@@ -16,7 +16,7 @@ function Nav() {
 
   return (
     <nav className="nav__container">
-      <Link to="/">
+      <Link className="nav__logo" to="/">
         <img height="32px" src="/img/logo.png" alt="Waterloo Oasis logo" />
       </Link>
       <form className="nav__searchform" onSubmit={submitQuery}>
@@ -28,8 +28,8 @@ function Nav() {
           onChange={updateQuery}
         />
       </form>
-      <Link to="/profile">
-        <img height="24px" alt="user icon" src="/img/user_icon.png" />
+      <Link className="nav__signout" to="/signin">
+        Sign out
       </Link>
     </nav>
   );

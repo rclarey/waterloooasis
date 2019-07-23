@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
 import { navigate } from '@reach/router';
 
-import './SignIn.css';
+import 'SignIn.css';
 
 function SignIn() {
   const mockSignIn = useCallback(e => {
     e.preventDefault();
     alert('pretend this is a auth portal');
-    navigate('/');
+    navigate('/trending');
   }, []);
 
   return (

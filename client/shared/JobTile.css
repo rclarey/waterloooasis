@@ -1,7 +1,10 @@
 .jobtile__container {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 50% 50%;
   margin-bottom: 30px;
+}
+.jobtile--big.jobtile__container {
+  margin-bottom: 0;
 }
 
 .jobtile__leftcontent {

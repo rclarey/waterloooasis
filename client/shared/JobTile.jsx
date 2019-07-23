@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from '@reach/router';
 
-import './JobTile.css';
+import 'shared/JobTile.css';
 
 function JobTile({ job, big = false }) {
   return (

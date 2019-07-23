@@ -66,8 +66,11 @@ const publicWebExpressRouter = (() => {
   router.use(express.static('web_service/static'));
   router.use(bodyParser.urlencoded());
   router.use(bodyParser.json());
-  router.get('/', serveReact);
+  router.get('/trending', serveReact);
+  router.get('/myjobs', serveReact);
+  router.get('/mycomments', serveReact);
   router.get('/signin', serveReact);
+  router.get('/jobs/*', serveReact);
   router.get('/jobs/*/*', serveReact);
 
   /**

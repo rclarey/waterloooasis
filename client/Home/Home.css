@@ -1,0 +1,31 @@
+.home__container {
+  display: grid;
+  grid-template-columns: auto 200px 880px auto;
+  margin-top: 100px;
+}
+
+.home__tabs {
+  grid-column-start: 2;
+  position: relative;
+}
+
+.home__tabpos {
+  position: fixed;
+}
+
+.home__tabcontent {
+  grid-column-start: 3;
+}
+
+.home__tabheader {
+  color: #72bcff;
+  margin-top: 8px;;
+}
+.home__tabheader.home__tabheader--active {
+  color: #007ff4;
+  text-decoration: underline;
+}
+
+.home__eol {
+  height: 100px;
+}

@@ -1,13 +1,13 @@
-const path = require("path");
+const path = require('path');
 
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  mode: "development",
-  entry: "./client/index.jsx",
+  mode: 'development',
+  entry: './client/index.jsx',
   output: {
-    path: path.join(__dirname, "web_service/static"),
-    filename: "client_bundle.js",
+    path: path.join(__dirname, 'web_service/static'),
+    filename: 'client_bundle.js',
   },
   module: {
     rules: [
@@ -15,25 +15,25 @@ module.exports = {
         test: /\.jsx?$|/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"],
-            plugins: ["@babel/plugin-transform-react-jsx"],
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+            plugins: ['@babel/plugin-transform-react-jsx'],
           },
         },
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
     ],
   },
   resolve: {
-    extensions: [".js", ".jsx"],
+    modules: ['node_modules', path.join(__dirname, 'client')],
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "styles.css",
+      filename: 'styles.css',
     }),
   ],
 };

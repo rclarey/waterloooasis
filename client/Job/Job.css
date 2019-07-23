@@ -1,0 +1,30 @@
+.job__container {
+  margin: 0 auto;
+  padding-top: 100px;
+  width: 1080px;
+}
+
+.job__info {
+  display: grid;
+  grid-template-columns: 100px auto;
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
+}
+
+.job__logo {
+}
+
+.job__subheader {
+  font-size: 20px;
+  min-width: 130px;
+}
+
+.job__description > p {
+  margin-top: 0;
+}
+
+.job__commentsection {
+  margin: 20px 0;
+  border-radius: 5px;
+  border: 1px solid lightgrey;
+}

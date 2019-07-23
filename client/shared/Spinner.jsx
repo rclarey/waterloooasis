@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 
-import './Spinner.css';
+import 'shared/Spinner.css';
 
 function Spinner({ centre = false, className, size }) {
   return (
