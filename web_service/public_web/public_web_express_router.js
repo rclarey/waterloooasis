@@ -1,6 +1,6 @@
 const express = require('express');
 const expressUtils = require('shared/util/expressUtils');
-const pool = require('shared/util/db.js');
+const { pool } = require('shared/util/db.js');
 const bodyParser = require('body-parser');
 
 function serveReact(_, res) {
