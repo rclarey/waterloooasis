@@ -1,5 +1,5 @@
-Waterloo Oasis
-
+# Waterloo Oasis
+[![Build Status](https://travis-ci.com/rclarey/waterloooasis.svg?branch=master)](https://travis-ci.com/rclarey/waterloooasis)
 # Getting set up
 
 - Install node, if necessary:

@@ -22,5 +22,5 @@
     }
   },
   "plugins": ["mocha", "react", "babel"],
-  "extends": ["eslint:recommended", ,"plugin:react/recommended", "eslint-config-prettier"]
+  "extends": ["eslint:recommended", "plugin:react/recommended", "eslint-config-prettier"]
 }
