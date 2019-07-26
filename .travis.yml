@@ -1,0 +1,12 @@
+language: node_js
+
+install:
+- nvm install 10.15.3
+- yarn install
+
+script:
+- prettier --check ./web_service/**/**/*.js
+- prettier --check ./client/**/**/*.{js,jsx}
+- eslint ./web_service/**/**/*.js
+- eslint ./client/**/**/*.{js,jsx}
+- grunt webpack:once

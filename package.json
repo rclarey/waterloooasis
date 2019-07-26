@@ -55,6 +55,7 @@
         "mini-css-extract-plugin": "^0.7.0",
         "mocha": "2.4.5",
         "performance-now": "0.1.4",
+        "prettier": "^1.18.2",
         "shelljs": "0.7.4",
         "sinon": "1.14.1",
         "supertest": "3.0.0",
