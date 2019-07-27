@@ -1,0 +1,22 @@
+.landingpage__nav-container {
+  display: flex;
+  position: relative;
+  padding: 0 100px;
+  background-color: #2F80ED;
+  height: 150px;
+  align-items: center;
+}
+
+.landingpage__nav-item {
+
+}
+
+.landingpage__nav-link {
+  color: #FFFFFF;
+  margin: 0 30px;
+  font-weight: bold;
+}
+
+.landingpage__nav-login {
+  margin-left: auto;
+}

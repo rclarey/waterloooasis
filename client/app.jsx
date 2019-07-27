@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Redirect, Router } from '@reach/router';
 import 'regenerator-runtime/runtime';
 
+import LandingPage from 'LandingPage.jsx';
 import Company from 'Company/Company.jsx';
 import FourOhFour from 'shared/FourOhFour.jsx';
 import Home from 'Home/Home.jsx';
