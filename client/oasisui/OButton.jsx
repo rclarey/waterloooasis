@@ -1,13 +1,20 @@
 import React, { Suspense, memo } from 'react';
 import { Link, Router } from '@reach/router';
+import * as classNames from 'classnames';
 
 import Spinner from 'shared/Spinner.jsx';
 
-import 'LandingPage.css';
+import 'oasisui/OButton.css';
 
-function OButton(text, alt, light) {
+function OButton({text, alt, light, large}) {
+  const classes = classNames('obutton__container', {
+    'obutton__alt': alt,
+    'obutton__light': light,
+    'obutton__large': large,
+  });
   return (
-    <div>
+    <div className={classes}>
+      {text}
     </div>
   );
 }
