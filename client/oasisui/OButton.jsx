@@ -1,8 +1,5 @@
-import React, { Suspense, memo } from 'react';
-import { Link, Router } from '@reach/router';
+import React, { memo } from 'react';
 import * as classNames from 'classnames';
-
-import Spinner from 'shared/Spinner.jsx';
 
 import 'oasisui/OButton.css';
 
@@ -16,19 +13,6 @@ function OButton({text, alt, light, large}) {
     <div className={classes}>
       {text}
     </div>
-  );
-}
-
-function TabLink(props) {
-  return (
-    <Link
-      {...props}
-      getProps={({ isCurrent }) => ({
-        className: `home__tabheader${
-          isCurrent ? ' home__tabheader--active' : ''
-        }`,
-      })}
-    />
   );
 }
 

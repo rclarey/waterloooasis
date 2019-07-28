@@ -22,10 +22,27 @@ function LandingPage() {
         <div className="landingpage__nav-login">
           <OButton
             text="Log in"
+            light={true}
+            alt={true}
           />
         </div>
       </div>
       <div className="landingpage__display">
+        <div className="landingpage__display-left">
+          <div className="landingpage__jumbo-text">
+            Your home for Waterloo Co-op.
+          </div>
+          <div className="landingpage__sign-up">
+            <OButton
+              text="Sign up"
+              light={true}
+              large={true}
+            />
+          </div>
+        </div>
+        <div className="landingpage__illustration">
+          <img src="svg/landing-illustration.svg" />
+        </div>
       </div>
     </main>
   );

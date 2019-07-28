@@ -1,28 +1,46 @@
 .obutton__container {
-  border: 1px solid rgba(229, 229, 229, 0.2);
-  border-radius: 5px;
-  width: 130px;
-  height: 32px;
-  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  border-radius: 5px;
   letter-spacing: 0.02em;
   font-weight: bold;
   cursor: pointer;
   user-select: none;
+
+  /* light */
+  border: 1px solid rgba(229, 229, 229, 0.2);
+  color: #FFFFFF;
+
+  /* small */
+  width: 130px;
+  height: 32px;
+  font-size: 14px;
+
+
+
+}
+
+.obutton__alt .obutton__light {
+
+}
+
+.obutton__large {
+  color: #007FF5;
+  width: 205px;
+  height: 50px;
+  background: #FFFFFF;
+  font-size: 18px;
 }
 
 .obutton__container:hover {
-  background-color: rgba(229, 229, 229, 0.05);
+  background-color: rgba(229, 229, 229, 0.03);
 }
 
 .obutton__container:active {
   background-color: rgba(229, 229, 229, 0.1);
-  opacity: 1;
 }
 
 .obutton__text {
-  
+
 }
