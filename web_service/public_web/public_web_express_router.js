@@ -1,10 +1,17 @@
-const express = require('express');
-const expressUtils = require('shared/util/expressUtils');
-const pool = require('shared/util/db.js');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const express = require('express');
 
-function serveReact(_, res) {
-  res.sendFile('web_service/static/index.html', { root: '.' });
+const expressUtils = require('shared/util/expressUtils');
+const setupAuth = require('web_service/auth/auth.js');
+const { pool } = require('shared/util/db.js');
+
+function serveApp(_, res) {
+  res.sendFile('web_service/static/app.html', { root: '.' });
+}
+
+function servePublicPages(_, res) {
+  res.sendFile('web_service/static/public.html', { root: '.' });
 }
 
 function jobQuery(whereClause = '') {
@@ -66,19 +73,25 @@ const publicWebExpressRouter = (() => {
   router.use(express.static('web_service/static'));
   router.use(bodyParser.urlencoded());
   router.use(bodyParser.json());
-  router.get('/trending', serveReact);
-  router.get('/myjobs', serveReact);
-  router.get('/mycomments', serveReact);
-  router.get('/signin', serveReact);
-  router.get('/jobs/*', serveReact);
-  router.get('/jobs/*/*', serveReact);
+  router.use(cookieParser(process.env.COOKIE_SECRET));
+
+  const { authenticate, authenticationFork } = setupAuth(router);
+
+  router.get('/', authenticationFork(serveApp, servePublicPages));
+  router.get('/trending', authenticate, serveApp);
+  router.get('/myjobs', authenticate, serveApp);
+  router.get('/mycomments', authenticate, serveApp);
+  router.get('/signin', servePublicPages);
+  router.get('/signup', servePublicPages);
+  router.get('/jobs/*', authenticate, serveApp);
+  router.get('/jobs/*/*', authenticate, serveApp);
 
   /**
   FOR NOW PUT THIS HERE TO TEST EXTERNALLY
   */
   router.get('/api/users', (_, res) => {
     const select_query = 'SELECT * FROM waterloo_oasis_dev.user';
-    pool.query(select_query, function(err, rows, fields) {
+    pool.query(select_query, function(err, rows) {
       if (err) throw err;
       res.send(rows);
     });
@@ -88,7 +101,6 @@ const publicWebExpressRouter = (() => {
     const q = jobQuery();
     pool.query(q, (err, rows) => {
       if (err) {
-        console.error(err);
         return;
       }
       res.json(rows.map(jsonifyJob));
@@ -99,7 +111,6 @@ const publicWebExpressRouter = (() => {
     const jobq = jobQuery('where job.short_code = ?');
     pool.query(jobq, [req.params.shortCode], (jobErr, [job]) => {
       if (jobErr) {
-        console.error(jobErr);
         return;
       }
 
@@ -107,7 +118,6 @@ const publicWebExpressRouter = (() => {
         'select comment.*, user.username from comment inner join user on comment.author_id = user.id where job_id = ? order by id;';
       pool.query(commentq, [job.id], (commentErr, rows) => {
         if (commentErr) {
-          console.error(commentErr);
           return;
         }
 
@@ -147,17 +157,14 @@ const publicWebExpressRouter = (() => {
   FOR NOW: Pass in username, rest will be set values
   */
   router.post('/api/users', (req, res) => {
-    console.log(req.body);
-
     if (!('username' in req.body)) {
       res.sendStatus(400);
     }
 
     const insert_query =
       "INSERT INTO waterloo_oasis_dev.user (username, email, hash, salt, log_rounds) VALUES(?, 'email', 'hash', 'salt', 1);";
-    pool.query(insert_query, [req.body.username], function(err, rows, fields) {
+    pool.query(insert_query, [req.body.username], function(err) {
       if (err) {
-        console.log(err);
         res.sendStatus(400);
       } else {
         /* Manage your results here */

@@ -10,8 +10,10 @@ coverage
 
 # production
 build
-web_service/static/client_bundle.js
-web_service/static/styles.css
+web_service/static/app_bundle.js
+web_service/static/public_bundle.js
+web_service/static/app_styles.css
+web_service/static/public_styles.css
 
 # misc
 .DS_Store

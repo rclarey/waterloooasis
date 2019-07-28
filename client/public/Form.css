@@ -1,0 +1,44 @@
+.form__row {
+  display: flex;
+  margin: 20px auto;
+  max-width: 400px;
+}
+
+.form__label {
+  font-size: 18px;
+  margin: 5px 0;
+  text-align: left;
+}
+
+.form__input {
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  color: black;
+  font-size: 16px;
+  height: 30px;
+  outline: none;
+  padding: 0 8px;
+  width: 100%;
+}
+.form__input--valid {
+  border: 2px solid lightgreen;
+  height: 26px;
+  padding: 0 6px;
+}
+.form__input--invalid {
+  border: 2px solid red;
+  height: 26px;
+  padding: 0 6px;
+}
+
+.form__submit {
+  border: none;
+  color: #007ff4;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 auto;
+}
+.form__submit[disabled] {
+  cursor: not-allowed;
+}

@@ -4,10 +4,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: './client/index.jsx',
+  entry: {
+    app: './client/app.jsx',
+    public: './client/public.jsx',
+  },
   output: {
     path: path.join(__dirname, 'web_service/static'),
-    filename: 'client_bundle.js',
+    filename: '[name]_bundle.js',
   },
   module: {
     rules: [
@@ -33,7 +36,7 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'styles.css',
+      filename: '[name]_styles.css',
     }),
   ],
 };

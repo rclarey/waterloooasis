@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import PropTypes from 'prop-types';
 
 import 'shared/Spinner.css';
 
@@ -38,5 +39,10 @@ function Spinner({ centre = false, className, size }) {
     </div>
   );
 }
+Spinner.propTypes = {
+  centre: PropTypes.bool,
+  className: PropTypes.string,
+  size: PropTypes.number.isRequired,
+};
 
 export default memo(Spinner);

@@ -1,7 +1,7 @@
 import React from 'react';
 
 function MyComments() {
-  return 'My Comments';
+  return <p>My Comments</p>;
 }
 
 export default MyComments;

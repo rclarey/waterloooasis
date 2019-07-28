@@ -1,32 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router } from '@reach/router';
+import { Redirect, Router } from '@reach/router';
+import 'regenerator-runtime/runtime';
 
-import App from 'App.jsx';
 import Company from 'Company/Company.jsx';
-import FourOhFour from 'FourOhFour.jsx';
+import FourOhFour from 'shared/FourOhFour.jsx';
 import Home from 'Home/Home.jsx';
 import Job from 'Job/Job.jsx';
 import MyComments from 'Home/MyComments.jsx';
 import MyJobs from 'Home/MyJobs.jsx';
-import SignIn from 'SignIn.jsx';
+import Nav from 'Nav.jsx';
 import Trending from 'Home/Trending.jsx';
 
-import 'index.css';
+import 'global.css';
+import 'app.css';
 
 ReactDOM.render(
-  <Router>
-    <App path="/">
+  <>
+    <Nav />
+    <Router>
       <Home path="/">
         <Trending path="trending" />
         <MyJobs path="myjobs" />
         <MyComments path="mycomments" />
+        <Redirect from="/" to="trending" />
       </Home>
       <Company path="jobs/:shortName/" />
       <Job path="jobs/:shortName/:jobCode/" />
-    </App>
-    <SignIn path="/signin" />
-    <FourOhFour default />
-  </Router>,
+      <FourOhFour default />
+    </Router>
+  </>,
   document.getElementById('app'),
 );

@@ -1,0 +1,30 @@
+.auth__switchbutton {
+  background: #248bf6;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 8px 30px;
+}
+.auth__switchbutton:visited {
+  color: #ffffff;
+}
+
+.auth__container {
+  margin: 100px auto 0;
+  text-align: center;
+  width: 600px;
+}
+
+.auth__logo {
+  margin-bottom: 20px;
+}
+
+.auth__emailsuffix {
+  align-self: center;
+  padding: 5px;
+}
+
+.auth__spacer {
+  height: 150px;
+}
