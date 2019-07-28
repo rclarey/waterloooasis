@@ -24,6 +24,11 @@ function query(queryString, args) {
         }
       });
     }
+  }).catch(() => {
+    // TODO: log the original error when we get to logging errors
+    return Promise.reject(
+      new Error('Something went wrong on our end. Try again later.'),
+    );
   });
 }
 

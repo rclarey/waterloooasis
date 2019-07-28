@@ -1,7 +1,18 @@
 import React, { useCallback, useState } from 'react';
 import { Link } from '@reach/router';
 
+import { post } from 'utils.js';
+
 import 'Nav.css';
+
+async function signOut() {
+  try {
+    await post('/signout');
+    window.location.pathname = '/';
+  } catch (e) {
+    // TODO: do something about this
+  }
+}
 
 function Nav() {
   const [query, setQuery] = useState('');
@@ -28,9 +39,9 @@ function Nav() {
           onChange={updateQuery}
         />
       </form>
-      <Link className="nav__signout" to="/signin">
+      <a className="nav__signout" href="#" onClick={signOut}>
         Sign out
-      </Link>
+      </a>
     </nav>
   );
 }
