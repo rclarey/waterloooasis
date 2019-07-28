@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import 'shared/Comment.css';
 
@@ -24,5 +25,9 @@ function Comment({ comment, last = false }) {
     </div>
   );
 }
+Comment.propTypes = {
+  comment: PropTypes.object.isRequired,
+  last: PropTypes.bool,
+};
 
 export default Comment;

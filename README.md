@@ -8,6 +8,6 @@
 - Run `grunt symlink`
 - In two terminal tabs, run:
     - `grunt`, and
-    - `grunt web`
+    - `JWT_SECRET=<your jwt secret> COOKIE_SECRET=<your cookie secret> grunt web`
 
 # DB set up

@@ -88,6 +88,13 @@ export function Form({ children, cta, names, onSubmit, noDisable = false }) {
     </form>
   );
 }
+Form.propTypes = {
+  children: PropTypes.node.isRequired,
+  cta: PropTypes.string.isRequired,
+  names: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  noDisable: PropTypes.bool,
+};
 
 function Row({ children, className = '' }) {
   return <div className={`form__row ${className}`}>{children}</div>;
@@ -125,5 +132,12 @@ function FieldInner({ name, placeholder, setRef, type, validate }) {
     />
   );
 }
+FieldInner.propTypes = {
+  name: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  setRef: PropTypes.func,
+  type: PropTypes.string,
+  validate: PropTypes.func,
+};
 
 export const Field = memo(FieldInner);

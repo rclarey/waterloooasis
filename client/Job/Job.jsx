@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+import PropTypes from 'prop-types';
 import useFetch from 'fetch-suspense';
 
 import Comment from 'shared/Comment.jsx';
@@ -16,6 +17,9 @@ function Job({ jobCode }) {
     </main>
   );
 }
+Job.propTypes = {
+  jobCode: PropTypes.string.isRequired,
+};
 
 function JobContent({ shortCode }) {
   const job = useFetch(`http://localhost:3000/api/job/${shortCode}`);
@@ -50,5 +54,8 @@ function JobContent({ shortCode }) {
     </>
   );
 }
+JobContent.propTypes = {
+  shortCode: PropTypes.string.isRequired,
+};
 
 export default Job;

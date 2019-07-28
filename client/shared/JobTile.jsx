@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import 'shared/JobTile.css';
 
@@ -22,5 +23,9 @@ function JobTile({ job, big = false }) {
     </div>
   );
 }
+JobTile.propTypes = {
+  job: PropTypes.object.isRequired,
+  big: PropTypes.bool,
+};
 
 export default JobTile;

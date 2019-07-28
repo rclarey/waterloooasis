@@ -1,5 +1,6 @@
 import React, { Suspense, memo } from 'react';
-import { Link, Router } from '@reach/router';
+import PropTypes from 'prop-types';
+import { Link } from '@reach/router';
 
 import Spinner from 'shared/Spinner.jsx';
 
@@ -30,6 +31,9 @@ function Home({ children }) {
     </main>
   );
 }
+Home.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 function TabLink(props) {
   return (

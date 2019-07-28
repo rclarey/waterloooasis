@@ -1,7 +1,7 @@
 import React from 'react';
 
 function MyJobs() {
-  return 'My Jobs';
+  return <p>My Jobs</p>;
 }
 
 export default MyJobs;
