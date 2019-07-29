@@ -40,7 +40,7 @@ html {
   height: 450px;
 
   /* TODO: remove the 2 lines below (and uncomment the line above) when full landing page is fleshed out */
-  height: calc(100vh - 150px);
+  height: calc(100vh - 225px);
   padding-top: 75px;
 }
 
