@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import PropTypes from 'prop-types';
 import * as classNames from 'classnames';
 
 import 'oasisui/OLink.css';
@@ -16,5 +17,12 @@ function OLink({ text, light, large, link }) {
     </a>
   );
 }
+
+OLink.propTypes = {
+  text: PropTypes.string.isRequired,
+  light: PropTypes.bool,
+  large: PropTypes.bool,
+  link: PropTypes.string.isRequired,
+};
 
 export default memo(OLink);

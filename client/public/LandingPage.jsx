@@ -1,4 +1,4 @@
-import React, { Suspense, memo } from 'react';
+import React, { memo } from 'react';
 import { Link } from '@reach/router';
 
 import OButton from 'oasisui/OButton.jsx';
@@ -72,19 +72,6 @@ function LandingPage() {
       <div id="team" className="landingpage__team"></div>
       <div id="contactus" className="landingpage__contact-us"></div>
     </main>
-  );
-}
-
-function TabLink(props) {
-  return (
-    <Link
-      {...props}
-      getProps={({ isCurrent }) => ({
-        className: `home__tabheader${
-          isCurrent ? ' home__tabheader--active' : ''
-        }`,
-      })}
-    />
   );
 }
 
