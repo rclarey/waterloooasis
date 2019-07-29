@@ -2,6 +2,7 @@ import React, { Suspense, memo } from 'react';
 import { Link, Router } from '@reach/router';
 
 import OButton from 'oasisui/OButton.jsx';
+import OLink from 'oasisui/OLink.jsx';
 
 import 'LandingPage.css';
 
@@ -13,10 +14,30 @@ function LandingPage() {
           <img src="svg/oasis-white.svg" />
         </div>
         <div className="landingpage__nav-link-container">
-          <div className="landingpage__nav-link">Home</div>
-          <div className="landingpage__nav-link">About</div>
-          <div className="landingpage__nav-link">Team</div>
-          <div className="landingpage__nav-link">Contact Us</div>
+          <div className="landingpage__nav-link">
+            <OLink
+              text="Home"
+              light={true}
+            />
+          </div>
+          <div className="landingpage__nav-link">
+            <OLink
+              text="About"
+              light={true}
+            />
+          </div>
+          <div className="landingpage__nav-link">
+            <OLink
+              text="Team"
+              light={true}
+            />
+          </div>
+          <div className="landingpage__nav-link">
+            <OLink
+              text="Contact Us"
+              light={true}
+            />
+          </div>
         </div>
         <div className="landingpage__nav-login">
           <OButton
@@ -44,58 +65,7 @@ function LandingPage() {
         </div>
       </div>
       <div className="landingpage__about">
-        <div className="landingpage__about-item-light">
-          <OButton
-            text="Light large alt"
-            light={true}
-            large={true}
-            alt={true}
-          />
-        </div>
-        <div className="landingpage__about-item-light">
-          <OButton
-            text="Light large CTA"
-            light={true}
-            large={true}
-          />
-        </div>
-        <div className="landingpage__about-item">
-          <OButton
-            text="Dark large alt"
-            large={true}
-            alt={true}
-          />
-        </div>
-        <div className="landingpage__about-item-light">
-          <OButton
-            text="Light small alt"
-            light={true}
-            alt={true}
-          />
-        </div>
-        <div className="landingpage__about-item">
-          <OButton
-            text="Dark small alt"
-            alt={true}
-          />
-        </div>
-        <div className="landingpage__about-item-light">
-          <OButton
-            text="Light small CTA"
-            light={true}
-          />
-        </div>
-        <div className="landingpage__about-item">
-          <OButton
-            text="Dark large cta"
-            large={true}
-          />
-        </div>
-        <div className="landingpage__about-item">
-          <OButton
-            text="Dark small cta"
-          />
-        </div>
+
       </div>
     </main>
   );
