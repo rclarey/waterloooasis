@@ -45,11 +45,7 @@ function LandingPage() {
         </div>*/}
         <div className="landingpage__nav-login">
           <Link to="/signin">
-            <OButton
-              text="Log in"
-              light={true}
-              alt={true}
-            />
+            <OButton text="Log in" light={true} alt={true} />
           </Link>
         </div>
       </div>
@@ -59,15 +55,12 @@ function LandingPage() {
             The front page of Waterloo co-op.
           </div>
           <div className="landingpage__sub-jumbo-text">
-            Oasis is the all-in-one platform for WaterlooWorks job discussion and interview status updates.
+            Oasis is the all-in-one platform for WaterlooWorks job discussion
+            and interview status updates.
           </div>
           <div className="landingpage__sign-up">
             <Link to="/signup">
-              <OButton
-                text="Sign up"
-                light={true}
-                large={true}
-              />
+              <OButton text="Sign up" light={true} large={true} />
             </Link>
           </div>
         </div>
@@ -75,15 +68,9 @@ function LandingPage() {
           <img src="svg/landing-illustration.svg" />
         </div>
       </div>
-      <div id="about" className="landingpage__about">
-
-      </div>
-      <div id="team" className="landingpage__team">
-
-      </div>
-      <div id="contactus" className="landingpage__contact-us">
-
-      </div>
+      <div id="about" className="landingpage__about"></div>
+      <div id="team" className="landingpage__team"></div>
+      <div id="contactus" className="landingpage__contact-us"></div>
     </main>
   );
 }
