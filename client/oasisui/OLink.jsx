@@ -3,7 +3,7 @@ import * as classNames from 'classnames';
 
 import 'oasisui/OLink.css';
 
-function OLink({text, light, large}) {
+function OLink({text, light, large, link}) {
   const classes = classNames('olink__container', {
     'olink__light': light,
     'olink__dark': !light,
@@ -11,9 +11,9 @@ function OLink({text, light, large}) {
     'olink__small': !large,
   });
   return (
-    <div className={classes}>
+    <a href={link} className={classes}>
       {text}
-    </div>
+    </a>
   );
 }
 

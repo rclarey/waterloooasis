@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 .landingpage__nav-container {
   display: flex;
   position: relative;
@@ -32,9 +36,12 @@
   position: relative;
   display: flex;
   background-color: #007FF5;
-  height: 450px;
-  padding: 20px;
   justify-content: center;
+  height: 450px;
+
+  /* TODO: remove the 2 lines below (and uncomment the line above) when full landing page is fleshed out */
+  height: calc(100vh - 150px);
+  padding-top: 75px;
 }
 
 .landingpage__display-left {
@@ -48,30 +55,31 @@
   width: 600px;
   color: #FFFFFF;
   line-height: 84px;
-  margin-top: 50px;
+  margin-top: 25px;
+}
+
+.landingpage__sub-jumbo-text {
+  font-style: italic;
+  letter-spacing: 0.02em;
+  font-size: 18px;
+  width: 600px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 25px;
+  margin: 20px 0 30px;
 }
 
 .landingpage__sign-up {
-  margin: 30px 0;
 }
 
-.landingpage__illustation {
+.landingpage__illustration {
   margin: 0 50px;
 }
 
-.landingpage__about {
-  height: 500px;
-  background-color: #FFFFFF;
-  /* display: flex; */
+/* .landingpage__about {
 }
 
-.landingpage__about-item {
-  display: block;
-  padding: 20px;
+.landingpage__team {
 }
 
-.landingpage__about-item-light {
-  display: block;
-  padding: 20px;
-  background-color: #007FF5;
-}
+.landingpage__contact-us {
+} */
