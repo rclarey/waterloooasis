@@ -1,10 +1,10 @@
 import React, { Suspense, memo } from 'react';
-import { Link, Router } from '@reach/router';
+import { Link } from '@reach/router';
 
 import OButton from 'oasisui/OButton.jsx';
-import OLink from 'oasisui/OLink.jsx';
+// import OLink from 'oasisui/OLink.jsx';
 
-import 'LandingPage.css';
+import 'public/LandingPage.css';
 
 function LandingPage() {
   return (
@@ -44,27 +44,31 @@ function LandingPage() {
           </div>
         </div>*/}
         <div className="landingpage__nav-login">
-          <OButton
-            text="Log in"
-            light={true}
-            alt={true}
-          />
+          <Link to="/signin">
+            <OButton
+              text="Log in"
+              light={true}
+              alt={true}
+            />
+          </Link>
         </div>
       </div>
       <div className="landingpage__display">
         <div className="landingpage__display-left">
           <div className="landingpage__jumbo-text">
-            The front page of Waterloo Co-op.
+            The front page of Waterloo co-op.
           </div>
           <div className="landingpage__sub-jumbo-text">
             Oasis is the all-in-one platform for WaterlooWorks job discussion and interview status updates.
           </div>
           <div className="landingpage__sign-up">
-            <OButton
-              text="Sign up"
-              light={true}
-              large={true}
-            />
+            <Link to="/signup">
+              <OButton
+                text="Sign up"
+                light={true}
+                large={true}
+              />
+            </Link>
           </div>
         </div>
         <div className="landingpage__illustration">
