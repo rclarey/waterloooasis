@@ -1,13 +1,30 @@
-const u = require('shared/util/u');
+const u = require('shared/util/u.js');
 const express = require('express');
 
-const publicWebExpressRouter = require('web_service/public_web/public_web_express_router');
-const privateApiExpressRouter = require('web_service/private_api/private_api_express_router');
+const setupAuth = require('web_service/auth/auth.js');
+const publicWebExpressRouter = require('web_service/public_web/public_web_express_router.js');
+const privateApiExpressRouter = require('web_service/private_api/private_api_express_router.js');
 
 const webServer = {
   _enableRoutes(app) {
-    app.use('/v:apiVersion([0-9]+.[0-9]+)', privateApiExpressRouter);
+    const {
+      authenticate,
+      authenticateWithRedirect,
+      authenticationFork,
+    } = setupAuth(publicWebExpressRouter);
+
+    // arbitrate what GET / resolves to based on auth result
+    app.get(
+      '/',
+      authenticationFork(
+        (_, res) => res.sendFile('web_service/static/app.html', { root: '.' }),
+        (_, res) =>
+          res.sendFile('web_service/static/public.html', { root: '.' }),
+      ),
+    );
+
     app.use(publicWebExpressRouter);
+    app.use(privateApiExpressRouter(authenticate, authenticateWithRedirect));
   },
 
   startWebServer(PORT_NUMBER = process.env.PORT || 3000) {

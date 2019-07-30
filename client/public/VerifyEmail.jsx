@@ -9,23 +9,73 @@ import 'public/VerifyEmail.css';
 
 async function retryEmail(email) {
   try {
-    await post('/retryemail', { email });
-    return true;
-  } catch (e) {
-    return false;
+    const result = await post('/retryemail', { email });
+    return result;
+  } catch (failureResult) {
+    return failureResult;
   }
 }
+
+function ResendMessage({ status, resend }) {
+  const resendLink = (
+    <a href="#" onClick={resend}>
+      Resend verification email
+    </a>
+  );
+
+  if (!status) {
+    return resendLink;
+  }
+
+  if (status.loading) {
+    return <Spinner centre={true} size={20} />;
+  }
+
+  if (status.ok) {
+    return <p>Verification email sent!</p>;
+  }
+
+  if (status.softRetry) {
+    return (
+      <>
+        <p>Failed to resend verification email.</p>
+        <a href="#" onClick={resend}>
+          Try again
+        </a>
+      </>
+    );
+  }
+
+  if (status.hardRetry) {
+    return (
+      <>
+        <p>
+          Something went wrong on our end. You need fill out the sign up form
+          again.
+        </p>
+        <Link to="/signup">Return to the sign up form</Link>
+      </>
+    );
+  }
+
+  return resendLink;
+}
+ResendMessage.propTypes = {
+  status: PropTypes.shape({
+    loading: PropTypes.boolean,
+    ok: PropTypes.boolean,
+    softRetry: PropTypes.boolean,
+    hardRetry: PropTypes.boolean,
+  }).isRequired,
+  resend: PropTypes.func.isRequired,
+};
+const MemoedResendMessage = memo(ResendMessage);
 
 function CheckYourEmail({ email }) {
   const [resendStatus, setResendStatus] = useState(null);
   const resend = useCallback(async () => {
-    setResendStatus(null);
-    const success = await retryEmail(email);
-    if (success) {
-      setResendStatus(true);
-    } else {
-      setResendStatus(false);
-    }
+    setResendStatus({ loading: true });
+    setResendStatus(await retryEmail(email));
   }, [email]);
 
   return (
@@ -35,18 +85,7 @@ function CheckYourEmail({ email }) {
         If the email does not appear try checking the junk or spam folder of
         your inbox.
       </p>
-      {resendStatus === true ? (
-        <p>Verification email sent!</p>
-      ) : (
-        <>
-          {resendStatus === false ? (
-            <p>Failed to resend verification email</p>
-          ) : null}
-          <a href="#" onClick={resend}>
-            Resend verification email
-          </a>
-        </>
-      )}
+      <MemoedResendMessage status={resendStatus} resend={resend} />
     </section>
   );
 }
