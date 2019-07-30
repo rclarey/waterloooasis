@@ -1,0 +1,85 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.landingpage__nav-container {
+  display: flex;
+  position: relative;
+  padding: 0 100px;
+  background-color: #007FF5;
+  height: 150px;
+  align-items: center;
+}
+
+.landingpage__logo {
+}
+
+.landingpage__nav-link-container {
+  display: flex;
+  margin: 0 100px;
+}
+
+.landingpage__nav-link {
+  width: 100px;
+  display: block;
+  color: #FFFFFF;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  font-size: 14px;
+}
+
+.landingpage__nav-login {
+  margin-left: auto;
+}
+
+.landingpage__display {
+  position: relative;
+  display: flex;
+  background-color: #007FF5;
+  justify-content: center;
+  height: 450px;
+
+  /* TODO: remove the 2 lines below (and uncomment the line above) when full landing page is fleshed out */
+  height: calc(100vh - 225px);
+  padding-top: 75px;
+}
+
+.landingpage__display-left {
+  margin: 0 50px;
+}
+
+.landingpage__jumbo-text {
+  font-weight: bold;
+  letter-spacing: -0.02em;
+  font-size: 72px;
+  width: 600px;
+  color: #FFFFFF;
+  line-height: 84px;
+  margin-top: 25px;
+}
+
+.landingpage__sub-jumbo-text {
+  font-style: italic;
+  letter-spacing: 0.02em;
+  font-size: 18px;
+  width: 600px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 25px;
+  margin: 20px 0 30px;
+}
+
+.landingpage__sign-up {
+}
+
+.landingpage__illustration {
+  margin: 0 50px;
+}
+
+/* .landingpage__about {
+}
+
+.landingpage__team {
+}
+
+.landingpage__contact-us {
+} */

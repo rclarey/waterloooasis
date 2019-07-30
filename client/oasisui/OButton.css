@@ -1,0 +1,72 @@
+.obutton__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  letter-spacing: 0.02em;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+}
+
+.obutton__small {
+  width: 130px;
+  height: 32px;
+  font-size: 14px;
+}
+
+.obutton__large {
+  width: 205px;
+  height: 50px;
+  font-size: 18px;
+}
+
+/* light */
+.obutton__light.obutton__cta {
+  color: #007FF5;
+  background-color: #FFFFFF;
+}
+
+.obutton__light.obutton__alt {
+  border: 1px solid rgba(229, 229, 229, 0.2);
+  color: #FFFFFF;
+}
+
+.obutton__light.obutton__alt:hover {
+  background-color: rgba(229, 229, 229, 0.03);
+}
+.obutton__light.obutton__alt:active {
+  background-color: rgba(229, 229, 229, 0.1);
+}
+
+.obutton__light.obutton__cta:hover {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+.obutton__light.obutton__cta:active {
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+/* dark (blue) */
+.obutton__dark.obutton__cta {
+  color: #FFFFFF;
+  background-color: #007FF5;
+}
+
+.obutton__dark.obutton__alt {
+  border: 1px solid rgba(0, 127, 245, 0.2);
+  color: #007FF5;
+}
+
+.obutton__dark.obutton__alt:hover {
+  background-color: rgba(0, 127, 245, 0.03);
+}
+.obutton__dark.obutton__alt:active {
+  background-color: rgba(0, 127, 245, 0.1);
+}
+
+.obutton__dark.obutton__cta:hover {
+  background-color: rgba(0, 127, 245, 0.95);
+}
+.obutton__dark.obutton__cta:active {
+  background-color: rgba(0, 127, 245, 0.85);
+}

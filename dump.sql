@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 5.7.23, for osx10.12 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.13, for macos10.14 (x86_64)
 --
 -- Host: localhost    Database: waterloo_oasis_dev
 -- ------------------------------------------------------
--- Server version	8.0.12
+-- Server version	8.0.13
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+ SET NAMES utf8mb4 ;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,16 +21,23 @@
 
 DROP TABLE IF EXISTS `comment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `author_id` int(11) NOT NULL,
   `date_time` datetime NOT NULL,
-  `description` varchar(512) NOT NULL,
+  `text` varchar(512) NOT NULL,
+  `likes` int(11) DEFAULT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `job_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `author_id` (`author_id`),
-  CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `comment_fk_1_idx` (`author_id`),
+  KEY `comment_fk_2_idx` (`parent_id`),
+  KEY `comment_fk_3_idx` (`job_id`),
+  CONSTRAINT `comment_fk_1` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `comment_fk_2` FOREIGN KEY (`parent_id`) REFERENCES `comment` (`id`),
+  CONSTRAINT `comment_fk_3` FOREIGN KEY (`job_id`) REFERENCES `job` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +46,7 @@ CREATE TABLE `comment` (
 
 LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
+INSERT INTO `comment` VALUES (1,1,'2019-06-11 21:11:01','Coding challenge out yet?',5,NULL,2),(2,2,'2019-06-12 20:11:01','Yeah. I\'ve heard they happen on a rolling basis tho so keep that in mind.',5,1,2),(3,3,'2019-06-10 20:11:01','Anyone have experience interviewing here?',2,NULL,2),(4,4,'2019-06-10 10:11:01','I\'ve interned here before if anyone has questions',3,NULL,2);
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -48,7 +56,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `company`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `company` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
@@ -56,7 +64,7 @@ CREATE TABLE `company` (
   `short_name` varchar(128) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,6 +73,7 @@ CREATE TABLE `company` (
 
 LOCK TABLES `company` WRITE;
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
+INSERT INTO `company` VALUES (1,'Mercari','desc','mercari'),(2,'Facebook','desc','facebook'),(3,'Google','desc','google'),(4,'Cockroach Labs','desc','cockroach'),(5,'LinkedIn','desc','linkedin'),(6,'Microsoft','desc','microsoft'),(7,'PagerDuty','desc','pagerduty');
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -74,7 +83,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `job`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `job` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `short_code` varchar(128) NOT NULL,
@@ -90,7 +99,7 @@ CREATE TABLE `job` (
   KEY `term_id` (`term_id`),
   CONSTRAINT `job_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`),
   CONSTRAINT `job_ibfk_2` FOREIGN KEY (`term_id`) REFERENCES `term` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,6 +108,7 @@ CREATE TABLE `job` (
 
 LOCK TABLES `job` WRITE;
 /*!40000 ALTER TABLE `job` DISABLE KEYS */;
+INSERT INTO `job` VALUES (2,'8azgnmhT','Software Engineering Intern','Interview selections complete',2,9001,'At Mercari, our mission is to create value in a global marketplace where anyone can buy & sell, and we pride ourselves in taking on a challenge. We are looking for new members to join us in achieving this goal under our values - Go Bold, All for One, and Be Professional.\n株式会社メルカリでは「新たな価値を生みだす世界的なマーケットプレイスを創る」というミッションを掲げ、あらゆる挑戦をしています。「Go Bold - 大胆にやろう」「All for One - 全ては成功のために」「Be Professional - プロフェッショナルであれ」という3つのバリューのもと、ミッション達成を共に目指していける仲間を募集しています。',1,1),(3,'V3XI1QvR','Software Engineering Intern','Interview selections complete',2,7500,'desc',2,1),(4,'kPYAIoy1','Software Engineering Intern','Coding challenge out',2,7500,'desc',3,1),(5,'g-4HuUAh','Backend Engineering Intern','Applications available',1,8000,'desc',4,1),(6,'_NAqzKrA','Systems and Infrastructure Engineering Intern','Rankings out',3,7800,'desc',5,1),(7,'as7qzKrA','Software Engineering Intern','Applications available',1,7200,'desc',6,1),(8,'9HNk_-q2','Site Reliability Engineering Intern','Interviews selections complete',2,7400,'desc',7,1);
 /*!40000 ALTER TABLE `job` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,7 +118,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `replies`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `replies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `thread_id` int(11) NOT NULL,
@@ -136,14 +146,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `term`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `term` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `term` enum('fall','winter','spring') DEFAULT NULL,
   `year` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `full_term` (`term`,`year`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,6 +162,7 @@ CREATE TABLE `term` (
 
 LOCK TABLES `term` WRITE;
 /*!40000 ALTER TABLE `term` DISABLE KEYS */;
+INSERT INTO `term` VALUES (1,'fall',2019);
 /*!40000 ALTER TABLE `term` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -161,7 +172,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `thread`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `thread` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `date_time` datetime NOT NULL,
@@ -188,17 +199,17 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(30) NOT NULL,
+  `username` varchar(64) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `hash` varchar(128) NOT NULL,
-  `salt` varchar(16) NOT NULL,
+  `hash` varchar(344) NOT NULL,
+  `salt` varchar(44) NOT NULL,
   `log_rounds` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,6 +218,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'FuriousRaccoon','','','',1),(2,'HissingWalrus','','','',1),(3,'FeignedChameleon','','','',1),(4,'VoraciousMaltese','','','',1),(10,'GiftedMole','reclarey@edu.uwaterloo.ca','fr5qId2dfZo3w3eN2EUnyGzsrBb8aoHHcQWGzSKeQ/f67XUhTIyLdNYjW/UCkwA4H7JQGFGX4Z4hQDOwKmNN2Iy4YaHsEE2pilwo6fp4U7Oqz17mvE4EPlQ7hVi8tAPK3MCVvv0c0z/Jl5ss4UGD/aYTf7wM+i5UzaJQUdI6kVr69HPdvJIRjoiCvIMBw2eCB5SF4LSEKDY1yGvenBkYNRiKCOGZk3LLUSY9NKtuDE/VXE2OLhZel1bDH/5WgutJoaowT5rKu9QRz+Aa+0QyqOK7KcO+FZiBPEP8JaOKeID8yTGaQtThsWgUj1MH+94fDNNJRqxRS15AI2245UZPpA==','35a6cvHUHCuOhBBx2r1Y5FszT4Ou1jmpuAzM2+AxRm0=',1),(11,'LateAkita','asdf@edu.uwaterloo.ca','1BkgrBa6QTZEwf5PSxdptEOsm465y02Z63HA85YUfubkegsh5yu97SJDYoAh5jGoFjMaIs6eDNrrqHqSVVYi2LVnwj4dzq83jg2iC9asx00WJiccDd4sAEWaaMbUX7/I7MGjgYQ+FnPjZxUu8vUblCk01PRxVoMEAHAHNf1Ez8hsMbLa+dfK613VruTYqpj63pbPn0RopyAZutXdvYfzncx/fyBVEcR+wSC+yCjiIUlhGYtFHhwK/slf+PCKGbLrAoi5sR53chT2eV6CaaJlDsuOcjCopKSbApZ6lSs1X02A43fKIlGmSt0RMbXpmwREzwFdLFTFAKThuRRvn0ahMw==','xzUcuxXxNkc1nZZ4pUtRMqycrlDYNpvQwZBv8ak+Ri0=',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -219,4 +231,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-12 14:11:27
+-- Dump completed on 2019-07-28 23:37:10

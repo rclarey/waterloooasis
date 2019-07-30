@@ -4,6 +4,7 @@ import { Router } from '@reach/router';
 import 'regenerator-runtime/runtime';
 
 import FourOhFour from 'shared/FourOhFour.jsx';
+import LandingPage from 'public/LandingPage.jsx';
 import SignIn from 'public/SignIn.jsx';
 import SignUp from 'public/SignUp.jsx';
 import VerifyEmail from 'public/VerifyEmail.jsx';
@@ -16,6 +17,7 @@ function Public() {
   return (
     <>
       <Router>
+        <LandingPage path="/" />
         <SignIn path="/signin" />
         <SignUp path="/signup" setEmail={setEmail} />
         <VerifyEmail path="/verify" email={email} />
