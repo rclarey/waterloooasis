@@ -1,50 +1,81 @@
 import React, { memo, useCallback, useState } from 'react';
-import { Link } from '@reach/router';
+import PropTypes from 'prop-types';
+import { Link, navigate } from '@reach/router';
 
 import { Field, Form, FormRow } from 'public/Form.jsx';
 import { post } from 'utils.js';
 
 import 'public/auth.css';
 
-// pretty sure WatIAM ids are strictly alphanumeric
-const watiamIdPattern = /[a-zA-Z0-9]+/;
-async function validateWatiamId(watiamId) {
-  const result = watiamIdPattern.exec(watiamId);
-  if (result === null || result[0].length !== watiamId.length) {
-    return false;
-  }
-
-  const { unused } = await post('/exists', {
-    email: `${watiamId}@edu.uwaterloo.ca`,
-  });
-
-  return unused;
-}
-
 const minPasswordLength = 8;
 async function validatePassword(password) {
   return password.length >= minPasswordLength;
 }
 
-async function validateConfirmPassword(passwordRef, confirm) {
-  return !!passwordRef && passwordRef.value === confirm;
-}
-
-async function onSubmit(info) {
-  const { redirect } = await post('/signup', {
-    email: `${info.watiam.value}@edu.uwaterloo.ca`,
-    password: info.password.value,
-  });
-
-  window.location.pathname = redirect;
-}
-
-function SignUp() {
+function SignUp({ setEmail }) {
   const [passwordRef, setPasswordRef] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const validateConfirm = useCallback(
-    validateConfirmPassword.bind(passwordRef),
+    async confirm => {
+      if (!passwordRef) {
+        return false;
+      }
+      const password = passwordRef.value;
+      return (await validatePassword(password)) && password === confirm;
+    },
     [passwordRef],
   );
+
+  const handleError = useCallback(error => {
+    if (error.reason) {
+      setErrorMessage(error.reason);
+    } else {
+      setErrorMessage('Something went wrong. Please try again later');
+    }
+  }, []);
+
+  // pretty sure WatIAM ids are strictly alphanumeric
+  const watiamIdPattern = /[a-zA-Z0-9]+/;
+  const validateWatiamId = useCallback(
+    async watiamId => {
+      try {
+        const result = watiamIdPattern.exec(watiamId);
+        if (result === null || result[0].length !== watiamId.length) {
+          return false;
+        }
+
+        const { unused } = await post('/exists', {
+          email: `${watiamId}@edu.uwaterloo.ca`,
+        });
+
+        return unused;
+      } catch (error) {
+        handleError(error);
+        return null;
+      }
+    },
+    [handleError],
+  );
+
+  const onSubmit = useCallback(
+    async info => {
+      try {
+        setErrorMessage(null);
+        const email = `${info.watiam.value}@edu.uwaterloo.ca`;
+        await post('/signup', {
+          email,
+          password: info.password.value,
+        });
+        setEmail(email);
+        navigate('/verify');
+      } catch (error) {
+        handleError(error);
+      }
+    },
+    [setEmail, setErrorMessage],
+  );
+
   return (
     <section className="auth__container">
       <img
@@ -53,12 +84,17 @@ function SignUp() {
         alt="Waterloo Oasis logo"
         src="img/logo.png"
       />
+      <div className="auth__messagearea">
+        {errorMessage ? (
+          <div className="auth__error">{errorMessage}</div>
+        ) : null}
+      </div>
       <Form
         cta="Sign up"
         names={['watiam', 'password', 'confirm']}
         onSubmit={onSubmit}
       >
-        <FormRow>
+        <FormRow className="auth__emailrow">
           <Field
             placeholder="WatIAM ID"
             name="watiam"
@@ -91,5 +127,8 @@ function SignUp() {
     </section>
   );
 }
+SignUp.propTypes = {
+  setEmail: PropTypes.func.isRequired,
+};
 
 export default memo(SignUp);

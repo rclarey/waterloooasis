@@ -5,6 +5,7 @@ const { sign } = require('jsonwebtoken');
 
 const { query } = require('shared/util/db.js');
 const randomNames = require('web_service/auth/randomname.js');
+const sendVerificationEmail = require('web_service/auth/email.js');
 
 const scryptOpts = {
   cost: 32768,
@@ -60,14 +61,50 @@ async function generateUsername() {
   throw new Error('Failed to generate username.');
 }
 
-async function createUser(email, password) {
-  const queryStr = 'INSERT INTO user SET ?';
-  const salt = randomBytes(32).toString('base64');
+async function generateVerificationCode() {
+  const queryStr = 'SELECT count(*) FROM verification WHERE code = ?';
 
-  const [hash, username] = await Promise.all([
+  // Try a few times. Shouldn't take more than once
+  for (let i = 0; i < 3; i += 1) {
+    const code = randomBytes(33).toString('base64');
+    const urlSafe = code.replace(/\+/g, '-').replace(/\//g, '_');
+    const unused = (await query(queryStr, [urlSafe]))[0]['count(*)'] === 0;
+    if (unused) {
+      return urlSafe;
+    }
+  }
+
+  throw new Error('Failed to generate verification code.');
+}
+
+async function createAndSendVerification(email, password) {
+  const deleteQuery = 'DELETE FROM verification WHERE email = ?';
+  const insertQuery = 'INSERT INTO verification SET ?';
+
+  // if a user signs up multiple times just overwrite their unused verification row
+  await query(deleteQuery, [email]);
+
+  const salt = randomBytes(32).toString('base64');
+  const [hash, code] = await Promise.all([
     computeHash(password, salt),
-    generateUsername(),
+    generateVerificationCode(),
   ]);
+
+  const msIn10Min = 1000 * 60 * 10;
+  const expires = new Date(Date.now() + msIn10Min);
+  await query(insertQuery, {
+    email,
+    hash,
+    salt,
+    code,
+    expires,
+  });
+  sendVerificationEmail(email, code);
+}
+
+async function createUser(email, hash, salt) {
+  const queryStr = 'INSERT INTO user SET ?';
+  const username = await generateUsername();
 
   await query(queryStr, {
     email,
@@ -79,6 +116,41 @@ async function createUser(email, password) {
 
   // return the result of getUser() so we're only passing along minimal info
   return getUser(email);
+}
+
+async function doVerification(req, res) {
+  const selectQuery =
+    'SELECT email, hash, salt, expires FROM verification WHERE code = ?';
+  const deleteQuery = 'DELETE FROM verification WHERE code = ?';
+  const code = req.body.code;
+
+  try {
+    const result = await query(selectQuery, [code]);
+
+    // Try to make sure verification is deleted before we proceed.
+    // If it can't be deleted then don't continue
+    for (let i = 0; i < 3; i += 1) {
+      try {
+        await query(deleteQuery, [code]);
+        break;
+      } catch (e) {
+        if (i === 2) {
+          throw new Error('Something went wrong. Reload the page to retry.');
+        }
+      }
+    }
+
+    const now = new Date(Date.now());
+    if (result.length === 0 || result[0].expires < now) {
+      throw new Error('This verification link has expired.');
+    }
+
+    const { email, hash, salt } = result[0];
+    const user = await createUser(email, hash, salt);
+    handleSignInOrVerify(res, null, user);
+  } catch (error) {
+    handleSignInOrVerify(res, null, null, error.message);
+  }
 }
 
 function extractJwtFromCookie(req) {
@@ -113,13 +185,13 @@ class SignInSignUpStrategy extends passport.Strategy {
     const email = req.body.email;
     const password = req.body.password;
     try {
-      this.verify(email, password, (error, user, message) => {
+      this.verify(email, password, (error, result, message) => {
         if (error) {
           this.fail(error.message);
-        } else if (!user) {
+        } else if (!result) {
           this.fail(message);
         } else {
-          this.success(user);
+          this.success(result);
         }
       });
     } catch (e) {
@@ -139,8 +211,8 @@ const signupStrategy = new SignInSignUpStrategy(
         throw new Error('That email is already taken.');
       }
 
-      const newUser = await createUser(email, password);
-      done(null, newUser);
+      await createAndSendVerification(email, password);
+      done(null, true);
     } catch (err) {
       done(err, null, err.message);
     }
@@ -179,7 +251,17 @@ function authenticationFork(success, failure) {
   };
 }
 
-function handleSignInSignUp(res, err, user, reason) {
+function handleSignUp(res, err, success, reason) {
+  if (err) {
+    res.status(500).send();
+  } else if (!success) {
+    res.status(400).json({ reason });
+  } else {
+    res.status(200).json({ ok: true });
+  }
+}
+
+function handleSignInOrVerify(res, err, user, reason) {
   if (err) {
     res.status(500).send();
   } else if (!user) {
@@ -225,7 +307,7 @@ module.exports = function setupAuth(router) {
     passport.authenticate(
       'signin',
       { session: false },
-      handleSignInSignUp.bind(null, res),
+      handleSignInOrVerify.bind(null, res),
     )(req, res, next),
   );
 
@@ -233,7 +315,7 @@ module.exports = function setupAuth(router) {
     passport.authenticate(
       'signup',
       { session: false },
-      handleSignInSignUp.bind(null, res),
+      handleSignUp.bind(null, res),
     )(req, res, next),
   );
 
@@ -247,6 +329,8 @@ module.exports = function setupAuth(router) {
       .status(200)
       .json({});
   });
+
+  router.post('/api/verify', doVerification);
 
   router.post('/api/exists', async (req, res) => {
     const user = await getUser(req.body.email);
