@@ -25,3 +25,7 @@ a,
 a:visited {
   text-decoration: none;
 }
+
+img {
+  display: block;
+}

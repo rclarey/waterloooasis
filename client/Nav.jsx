@@ -28,19 +28,20 @@ function Nav() {
   return (
     <nav className="nav__container">
       <Link className="nav__logo" to="/">
-        <img height="32px" src="/img/logo.png" alt="Waterloo Oasis logo" />
+        <img src="svg/oasis.svg" />
       </Link>
-      <form className="nav__searchform" onSubmit={submitQuery}>
+      <form className="nav__search-form" onSubmit={submitQuery}>
+        <img src="svg/search.svg" className="nav__search-icon" />
         <input
-          className="nav__searchinput"
+          className="nav__search-input"
           type="text"
           placeholder="Search"
           value={query}
           onChange={updateQuery}
         />
       </form>
-      <a className="nav__signout" href="#" onClick={signOut}>
-        Sign out
+      <a className="nav__profile" href="#" onClick={signOut}>
+        <img src="svg/profile.svg" />
       </a>
     </nav>
   );
