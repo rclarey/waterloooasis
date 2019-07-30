@@ -77,12 +77,11 @@ async function generateVerificationCode() {
   throw new Error('Failed to generate verification code.');
 }
 
+const deleteVerifQuery = 'DELETE FROM verification WHERE email = ?';
+const insertVerifQuery = 'INSERT INTO verification SET ?';
 async function createAndSendVerification(email, password) {
-  const deleteQuery = 'DELETE FROM verification WHERE email = ?';
-  const insertQuery = 'INSERT INTO verification SET ?';
-
   // if a user signs up multiple times just overwrite their unused verification row
-  await query(deleteQuery, [email]);
+  await query(deleteVerifQuery, [email]);
 
   const salt = randomBytes(32).toString('base64');
   const [hash, code] = await Promise.all([
@@ -92,14 +91,57 @@ async function createAndSendVerification(email, password) {
 
   const msIn10Min = 1000 * 60 * 10;
   const expires = new Date(Date.now() + msIn10Min);
-  await query(insertQuery, {
+  await query(insertVerifQuery, {
     email,
     hash,
     salt,
     code,
     expires,
   });
-  sendVerificationEmail(email, code);
+  await sendVerificationEmail(email, code);
+}
+
+async function resendVerification(req, res) {
+  const selectQuery = 'SELECT hash, salt FROM verification WHERE email = ?';
+  try {
+    const email = req.body.email;
+    if (!email) {
+      throw new Error('No email provided');
+    }
+
+    // pull the hash and salt out of the old verification row so we don't have to store
+    // and resend the plaintext password from the client
+    const result = await query(selectQuery, [email]);
+    if (result.length === 0) {
+      throw { hardRetry: true };
+    }
+
+    await query(deleteVerifQuery, [email]);
+    const code = await generateVerificationCode();
+    const msIn10Min = 1000 * 60 * 10;
+    const expires = new Date(Date.now() + msIn10Min);
+    try {
+      await query(insertVerifQuery, {
+        email,
+        code,
+        expires,
+        hash: result[0].hash,
+        salt: result[0].salt,
+      });
+    } catch (e) {
+      throw { hardRetry: true };
+    }
+
+    await sendVerificationEmail(email, code);
+    res.json({ ok: true });
+  } catch (error) {
+    res.status(400);
+    if (error.hardRetry) {
+      res.json({ hardRetry: true });
+    } else {
+      res.json({ softRetry: true });
+    }
+  }
 }
 
 async function createUser(email, hash, salt) {
@@ -337,9 +379,14 @@ module.exports = function setupAuth(router) {
     res.json({ unused: !user });
   });
 
+  router.post('/api/retryemail', resendVerification);
+
   return {
     authenticationFork,
     authenticate: passport.authenticate('jwt', {
+      session: false,
+    }),
+    authenticateWithRedirect: passport.authenticate('jwt', {
       session: false,
       failureRedirect: '/signin',
     }),
