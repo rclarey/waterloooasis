@@ -2,6 +2,7 @@ import React, { memo, useCallback, useState } from 'react';
 import { Link } from '@reach/router';
 
 import { Field, Form, FormRow } from 'public/Form.jsx';
+import OButton from 'oasisui/OButton.jsx';
 import { post } from 'utils.js';
 
 import 'public/auth.css';
@@ -36,19 +37,14 @@ function SignIn() {
 
   return (
     <section className="auth__container">
-      <img
-        className="auth__logo"
-        width="150px"
-        alt="Waterloo Oasis logo"
-        src="svg/oasis.svg"
-      />
+      <img className="auth__logo" src="svg/oasis.svg" />
       <div className="auth__messagearea">
         {errorMessage ? (
           <div className="auth__error">{errorMessage}</div>
         ) : null}
       </div>
       <Form
-        cta="Sign in"
+        cta="Log in"
         names={['watiam', 'password']}
         onSubmit={onSubmit}
         noDisable={true}
@@ -63,7 +59,7 @@ function SignIn() {
       </Form>
       <div className="auth__spacer" />
       <Link className="auth__switchbutton" to="/signup">
-        Sign up
+        <OButton text="Sign up" />
       </Link>
     </section>
   );

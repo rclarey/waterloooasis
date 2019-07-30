@@ -1,23 +1,25 @@
 .auth__switchbutton {
-  background: #248bf6;
-  border-radius: 5px;
-  color: #ffffff;
-  font-size: 20px;
-  font-weight: bold;
-  padding: 8px 30px;
+  margin: auto;
 }
+
 .auth__switchbutton:visited {
   color: #ffffff;
 }
 
 .auth__container {
-  margin: 100px auto 0;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  left: 50vw;
+  top: 50vh;
+  transform: translate(-50%, -50%);
   text-align: center;
   width: 600px;
 }
 
 .auth__logo {
-  margin: 0 auto 10px auto;
+  height: 70px;
 }
 
 .auth__emailrow {
