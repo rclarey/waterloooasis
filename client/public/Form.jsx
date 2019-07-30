@@ -78,12 +78,9 @@ export function Form({ children, cta, names, onSubmit, noDisable = false }) {
     <form onSubmit={guardSubmit}>
       <FormContext.Provider value={{ info, onChange }}>
         {children}
-        <input
-          className="form__submit"
-          type="submit"
-          disabled={buttonDisabled}
-          value={cta}
-        />
+        <div className="form__submit">
+          <OButton onClick={() => this.parentNode.parentNode.submit()} text={cta} />
+        </div>
       </FormContext.Provider>
     </form>
   );

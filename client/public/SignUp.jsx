@@ -82,7 +82,7 @@ function SignUp() {
       </Form>
       <div className="auth__spacer" />
       <Link className="auth__switchbutton" to="/signin">
-        <OButton text="Sign in" alt={true} />
+        <OButton text="Log in" alt={true} />
       </Link>
     </section>
   );
