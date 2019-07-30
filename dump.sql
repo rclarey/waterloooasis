@@ -209,7 +209,7 @@ CREATE TABLE `user` (
   `log_rounds` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -218,8 +218,37 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'FuriousRaccoon','','','',1),(2,'HissingWalrus','','','',1),(3,'FeignedChameleon','','','',1),(4,'VoraciousMaltese','','','',1),(10,'GiftedMole','reclarey@edu.uwaterloo.ca','fr5qId2dfZo3w3eN2EUnyGzsrBb8aoHHcQWGzSKeQ/f67XUhTIyLdNYjW/UCkwA4H7JQGFGX4Z4hQDOwKmNN2Iy4YaHsEE2pilwo6fp4U7Oqz17mvE4EPlQ7hVi8tAPK3MCVvv0c0z/Jl5ss4UGD/aYTf7wM+i5UzaJQUdI6kVr69HPdvJIRjoiCvIMBw2eCB5SF4LSEKDY1yGvenBkYNRiKCOGZk3LLUSY9NKtuDE/VXE2OLhZel1bDH/5WgutJoaowT5rKu9QRz+Aa+0QyqOK7KcO+FZiBPEP8JaOKeID8yTGaQtThsWgUj1MH+94fDNNJRqxRS15AI2245UZPpA==','35a6cvHUHCuOhBBx2r1Y5FszT4Ou1jmpuAzM2+AxRm0=',1),(11,'LateAkita','asdf@edu.uwaterloo.ca','1BkgrBa6QTZEwf5PSxdptEOsm465y02Z63HA85YUfubkegsh5yu97SJDYoAh5jGoFjMaIs6eDNrrqHqSVVYi2LVnwj4dzq83jg2iC9asx00WJiccDd4sAEWaaMbUX7/I7MGjgYQ+FnPjZxUu8vUblCk01PRxVoMEAHAHNf1Ez8hsMbLa+dfK613VruTYqpj63pbPn0RopyAZutXdvYfzncx/fyBVEcR+wSC+yCjiIUlhGYtFHhwK/slf+PCKGbLrAoi5sR53chT2eV6CaaJlDsuOcjCopKSbApZ6lSs1X02A43fKIlGmSt0RMbXpmwREzwFdLFTFAKThuRRvn0ahMw==','xzUcuxXxNkc1nZZ4pUtRMqycrlDYNpvQwZBv8ak+Ri0=',1);
+INSERT INTO `user` VALUES (1,'FuriousRaccoon','','','',1),(2,'HissingWalrus','','','',1),(3,'FeignedChameleon','','','',1),(4,'VoraciousMaltese','','','',1),(11,'LateAkita','asdf@edu.uwaterloo.ca','1BkgrBa6QTZEwf5PSxdptEOsm465y02Z63HA85YUfubkegsh5yu97SJDYoAh5jGoFjMaIs6eDNrrqHqSVVYi2LVnwj4dzq83jg2iC9asx00WJiccDd4sAEWaaMbUX7/I7MGjgYQ+FnPjZxUu8vUblCk01PRxVoMEAHAHNf1Ez8hsMbLa+dfK613VruTYqpj63pbPn0RopyAZutXdvYfzncx/fyBVEcR+wSC+yCjiIUlhGYtFHhwK/slf+PCKGbLrAoi5sR53chT2eV6CaaJlDsuOcjCopKSbApZ6lSs1X02A43fKIlGmSt0RMbXpmwREzwFdLFTFAKThuRRvn0ahMw==','xzUcuxXxNkc1nZZ4pUtRMqycrlDYNpvQwZBv8ak+Ri0=',1),(12,'ResoluteWallaby','qwer@edu.uwaterloo.ca','L88pginjsGknTC7AAmXZSga8E2j/Ez66v+PRzPxEEk7D4i2s5NHdiSHvMTE9eQyF9IsQ2hOe7YJ40HZNgnvfDD+Oh2A4SeeAboCk52HMtMm922DE5LPlXVjQh8xXUt03rOqjwHBaIv/z9Fo2MH4sihNhGwhbCWLnrc8j5eCVKmy8yRgwCtE8fXF/UxGO68HAGolEn1u59Rf0nCnJp7vzn86tO2pcxQ3ZfIfsL8l3QR70c7W3REOrt6OeZIw+fi9cXWOfPuBOE/wcE/sFV8urQxmi+2jhAiYugNAygARdzf6/QqsFsxGroXXURBOBQKeuh6flWqMUFPphOiTOMfMzKA==','dfjmxfGiFiVK2v65frPcnWWWuDed/tmSY5JCbX4vYLA=',1),(14,'MushyEarwig','reclarey@edu.uwaterloo.ca','FKyQ1/EjM/eHbMs6VMtOYwF3I6TFO5uWZI+rf+R5h3J5dGGnGp2KaSqn3v8DkDVFKeKopw2+4qYe7qK/n/1XeXZHZamFEKFzfsH4YzBpMo+Um5gaTtjabUrDzhuV3flRjKkNm3ziEp3AjDO8ZvhPYOff1rc6NJPjKl0yP4/bgdmUADU1a5NLVBw8EqimPyEvEkQ5DlTa3UBlq7PH1faYN10n4DgcuwZnKAafCRu+RLIRk2I3PCU+W0n2Bcq6OpyecknxqvDbyiM7BG3jNaN7Kt1Ccpmis+47+MlAzZ/3U1bIk7RqNtDvX/R7AO/WJF+tr6Ge9J5GxDvrCgS5l2mp6A==','jVTYPEHBGJsNg+rMcVJ0u5lwgU00Z6LJH0x3AX/XzSo=',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `verification`
+--
+
+DROP TABLE IF EXISTS `verification`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `verification` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(50) NOT NULL,
+  `hash` varchar(344) NOT NULL,
+  `salt` varchar(44) NOT NULL,
+  `code` varchar(45) DEFAULT NULL,
+  `expires` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  UNIQUE KEY `code_UNIQUE` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `verification`
+--
+
+LOCK TABLES `verification` WRITE;
+/*!40000 ALTER TABLE `verification` DISABLE KEYS */;
+/*!40000 ALTER TABLE `verification` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -231,4 +260,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-28 23:37:10
+-- Dump completed on 2019-07-30  0:14:31

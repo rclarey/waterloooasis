@@ -8,6 +8,7 @@
 - Run `grunt symlink`
 - In two terminal tabs, run:
     - `grunt`, and
-    - `JWT_SECRET=<your jwt secret> COOKIE_SECRET=<your cookie secret> grunt web`
+    - `JWT_SECRET=<your jwt secret> COOKIE_SECRET=<your cookie secret> MAILER_USER=<gmail address> MAILER_PW=<gmail pw> grunt web`
 
 # DB set up
+`mysql -u root -p waterloo_oasis_dev < dump.sql`

@@ -83,6 +83,7 @@ const publicWebExpressRouter = (() => {
   router.get('/mycomments', authenticate, serveApp);
   router.get('/signin', servePublicPages);
   router.get('/signup', servePublicPages);
+  router.get('/verify', servePublicPages);
   router.get('/jobs/*', authenticate, serveApp);
   router.get('/jobs/*/*', authenticate, serveApp);
 

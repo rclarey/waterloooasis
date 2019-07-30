@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import { Link } from '@reach/router';
 
 import { Field, Form, FormRow } from 'public/Form.jsx';
@@ -6,31 +6,54 @@ import { post } from 'utils.js';
 
 import 'public/auth.css';
 
-async function onSubmit(info) {
-  const { redirect } = await post('/signin', {
-    email: `${info.watiam.value}@edu.uwaterloo.ca`,
-    password: info.password.value,
-  });
-
-  window.location.pathname = redirect;
-}
-
 function SignIn() {
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const handleError = useCallback(error => {
+    if (error.reason) {
+      setErrorMessage(error.reason);
+    } else {
+      setErrorMessage('Something went wrong. Please try again later');
+    }
+  }, []);
+
+  const onSubmit = useCallback(
+    async info => {
+      try {
+        setErrorMessage(null);
+        const { redirect } = await post('/signin', {
+          email: `${info.watiam.value}@edu.uwaterloo.ca`,
+          password: info.password.value,
+        });
+
+        window.location.pathname = redirect;
+      } catch (error) {
+        handleError(error);
+      }
+    },
+    [setErrorMessage],
+  );
+
   return (
     <section className="auth__container">
       <img
         className="auth__logo"
         width="150px"
         alt="Waterloo Oasis logo"
-        src="img/logo.png"
+        src="svg/oasis.svg"
       />
+      <div className="auth__messagearea">
+        {errorMessage ? (
+          <div className="auth__error">{errorMessage}</div>
+        ) : null}
+      </div>
       <Form
         cta="Sign in"
         names={['watiam', 'password']}
         onSubmit={onSubmit}
         noDisable={true}
       >
-        <FormRow>
+        <FormRow className="auth__emailrow">
           <Field placeholder="WatIAM ID" name="watiam" />
           <span className="auth__emailsuffix">@edu.uwaterloo.ca</span>
         </FormRow>
