@@ -32,7 +32,7 @@ async function getUser(email) {
 
 async function validateEmailAndPassword(email, password) {
   const queryStr = 'SELECT hash, salt FROM user WHERE email = ?';
-  const [{ hash, salt }] = await query(queryStr, [email]);
+  const { hash, salt } = (await query(queryStr, [email]))[0] || {};
   if (!hash || !salt) {
     return false;
   }

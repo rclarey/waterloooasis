@@ -82,7 +82,7 @@ function SignUp({ setEmail }) {
         className="auth__logo"
         width="150px"
         alt="Waterloo Oasis logo"
-        src="img/logo.png"
+        src="svg/oasis.svg"
       />
       <div className="auth__messagearea">
         {errorMessage ? (
