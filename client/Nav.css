@@ -5,7 +5,7 @@
   justify-content: center;
   left: 0;
   margin: 0 auto;
-  max-width: 1080px;
+  max-width: 1350px;
   padding: 25px 90px;
   position: fixed;
   right: 0;
@@ -17,7 +17,7 @@
   flex-grow: 1;
   width: 1000px;
   height: 50px;
-  border: 1px solid #e5e5e5;
+  border: 1px solid #E5E5E5;
   border-radius: 5px;
   margin: 0 60px;
   user-select: none;
@@ -25,11 +25,6 @@
 
 .nav__search-form:hover {
   border: 1px solid #D9D9D9;
-}
-
-.nav__search-form:focus {
-  border: 1px solid rgba(44, 44, 44, 0.5);
-  border-radius: 10px;
 }
 
 .nav__search-icon {
@@ -43,6 +38,8 @@
   border: none;
   background: none;
   font-size: 16px;
+  caret-color: rgba(44, 44, 44, 0.5);
+  color: #2C2C2C;
 }
 
 .nav__search-input:focus {

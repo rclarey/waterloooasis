@@ -35,7 +35,6 @@ function Nav() {
         <input
           className="nav__search-input"
           type="text"
-          placeholder="Search"
           value={query}
           onChange={updateQuery}
         />
