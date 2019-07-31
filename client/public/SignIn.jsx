@@ -44,7 +44,8 @@ function SignIn() {
         ) : null}
       </div>
       <Form
-        cta="Log in"
+        btnText="Log in"
+        isAlt={true}
         names={['watiam', 'password']}
         onSubmit={onSubmit}
         noDisable={true}

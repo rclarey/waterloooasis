@@ -50,7 +50,7 @@ function SignUp() {
     <section className="auth__container">
       <img className="auth__logo" src="svg/oasis.svg" />
       <Form
-        cta="Sign up"
+        btnText="Sign up"
         names={['watiam', 'password', 'confirm']}
         onSubmit={onSubmit}
       >

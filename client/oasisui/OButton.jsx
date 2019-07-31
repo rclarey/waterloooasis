@@ -13,7 +13,7 @@ function OButton({ text, alt, light, large }) {
     obutton__large: large,
     obutton__small: !large,
   });
-  return <div className={classes}>{text}</div>;
+  return <button className={classes}>{text}</button>;
 }
 
 OButton.propTypes = {
