@@ -1,4 +1,4 @@
-const expressUtils = require('shared/util/expressUtils');
+const u = require('shared/util/u');
 const { query } = require('shared/util/db.js');
 const { Client } = require('@elastic/elasticsearch');
 
@@ -37,10 +37,22 @@ async function run() {
   const client = new Client({ node: 'http://localhost:9200' });
   const jobs = await getJobs();
 
-  await client.indices.delete({
-    index: 'jobs',
-  });
 
+  u.log("-> Checking for existing 'jobs' index...");
+  const jobsIndexExists = (await client.indices.exists({
+    index: 'jobs',
+  })).body;
+
+  if (jobsIndexExists) {
+    u.log("-> Deleting existing 'jobs' index");
+    await client.indices.delete({
+      index: 'jobs',
+    });
+  } else {
+    u.log("-> No existing 'jobs' index found.");
+  }
+
+  u.log("-> Creating 'jobs' index");
   await client.indices.create({
     index: 'jobs',
     body: {
@@ -54,6 +66,7 @@ async function run() {
     }
   });
 
+  u.log("-> Indexing all jobs from db");
   for (const job of jobs) {
     await client.index({
       index: 'jobs',
@@ -61,7 +74,11 @@ async function run() {
     });
   }
 
+  u.log("-> Refreshing jobs index");
   await client.indices.refresh({ index: 'jobs' });
+
+  u.log("-> Done.");
+  process.exit(0);
 };
 
 run();

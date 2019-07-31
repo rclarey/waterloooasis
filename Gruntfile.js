@@ -33,6 +33,9 @@ module.exports = function(grunt) {
         command: "node web_service/web_server.js",
       },
       search: {
+        command: "docker-compose -f search_service/docker-compose.yml up",
+      },
+      indexSearch: {
         command: "node search_service/search.js",
       },
     },
@@ -48,6 +51,7 @@ module.exports = function(grunt) {
   grunt.registerTask("precommit", "shell:precommit");
   grunt.registerTask("web", "shell:server");
   grunt.registerTask("search", "shell:search");
+  grunt.registerTask("indexSearch", "shell:indexSearch");
   grunt.registerTask("transpile", "webpack:watch");
   grunt.registerTask("default", "webpack:watch");
 
