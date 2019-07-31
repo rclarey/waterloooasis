@@ -1,10 +1,18 @@
 .jobtile__container {
   display: grid;
   grid-template-columns: 50% 50%;
-  margin-bottom: 30px;
+  padding: 15px 0;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
 }
 .jobtile--big.jobtile__container {
-  margin-bottom: 0;
+  padding: 0;
+  opacity: 1;
+}
+
+.jobtile__container:hover {
+  opacity: 1;
+  transition: opacity 0.2s ease;
 }
 
 .jobtile__leftcontent {

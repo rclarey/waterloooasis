@@ -27,7 +27,6 @@ function Nav() {
 
   return (
     <>
-      <div className="nav__overlay" />
       <nav className="nav__container">
         <Link className="nav__logo" to="/">
           <img src="svg/oasis.svg" />
@@ -50,6 +49,7 @@ function Nav() {
           <img src="svg/profile.svg" />
         </a>
       </nav>
+      <div className="nav__overlay" />
     </>
   );
 }
