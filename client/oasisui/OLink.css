@@ -37,7 +37,15 @@
 }
 
 .olink__dark.olink__inactive {
-  color: #D2D2D2;
+  opacity: 0.2;
+}
+
+.olink__dark.olink__inactive:hover {
+  opacity: 0.27;
+}
+
+.olink__dark.olink__inactive:active {
+  opacity: 0.4;
 }
 
 .olink__small {
