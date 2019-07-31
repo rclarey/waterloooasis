@@ -1,13 +1,13 @@
 .nav__container {
-  background: #ffffff;
+  background: #FFFFFF;
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
   left: 0;
   margin: 0 auto;
   max-width: 1350px;
-  padding: 25px 90px;
-  position: fixed;
+  padding: 32px 90px 0;
   right: 0;
   top: 0;
 }
@@ -64,4 +64,16 @@
 
 .nav__profile {
   user-select: none;
+}
+
+.nav__overlay {
+  /* background: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.4) 45%, rgba(255, 255, 255, 0.9) 70%, #FFFFFF 85%, #FFFFFF 100%); */
+  /* background: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.8) 75%, rgba(255, 255, 255, 0.94) 85%, #FFFFFF 100%); */
+  background: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 65%, #FFFFFF 100%);
+  position: fixed;
+  display: flex;
+  top: 80px;
+  width: 100%;
+  height: 80px;
+  pointer-events: none;
 }

@@ -10,8 +10,19 @@ function JobTile({ job, big = false }) {
         <h3 className="jobtile__companyname">{job.company.name}</h3>
         <h4 className="jobtile__jobtitle">{job.title}</h4>
         <div className="jobtile__interactions">
-          <span className="jobtile__discussion">●{job.commentCount}</span>
-          <span className="jobtile__squares">▊{job.squares}</span>
+          <div className="jobtile__discussion">
+            <img className="jobtile__interactions-img" src="svg/comments.svg" />
+            <span className="jobtile__interactions-text">
+              {job.commentCount}
+            </span>
+          </div>
+          <div className="jobtile__squares">
+            <img
+              className="jobtile__interactions-img"
+              src="svg/applications.svg"
+            />
+            <span className="jobtile__interactions-text">{job.squares}</span>
+          </div>
         </div>
       </div>
       <div className="jobtile__rightcontent">
