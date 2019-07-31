@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { Link } from '@reach/router';
+import * as axios from 'axios';
+import * as u from 'shared/util/u';
 
 import { post } from 'utils.js';
 
@@ -14,13 +16,19 @@ async function signOut() {
   }
 }
 
+async function search(query) {
+  const results = (await axios.get(`/api/search?queryString=${query}`)).data;
+  // TODO: remove log statement.
+  u.log(results.map(result => result._source.company.name));
+}
+
 function Nav() {
   const [query, setQuery] = useState('');
   const updateQuery = useCallback(e => setQuery(e.target.value), []);
   const submitQuery = useCallback(
     e => {
       e.preventDefault();
-      alert(`you searched: ${query}`);
+      search(query);
     },
     [query],
   );
