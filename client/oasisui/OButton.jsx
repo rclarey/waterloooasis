@@ -12,9 +12,12 @@ function OButton({ text, alt, light, large, disabled }) {
     obutton__dark: !light,
     obutton__large: large,
     obutton__small: !large,
-    obutton__disabled: disabled,
   });
-  return <button disabled={disabled} className={classes}>{text}</button>;
+  return (
+    <button disabled={disabled} className={classes}>
+      {text}
+    </button>
+  );
 }
 
 OButton.propTypes = {
