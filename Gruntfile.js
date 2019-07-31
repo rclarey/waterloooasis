@@ -36,7 +36,7 @@ module.exports = function(grunt) {
         command: "docker-compose -f search_service/docker-compose.yml up",
       },
       indexSearch: {
-        command: "node search_service/search.js",
+        command: "node search_service/indexSearch.js",
       },
     },
   });
