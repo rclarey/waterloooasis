@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react';
 import { Link } from '@reach/router';
 import * as axios from 'axios';
+import * as u from 'shared/util/u';
 
 import { post } from 'utils.js';
-import useFetch from 'fetch-suspense';
 
 import 'Nav.css';
 
@@ -18,7 +18,8 @@ async function signOut() {
 
 async function search(query) {
   const results = (await axios.get(`/api/search?queryString=${query}`)).data;
-  console.log(results.map((result) => result._source.company.name));
+  // TODO: remove log statement.
+  u.log(results.map(result => result._source.company.name));
 }
 
 function Nav() {

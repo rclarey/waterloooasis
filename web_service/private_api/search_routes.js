@@ -1,31 +1,6 @@
 const expressUtils = require('shared/util/expressUtils');
-const { pool } = require('shared/util/db.js');
 const { Client } = require('@elastic/elasticsearch');
-
-function jobQuery(whereClause = '') {
-  return `
-select job.*, company.name, company.short_name,
-(select count(*) from comment where job_id = job.id) as comments
-from job inner join company on job.company_id = company.id ${whereClause};`;
-}
-
-function jsonifyJob(row) {
-  return {
-    company: {
-      name: row.name,
-      shortName: row.short_name,
-    },
-    id: row.id,
-    shortCode: row.short_code,
-    title: row.title,
-    status: row.status,
-    statusStage: row.status_stage,
-    pay: row.pay,
-    description: row.description,
-    squares: 774,
-    commentCount: row.comments,
-  };
-}
+const u = require('shared/util/u');
 
 const searchRouter = (() => {
   const router = expressUtils.createRouter();
@@ -34,8 +9,9 @@ const searchRouter = (() => {
 
   router.get('/', async (req, res) => {
     const { queryString } = req.query;
-    console.log('******');
-    console.log(queryString);
+    // TODO: remove log statements.
+    u.log('******');
+    u.log(queryString);
 
     try {
       const results = (await client.search({
@@ -47,16 +23,17 @@ const searchRouter = (() => {
               query: {
                 bool: {
                   must: [
-                    { match_phrase_prefix: { 'company.name': queryString } }
-                  ]
-                }
-              }
-            }
-          }
-        }
+                    { match_phrase_prefix: { 'company.name': queryString } },
+                  ],
+                },
+              },
+            },
+          },
+        },
       })).body.hits.hits;
 
-      console.log(results);
+      // TODO: remove log statements.
+      u.log(results);
       res.send(results);
     } catch (e) {
       res.send(e);
