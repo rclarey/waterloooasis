@@ -5,6 +5,7 @@ install:
 - yarn install
 
 script:
+- grunt symlink
 - prettier --check ./web_service/**/**/*.js
 - prettier --check ./client/**/**/*.{js,jsx}
 - eslint ./web_service/**/**/*.js
