@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Link } from '@reach/router';
+import * as axios from 'axios';
 
 import { post } from 'utils.js';
 import useFetch from 'fetch-suspense';
@@ -16,8 +17,8 @@ async function signOut() {
 }
 
 async function search(query) {
-  const results = useFetch(`/api/search?queryString=${query}`);
-  console.log(results);
+  const results = (await axios.get(`/api/search?queryString=${query}`)).data;
+  console.log(results.map((result) => result._source.company.name));
 }
 
 function Nav() {

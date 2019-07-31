@@ -38,7 +38,7 @@ const searchRouter = (() => {
     console.log(queryString);
 
     try {
-      const { body } = await client.search({
+      const results = (await client.search({
         index: 'jobs',
         body: {
           query: {
@@ -54,9 +54,10 @@ const searchRouter = (() => {
             }
           }
         }
-      });
-      console.log(body.hits.hits);
-      res.send(body.hits.hits);
+      })).body.hits.hits;
+
+      console.log(results);
+      res.send(results);
     } catch (e) {
       res.send(e);
     }
