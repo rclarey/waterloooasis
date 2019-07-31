@@ -26,28 +26,31 @@ function Nav() {
   );
 
   return (
-    <nav className="nav__container">
-      <Link className="nav__logo" to="/">
-        <img src="svg/oasis.svg" />
-      </Link>
-      <form className="nav__search-form" onSubmit={submitQuery}>
-        <input
-          className="nav__search-input"
-          type="text"
-          value={query}
-          onChange={updateQuery}
-        />
-        <input
-          className="nav__search-icon"
-          type="image"
-          value={query}
-          src="svg/search.svg"
-        />
-      </form>
-      <a className="nav__profile" href="#" onClick={signOut}>
-        <img src="svg/profile.svg" />
-      </a>
-    </nav>
+    <>
+      <div className="nav__overlay" />
+      <nav className="nav__container">
+        <Link className="nav__logo" to="/">
+          <img src="svg/oasis.svg" />
+        </Link>
+        <form className="nav__search-form" onSubmit={submitQuery}>
+          <input
+            className="nav__search-input"
+            type="text"
+            value={query}
+            onChange={updateQuery}
+          />
+          <input
+            className="nav__search-icon"
+            type="image"
+            value={query}
+            src="svg/search.svg"
+          />
+        </form>
+        <a className="nav__profile" href="#" onClick={signOut}>
+          <img src="svg/profile.svg" />
+        </a>
+      </nav>
+    </>
   );
 }
 
