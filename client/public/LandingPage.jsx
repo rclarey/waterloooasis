@@ -18,28 +18,32 @@ function LandingPage() {
             <OLink
               text="Home"
               light={true}
-              link="#home"
+              to="#home"
+              isAnchorLink={true}
             />
           </div>
           <div className="landingpage__nav-link">
             <OLink
               text="About"
               light={true}
-              link="#about"
+              to="#about"
+              isAnchorLink={true}
             />
           </div>
           <div className="landingpage__nav-link">
             <OLink
               text="Team"
               light={true}
-              link="#team"
+              to="#team"
+              isAnchorLink={true}
             />
           </div>
           <div className="landingpage__nav-link">
             <OLink
               text="Contact Us"
               light={true}
-              link="#contactus"
+              to="#contactus"
+              isAnchorLink={true}
             />
           </div>
         </div>*/}

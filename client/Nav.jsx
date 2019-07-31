@@ -31,12 +31,17 @@ function Nav() {
         <img src="svg/oasis.svg" />
       </Link>
       <form className="nav__search-form" onSubmit={submitQuery}>
-        <img src="svg/search.svg" className="nav__search-icon" />
         <input
           className="nav__search-input"
           type="text"
           value={query}
           onChange={updateQuery}
+        />
+        <input
+          className="nav__search-icon"
+          type="image"
+          value={query}
+          src="svg/search.svg"
         />
       </form>
       <a className="nav__profile" href="#" onClick={signOut}>

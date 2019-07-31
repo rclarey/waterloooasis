@@ -8,20 +8,36 @@
   font-weight: bold;
 }
 
-.olink__container:hover {
+.olink__light.olink__container:hover {
   opacity: 0.97
 }
 
-.olink__container:active {
+.olink__light.olink__container:active {
   opacity: 0.9
+}
+
+.olink__dark.olink__container:hover {
+  opacity: 0.95
+}
+
+.olink__dark.olink__container:active {
+  opacity: 0.85
 }
 
 .olink__light {
   color: #FFFFFF;
 }
 
+.olink__light.olink__inactive {
+  opacity: 0.2;
+}
+
 .olink__dark {
   color: #007FF5;
+}
+
+.olink__dark.olink__inactive {
+  color: #D2D2D2;
 }
 
 .olink__small {
