@@ -45,7 +45,7 @@ function SignIn() {
       </div>
       <Form
         btnText="Log in"
-        isAlt={true}
+        btnIsAlt={true}
         names={['watiam', 'password']}
         onSubmit={onSubmit}
         noDisable={true}

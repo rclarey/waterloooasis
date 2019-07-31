@@ -14,7 +14,14 @@ const FormContext = React.createContext({
   },
 });
 
-export function Form({ children, isAlt, btnText, names, onSubmit, noDisable = false }) {
+export function Form({
+  children,
+  btnText,
+  btnIsAlt,
+  names,
+  onSubmit,
+  noDisable = false,
+}) {
   // initially all names are unvalidated
   const initialInfo = useMemo(() => {
     const map = {};
@@ -79,7 +86,7 @@ export function Form({ children, isAlt, btnText, names, onSubmit, noDisable = fa
       <FormContext.Provider value={{ info, onChange }}>
         {children}
         <div className="form__submit">
-          <OButton text={btnText} alt={isAlt} />
+          <OButton disabled={buttonDisabled} text={btnText} alt={btnIsAlt} />
         </div>
       </FormContext.Provider>
     </form>
@@ -87,7 +94,8 @@ export function Form({ children, isAlt, btnText, names, onSubmit, noDisable = fa
 }
 Form.propTypes = {
   children: PropTypes.node.isRequired,
-  cta: PropTypes.string.isRequired,
+  btnText: PropTypes.string.isRequired,
+  btnIsAlt: PropTypes.bool,
   names: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   onSubmit: PropTypes.func.isRequired,
   noDisable: PropTypes.bool,

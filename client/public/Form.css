@@ -40,7 +40,3 @@
   width: fit-content;
   margin-top: 20px;
 }
-
-.form__submit[disabled] {
-  cursor: not-allowed;
-}

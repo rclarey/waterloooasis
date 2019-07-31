@@ -11,6 +11,10 @@
   outline: none;
 }
 
+.obutton__container[disabled] {
+  cursor: not-allowed;
+}
+
 .obutton__small {
   width: 130px;
   height: 32px;
