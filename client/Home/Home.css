@@ -1,6 +1,6 @@
 .home__container {
   display: grid;
-  grid-template-columns: auto 195px 795px auto;
+  grid-template-columns: auto 160px 830px auto;
   margin-top: 150px;
 }
 
@@ -13,11 +13,12 @@
   position: fixed;
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: flex-end;
 }
 
 .home__tabcontent {
   grid-column-start: 3;
+  margin-left: 70px;
 }
 
 .home__tabheader {

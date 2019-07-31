@@ -11,33 +11,56 @@
 }
 
 .jobtile__companyname {
-  color: #000000;
-  font-size: 40px;
+  color: #2C2C2C;
+  font-size: 48px;
+  letter-spacing: -0.02em;
 }
 .jobtile--big .jobtile__companyname {
   font-size: 50px;
+  letter-spacing: -0.02em;
 }
 
 .jobtile__jobtitle {
-  color: grey;
-  font-size: 20px;
+  color: rgba(44, 44, 44, 0.5);
+  font-size: 22px;
+  letter-spacing: -0.02em;
   font-weight: normal;
-  margin: 8px 0;
 }
 .jobtile--big .jobtile__jobtitle {
   font-size: 24px;
 }
 
 .jobtile__interactions {
-  color: grey;
+  display: flex;
+  flex-direction: row;
   font-size: 14px;
+  font-weight: 900;
+  color: #D2D2D2;
+  margin-left: 5px;
+  margin-top: 10px;
 }
 .jobtile--big .jobtile__interactions {
   font-size: 16px;
 }
 
+.jobtile__interactions-text {
+  display: inline-block;
+}
+
+.jobtile__interactions-img {
+  display: inline-block;
+  margin-right: 3px;
+}
+
 .jobtile__discussion {
   margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.jobtile__squares {
+  display: flex;
+  align-items: center;
 }
 
 .jobtile__rightcontent {
@@ -46,18 +69,19 @@
 }
 
 .jobtile__status {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
-  margin-bottom: 5px;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
 }
 .jobtile__status--1 {
-  color: limegreen;
+  color: #00B401;
 }
 .jobtile__status--2 {
-  color: darkorange;
+  color: #FF9533;
 }
 .jobtile__status--3 {
-  color: red;
+  color: #E10000;
 }
 .jobtile--big .jobtile__status {
   font-size: 20px;
@@ -65,8 +89,9 @@
 }
 
 .jobtile__pay {
-  color: grey;
-  font-size: 16px;
+  color: rgba(44, 44, 44, 0.5);
+  letter-spacing: -0.02em;
+  font-size: 18px;
   font-weight: bold;
 }
 .jobtile--big .jobtile__pay {
