@@ -3,6 +3,8 @@ const cookieParser = require('cookie-parser');
 const expressUtils = require('shared/util/expressUtils');
 const { pool } = require('shared/util/db.js');
 
+const searchRouter = require('web_service/private_api/search_routes');
+
 function serveApp(_, res) {
   res.sendFile('web_service/static/app.html', { root: '.' });
 }
@@ -77,6 +79,8 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
   router.get('/mycomments', serveApp);
   router.get('/jobs/*', serveApp);
   router.get('/jobs/*/*', serveApp);
+
+  router.use('/api/search', searchRouter);
 
   router.get('/api/users', (_, res) => {
     const select_query = 'SELECT * FROM waterloo_oasis_dev.user';

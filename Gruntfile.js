@@ -32,6 +32,9 @@ module.exports = function(grunt) {
       server: {
         command: "node web_service/web_server.js",
       },
+      search: {
+        command: "node search_service/search.js",
+      },
     },
   });
 
@@ -44,6 +47,7 @@ module.exports = function(grunt) {
   grunt.registerTask("symlink", "shell:symlink");
   grunt.registerTask("precommit", "shell:precommit");
   grunt.registerTask("web", "shell:server");
+  grunt.registerTask("search", "shell:search");
   grunt.registerTask("transpile", "webpack:watch");
   grunt.registerTask("default", "webpack:watch");
 
