@@ -7,6 +7,12 @@
   font-weight: bold;
   cursor: pointer;
   user-select: none;
+  background: none;
+  outline: none;
+}
+
+.obutton__container[disabled] {
+  cursor: not-allowed;
 }
 
 .obutton__small {

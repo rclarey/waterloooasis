@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { memo, useCallback, useContext, useMemo, useState } from 'react';
 
+import OButton from 'oasisui/OButton.jsx';
+
 import 'public/Form.css';
 
 const DEBOUNCE_TIMEOUT = 500;
@@ -12,7 +14,14 @@ const FormContext = React.createContext({
   },
 });
 
-export function Form({ children, cta, names, onSubmit, noDisable = false }) {
+export function Form({
+  children,
+  btnText,
+  btnIsAlt,
+  names,
+  onSubmit,
+  noDisable = false,
+}) {
   // initially all names are unvalidated
   const initialInfo = useMemo(() => {
     const map = {};
@@ -76,19 +85,17 @@ export function Form({ children, cta, names, onSubmit, noDisable = false }) {
     <form onSubmit={guardSubmit}>
       <FormContext.Provider value={{ info, onChange }}>
         {children}
-        <input
-          className="form__submit"
-          type="submit"
-          disabled={buttonDisabled}
-          value={cta}
-        />
+        <div className="form__submit">
+          <OButton disabled={buttonDisabled} text={btnText} alt={btnIsAlt} />
+        </div>
       </FormContext.Provider>
     </form>
   );
 }
 Form.propTypes = {
   children: PropTypes.node.isRequired,
-  cta: PropTypes.string.isRequired,
+  btnText: PropTypes.string.isRequired,
+  btnIsAlt: PropTypes.bool,
   names: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   onSubmit: PropTypes.func.isRequired,
   noDisable: PropTypes.bool,
