@@ -37,27 +37,29 @@ const searchRouter = (() => {
     console.log('******');
     console.log(queryString);
 
-    const { body } = await client.search({
-      index: 'jobs',
-      body: {
-        query: {
-          nested: {
-            path: 'company',
-            query: {
-              bool: {
-                must: [
-                  { match: { 'company.name': queryString } }
-                ]
+    try {
+      const { body } = await client.search({
+        index: 'jobs',
+        body: {
+          query: {
+            nested: {
+              path: 'company',
+              query: {
+                bool: {
+                  must: [
+                    { match_phrase_prefix: { 'company.name': queryString } }
+                  ]
+                }
               }
             }
           }
         }
-      }
-    });
-
-    console.log(body.hits.hits);
-
-    res.json(body.hits.hits);
+      });
+      console.log(body.hits.hits);
+      res.send(body.hits.hits);
+    } catch (e) {
+      res.send(e);
+    }
   });
 
   return router;

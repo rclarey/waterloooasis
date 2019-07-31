@@ -16,7 +16,7 @@ async function signOut() {
 }
 
 async function search(query) {
-  const results = await useFetch(`/api/search?queryString=${query}`);
+  const results = useFetch(`/api/search?queryString=${query}`);
   console.log(results);
 }
 
