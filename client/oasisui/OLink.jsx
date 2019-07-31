@@ -5,33 +5,39 @@ import * as classNames from 'classnames';
 
 import 'oasisui/OLink.css';
 
-function OLink({ text, light, large, link, isRouterLink }) {
-  const classes = classNames('olink__container', {
+function OLink({ className, text, to, light, large, isAnchorLink, activeLinking }) {
+  const classes = `${classNames('olink__container', {
     olink__light: light,
     olink__dark: !light,
     olink__large: large,
     olink__small: !large,
-  });
+  })} ${className || ''}`;
 
-  if (isRouterLink) {
-    <Link className={classes} to={link}>
+  console.log(classes);
+
+  if (isAnchorLink) {
+    <a className={classes} href={to}>
       {text}
-    </Link>
+    </a>
   }
 
   return (
-    <a className={classes} href={link}>
+    <Link className={classes} to={to} getProps={true ? ({ isCurrent }) => ({
+      className: `${classes} ${isCurrent ? '' : 'olink__inactive'}`
+    }) : undefined}>
       {text}
-    </a>
+    </Link>
   );
 }
 
 OLink.propTypes = {
+  className: PropTypes.string,
   text: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired,
   light: PropTypes.bool,
   large: PropTypes.bool,
-  link: PropTypes.string.isRequired,
-  isRouterLink: PropTypes.bool,
+  isAnchorLink: PropTypes.bool,
+  activeLinking: PropTypes.bool,
 };
 
 export default memo(OLink);

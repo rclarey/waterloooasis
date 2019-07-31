@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
 
 import Spinner from 'shared/Spinner.jsx';
+import OLink from 'oasisui/OLink.jsx';
 
 import 'Home/Home.css';
 
@@ -11,15 +12,9 @@ function Home({ children }) {
     <main className="home__container">
       <header className="home__tabs">
         <div className="home__tabpos">
-          <TabLink to="/trending">
-            <h2>Trending</h2>
-          </TabLink>
-          <TabLink to="/myjobs">
-            <h2>My Jobs</h2>
-          </TabLink>
-          <TabLink to="/mycomments">
-            <h2>My Comments</h2>
-          </TabLink>
+          <TabLink to="/trending" text="Trending" />
+          <TabLink to="/myjobs" text="My Jobs" />
+          <TabLink to="/mycomments" text="My Comments" />
         </div>
       </header>
       <section className="home__tabcontent">
@@ -37,14 +32,13 @@ Home.propTypes = {
 
 function TabLink(props) {
   return (
-    <Link
-      {...props}
-      getProps={({ isCurrent }) => ({
-        className: `home__tabheader${
-          isCurrent ? ' home__tabheader--active' : ''
-        }`,
-      })}
-    />
+    <div className="home__tabheader">
+      <OLink
+        large={true}
+        {...props}
+        activeClassName="home__tabheader--active"
+      />
+    </div>
   );
 }
 
