@@ -37,7 +37,12 @@ function Nav() {
           value={query}
           onChange={updateQuery}
         />
-        <input className="nav__search-icon" type="image" value={query} src="svg/search.svg" />
+        <input
+          className="nav__search-icon"
+          type="image"
+          value={query}
+          src="svg/search.svg"
+        />
       </form>
       <a className="nav__profile" href="#" onClick={signOut}>
         <img src="svg/profile.svg" />

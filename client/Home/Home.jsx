@@ -1,6 +1,5 @@
 import React, { Suspense, memo } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from '@reach/router';
 
 import Spinner from 'shared/Spinner.jsx';
 import OLink from 'oasisui/OLink.jsx';
@@ -35,6 +34,7 @@ function TabLink(props) {
     <div className="home__tabheader">
       <OLink
         large={true}
+        activeLinking={true}
         {...props}
         activeClassName="home__tabheader--active"
       />
