@@ -26,6 +26,9 @@ module.exports = function(grunt) {
       symlink: {
         command: "./bin/symlink.sh",
       },
+      precommit: {
+        command: "./bin/precommit.sh",
+      },
       server: {
         command: "node web_service/web_server.js",
       },
@@ -39,6 +42,7 @@ module.exports = function(grunt) {
 
   // Add tasks.
   grunt.registerTask("symlink", "shell:symlink");
+  grunt.registerTask("precommit", "shell:precommit");
   grunt.registerTask("web", "shell:server");
   grunt.registerTask("transpile", "webpack:watch");
   grunt.registerTask("default", "webpack:watch");
