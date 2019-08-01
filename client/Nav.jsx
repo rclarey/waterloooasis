@@ -7,6 +7,15 @@ import { post } from 'utils.js';
 
 import 'Nav.css';
 
+document.addEventListener('keydown', e => {
+  const searchBar = document.getElementById('searchBar');
+
+  if (e.code === 'KeyF' && document.activeElement !== searchBar) {
+    e.preventDefault();
+    searchBar.focus();
+  }
+});
+
 async function signOut() {
   try {
     await post('/signout');
@@ -41,6 +50,7 @@ function Nav() {
         </Link>
         <form className="nav__search-form" onSubmit={submitQuery}>
           <input
+            id="searchBar"
             className="nav__search-input"
             type="text"
             value={query}
