@@ -50,7 +50,7 @@ function SignIn() {
         onSubmit={onSubmit}
         noDisable={true}
       >
-        <FormRow className="auth__emailrow">
+        <FormRow className="auth__emailrow" autofocus>
           <Field placeholder="WatIAM ID" name="watiam" />
           <span className="auth__emailsuffix">@edu.uwaterloo.ca</span>
         </FormRow>

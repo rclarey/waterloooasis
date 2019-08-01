@@ -41,11 +41,19 @@
 .obutton__light.obutton__alt:hover {
   background-color: rgba(229, 229, 229, 0.03);
 }
+.obutton__light.obutton__alt:focus {
+  outline: none;
+  background-color: rgba(229, 229, 229, 0.03);
+}
 .obutton__light.obutton__alt:active {
   background-color: rgba(229, 229, 229, 0.1);
 }
 
 .obutton__light.obutton__cta:hover {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+.obutton__light.obutton__cta:focus {
+  outline: none;
   background-color: rgba(255, 255, 255, 0.95);
 }
 .obutton__light.obutton__cta:active {
@@ -66,11 +74,19 @@
 .obutton__dark.obutton__alt:hover {
   background-color: rgba(0, 127, 245, 0.03);
 }
+.obutton__dark.obutton__alt:focus {
+  outline: none;
+  background-color: rgba(0, 127, 245, 0.03);
+}
 .obutton__dark.obutton__alt:active {
   background-color: rgba(0, 127, 245, 0.1);
 }
 
 .obutton__dark.obutton__cta:hover {
+  background-color: rgba(0, 127, 245, 0.95);
+}
+.obutton__dark.obutton__cta:focus {
+  outline: none;
   background-color: rgba(0, 127, 245, 0.95);
 }
 .obutton__dark.obutton__cta:active {
