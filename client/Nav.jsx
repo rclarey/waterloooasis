@@ -10,7 +10,7 @@ import 'Nav.css';
 document.addEventListener('keydown', e => {
   const searchBar = document.getElementById('searchBar');
 
-  if (e.code === 'KeyF' && e.metaKey && document.activeElement !== searchBar) {
+  if (e.code === 'KeyF' && !e.metaKey && document.activeElement !== searchBar) {
     e.preventDefault();
     searchBar.focus();
   }
