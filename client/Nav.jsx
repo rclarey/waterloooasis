@@ -40,7 +40,7 @@ function Nav() {
     setTimeout(() => {
       setSearchFocused(false);
     }, 1000);
-  }
+  };
   const submitQuery = useCallback(
     e => {
       e.preventDefault();
@@ -58,7 +58,9 @@ function Nav() {
         <form className="nav__search-form" onSubmit={submitQuery}>
           <input
             id="searchBar"
-            className={`nav__search-input ${searchFocused ? 'nav__search-input-shadow' : ''}`}
+            className={`nav__search-input ${
+              searchFocused ? 'nav__search-input-shadow' : ''
+            }`}
             type="text"
             value={query}
             onChange={updateQuery}
