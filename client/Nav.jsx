@@ -10,7 +10,7 @@ import 'Nav.css';
 document.addEventListener('keydown', e => {
   const searchBar = document.getElementById('searchBar');
 
-  if (e.code === 'KeyF' && document.activeElement !== searchBar) {
+  if (e.code === 'KeyF' && e.metaKey && document.activeElement !== searchBar) {
     e.preventDefault();
     searchBar.focus();
   }
@@ -33,7 +33,14 @@ async function search(query) {
 
 function Nav() {
   const [query, setQuery] = useState('');
+  const [searchFocused, setSearchFocused] = useState('');
   const updateQuery = useCallback(e => setQuery(e.target.value), []);
+  const onFocusSearch = () => {
+    setSearchFocused(true);
+    setTimeout(() => {
+      setSearchFocused(false);
+    }, 1000);
+  }
   const submitQuery = useCallback(
     e => {
       e.preventDefault();
@@ -51,10 +58,11 @@ function Nav() {
         <form className="nav__search-form" onSubmit={submitQuery}>
           <input
             id="searchBar"
-            className="nav__search-input"
+            className={`nav__search-input ${searchFocused ? 'nav__search-input-shadow' : ''}`}
             type="text"
             value={query}
             onChange={updateQuery}
+            onFocus={onFocusSearch}
           />
           <input
             className="nav__search-icon"
