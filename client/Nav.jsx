@@ -3,8 +3,6 @@ import { Link } from '@reach/router';
 import * as axios from 'axios';
 import * as u from 'shared/util/u';
 
-import { post } from 'utils.js';
-
 import 'Nav.css';
 
 document.addEventListener('keydown', e => {
@@ -15,15 +13,6 @@ document.addEventListener('keydown', e => {
     searchBar.focus();
   }
 });
-
-async function signOut() {
-  try {
-    await post('/signout');
-    window.location.pathname = '/';
-  } catch (e) {
-    // TODO: do something about this
-  }
-}
 
 async function search(query) {
   const results = (await axios.get(`/api/search?queryString=${query}`)).data;
@@ -73,9 +62,9 @@ function Nav() {
             src="svg/search.svg"
           />
         </form>
-        <a className="nav__profile" href="#" onClick={signOut}>
+        <Link className="nav__profile" to="/profile">
           <img src="svg/profile.svg" />
-        </a>
+        </Link>
       </nav>
       <div className="nav__overlay" />
     </>

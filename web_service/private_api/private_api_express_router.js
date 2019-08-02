@@ -76,7 +76,9 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
 
   router.get('/trending', serveApp);
   router.get('/myjobs', serveApp);
-  router.get('/mycomments', serveApp);
+  router.get('/mycomments', serveApp)
+  router.get('/profile', serveApp);;
+  router.get('/profile/*', serveApp);
   router.get('/jobs/*', serveApp);
   router.get('/jobs/*/*', serveApp);
 
@@ -92,6 +94,21 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
 
   router.get('/api/trending', (_, res) => {
     const q = jobQuery();
+    pool.query(q, (err, rows) => {
+      if (err) {
+        return;
+      }
+      res.json(rows.map(jsonifyJob));
+    });
+  });
+
+  router.get('/api/profile', (_, res) => {
+    // const profileQuery =
+    try {
+
+    } catch (err) {
+
+    }
     pool.query(q, (err, rows) => {
       if (err) {
         return;

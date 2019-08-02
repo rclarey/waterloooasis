@@ -1,19 +1,32 @@
 import React, { Suspense, memo } from 'react';
+import { Link } from '@reach/router';
 import PropTypes from 'prop-types';
 
 import Spinner from 'shared/Spinner.jsx';
 import TabLink from 'shared/TabLink.jsx';
 
+import { post } from 'utils.js';
+
+// TODO (dane): Move Home.css and Profile.css to be shared.
+import 'Profile/Profile.css';
 import 'Home/Home.css';
 
-function Home({ children }) {
+async function signOut() {
+  try {
+    await post('/signout');
+    window.location.pathname = '/';
+  } catch (e) {
+    // TODO: do something about this
+  }
+}
+
+function Profile({ children }) {
   return (
     <main className="home__container">
       <header className="home__tabs">
         <div className="home__tabpos">
-          <TabLink to="/trending" text="Trending" />
-          <TabLink to="/myjobs" text="My Jobs" />
-          <TabLink to="/mycomments" text="My Comments" />
+          <TabLink to="/profile" text="My Account" />
+          <TabLink to="/profile/privacy" text="Privacy" />
         </div>
       </header>
       <section className="home__tabcontent">
@@ -25,8 +38,8 @@ function Home({ children }) {
     </main>
   );
 }
-Home.propTypes = {
+Profile.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default memo(Home);
+export default memo(Profile);
