@@ -1,9 +1,10 @@
 const cookieParser = require('cookie-parser');
 
 const expressUtils = require('shared/util/expressUtils');
-const { pool, getCommentsForJobAndCompany } = require('shared/util/db.js');
+const { pool, timeString } = require('shared/util/db.js');
 
 const searchRouter = require('web_service/private_api/search_routes');
+const setupComments = require('web_service/private_api/comments.js');
 
 function serveApp(_, res) {
   res.sendFile('web_service/static/app.html', { root: '.' });
@@ -34,34 +35,6 @@ function jsonifyJob(row) {
   };
 }
 
-function timeString(datetime) {
-  const diff = Date.now() - new Date(datetime);
-  const years = Math.floor(diff / 31536000000);
-  const months = Math.floor(diff / 2592000000);
-  const weeks = Math.floor(diff / 604800000);
-  const days = Math.floor(diff / 86400000);
-  const hours = Math.floor(diff / 3600000);
-  const minutes = Math.floor(diff / 60000);
-
-  if (years > 0) {
-    return `${years}y`;
-  }
-  if (months > 0) {
-    return `${months}mo`;
-  }
-  if (weeks > 0) {
-    return `${weeks}w`;
-  }
-  if (days > 0) {
-    return `${days}d`;
-  }
-  if (hours > 0) {
-    return `${hours}h`;
-  }
-
-  return `${minutes || 1}m`;
-}
-
 function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
   const router = expressUtils.createRouter();
 
@@ -73,6 +46,8 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
       authenticateWithRedirect(req, res, next);
     }
   });
+
+  setupComments(router);
 
   router.get('/trending', serveApp);
   router.get('/myjobs', serveApp);
@@ -165,49 +140,6 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
       }
     });
   });
-
-  router.post('/api/comment', (req, res) => {
-    if (!('text' in req.body)) {
-      res.sendStatus(400);
-      return;
-    }
-
-    /* Add the following auth : user_id matches the cookie auth , */
-
-    const company_id = 'companyId' in req.body ? req.body.company_id : null;
-    const job_id = 'jobId' in req.body ? req.body.job_id : null;
-    const parent_id = 'parentId' in req.body ? req.body.parent_id : null;
-    const author_id = 'userId' in req.body ? req.body.author_id : 0; /* This value needs to be authenticated */
-    const date_time = '2019-01-01'; /* This should be retrieved on the server side */
-    const edited = 0; /* This can be done in the future */
-    const text = req.body.text;
-
-    const insert_query =
-      "INSERT INTO waterloo_oasis_dev.comment (company_id, job_id, parent_id, author_id, date_time, edited, text) " +
-      "VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
-
-    pool.query(insert_query, [company_id, job_id, parent_id, author_id, date_time, edited, text], function(err) {
-      if (err) {
-        res.sendStatus(400);
-      }  else {
-        res.sendStatus(200);
-      }
-    });
-  });
-
-  router.post('/api/comments', (req, res) => {
-      if (!('companyId' in req.body)) {
-        res.sendStatus(400);
-        return;
-      }
-
-      /* Add the following auth : user_id matches the cookie auth , */
-
-      const company_id = req.body.company_id;
-      const job_id = 'jobId' in req.body ? req.body.job_id : null;
-
-      return getCommentsForJobAndCompany(company_id, job_id, null);
-    });
 
   return router;
 }

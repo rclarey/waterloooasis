@@ -32,57 +32,36 @@ function query(queryString, args) {
   });
 }
 
-/**
-FUNCTION RECURSIVELY RESOLVES COMMENTS
-*/
-function getCommentsForJobAndCompany(jobId, companyId, parentId) {
-  const commentSelectQuery =
-    "SELECT " +
-    "comment.* , " +
-    "user.username " +
-    "FROM waterloo_oasis_dev.comment as comment " +
-    "LEFT JOIN waterloo_oasis_dev.user as user " +
-    "ON comment.author_id = user.id " +
-    "WHERE " +
-    "comment.job_id = ? " +
-    "AND comment.company_id = ? " +
-    "AND comment.parent_id = ? " +
-    "ORDER BY comment.date_time DESC;";
+function timeString(datetime) {
+  const diff = Date.now() - new Date(datetime);
+  const years = Math.floor(diff / 31536000000);
+  const months = Math.floor(diff / 2592000000);
+  const weeks = Math.floor(diff / 604800000);
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor(diff / 3600000);
+  const minutes = Math.floor(diff / 60000);
 
-  pool.query(commentSelectQuery, [jobId, companyId, parentId], (commentErr, rows) => {
-    if (commentErr) {
-      return [];
-    }
+  if (years > 0) {
+    return `${years}y`;
+  }
+  if (months > 0) {
+    return `${months}mo`;
+  }
+  if (weeks > 0) {
+    return `${weeks}w`;
+  }
+  if (days > 0) {
+    return `${days}d`;
+  }
+  if (hours > 0) {
+    return `${hours}h`;
+  }
 
-    const queryComments = [];
-
-    rows.forEach(row => {
-
-      const replies = getCommentsForJobAndCompany(jobId, companyId, row.id);
-
-      const comment = {
-        id : row.id,
-        companyId : row.company_id,
-        jobId : row.job_id,
-        parentId : row.parent_id,
-        author : row.username,
-        dateTime : row.date_time,
-        text : row.text
-      };
-
-      queryComments.push(row);
-
-    });
-
-    return {
-      comments: queryComments;
-    }
-  });
-
+  return `${minutes || 1}m`;
 }
 
 module.exports = {
-  query,
   pool,
-  getCommentsForJobAndCompany,
+  query,
+  timeString,
 };
