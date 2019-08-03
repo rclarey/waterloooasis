@@ -280,7 +280,7 @@ const signinStrategy = new SignInSignUpStrategy(
 
 function authenticationFork(passport, success, failure) {
   return function forkMiddleware(req, res, next) {
-    passport.authenticate('jwt', (err, user, message) => {
+    passport.authenticate('jwt', (err, user) => {
       if (err) {
         next(err);
       }

@@ -1,5 +1,5 @@
-import React, { Suspense, memo, useCallback, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { memo, useCallback, useRef, useState } from 'react';
+// import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import OButton from 'oasisui/OButton.jsx';
