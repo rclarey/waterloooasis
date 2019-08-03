@@ -25,7 +25,8 @@ async function computeHash(password, salt) {
 }
 
 async function getUser(email) {
-  const queryStr = 'SELECT email, username FROM user WHERE email = ? LIMIT 1';
+  const queryStr =
+    'SELECT id, email, username FROM user WHERE email = ? LIMIT 1';
   const result = await query(queryStr, [email]);
   return result[0] || null;
 }

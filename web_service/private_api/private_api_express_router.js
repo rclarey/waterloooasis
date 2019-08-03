@@ -1,9 +1,10 @@
 const cookieParser = require('cookie-parser');
 
 const expressUtils = require('shared/util/expressUtils');
-const { pool } = require('shared/util/db.js');
+const { pool, timeString } = require('shared/util/db.js');
 
 const searchRouter = require('web_service/private_api/search_routes');
+const setupComments = require('web_service/private_api/comments.js');
 
 function serveApp(_, res) {
   res.sendFile('web_service/static/app.html', { root: '.' });
@@ -34,34 +35,6 @@ function jsonifyJob(row) {
   };
 }
 
-function timeString(datetime) {
-  const diff = Date.now() - new Date(datetime);
-  const years = Math.floor(diff / 31536000000);
-  const months = Math.floor(diff / 2592000000);
-  const weeks = Math.floor(diff / 604800000);
-  const days = Math.floor(diff / 86400000);
-  const hours = Math.floor(diff / 3600000);
-  const minutes = Math.floor(diff / 60000);
-
-  if (years > 0) {
-    return `${years}y`;
-  }
-  if (months > 0) {
-    return `${months}mo`;
-  }
-  if (weeks > 0) {
-    return `${weeks}w`;
-  }
-  if (days > 0) {
-    return `${days}d`;
-  }
-  if (hours > 0) {
-    return `${hours}h`;
-  }
-
-  return `${minutes || 1}m`;
-}
-
 function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
   const router = expressUtils.createRouter();
 
@@ -73,6 +46,8 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
       authenticateWithRedirect(req, res, next);
     }
   });
+
+  setupComments(router);
 
   router.get('/trending', serveApp);
   router.get('/myjobs', serveApp);
@@ -165,6 +140,7 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
       }
     });
   });
+
   return router;
 }
 

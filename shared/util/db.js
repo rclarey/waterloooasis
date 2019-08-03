@@ -32,7 +32,36 @@ function query(queryString, args) {
   });
 }
 
+function timeString(datetime) {
+  const diff = Date.now() - new Date(datetime);
+  const years = Math.floor(diff / 31536000000);
+  const months = Math.floor(diff / 2592000000);
+  const weeks = Math.floor(diff / 604800000);
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor(diff / 3600000);
+  const minutes = Math.floor(diff / 60000);
+
+  if (years > 0) {
+    return `${years}y`;
+  }
+  if (months > 0) {
+    return `${months}mo`;
+  }
+  if (weeks > 0) {
+    return `${weeks}w`;
+  }
+  if (days > 0) {
+    return `${days}d`;
+  }
+  if (hours > 0) {
+    return `${hours}h`;
+  }
+
+  return `${minutes || 1}m`;
+}
+
 module.exports = {
-  query,
   pool,
+  query,
+  timeString,
 };
