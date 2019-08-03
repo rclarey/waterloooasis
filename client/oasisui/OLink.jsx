@@ -11,6 +11,7 @@ function OLink({
   to,
   light,
   large,
+  medium,
   isAnchorLink,
   activeLinking,
 }) {
@@ -18,13 +19,16 @@ function OLink({
     olink__light: light,
     olink__dark: !light,
     olink__large: large,
-    olink__small: !large,
+    olink__medium: medium,
+    olink__small: !large && !medium,
   })} ${className || ''}`;
 
   if (isAnchorLink) {
-    <a className={classes} href={to}>
-      {text}
-    </a>;
+    return (
+      <a className={classes} href={to}>
+        {text}
+      </a>
+    );
   }
 
   return (
@@ -50,6 +54,7 @@ OLink.propTypes = {
   to: PropTypes.string.isRequired,
   light: PropTypes.bool,
   large: PropTypes.bool,
+  medium: PropTypes.bool,
   isAnchorLink: PropTypes.bool,
   activeLinking: PropTypes.bool,
 };

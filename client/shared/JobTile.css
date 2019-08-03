@@ -96,12 +96,27 @@
   margin-bottom: 10px;
 }
 
-.jobtile__pay {
+.jobtile__location {
   color: rgba(44, 44, 44, 0.5);
   letter-spacing: -0.02em;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
 }
 .jobtile--big .jobtile__pay {
   font-size: 20px;
+}
+
+.jobtile__rating {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.jobtile__stars {
+  margin-right: 10px;
+}
+
+.jobtile__star {
+  display: inline;
 }

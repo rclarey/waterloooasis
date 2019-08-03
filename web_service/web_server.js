@@ -1,5 +1,6 @@
 const u = require('shared/util/u.js');
 const express = require('express');
+const cookieParser = require('cookie-parser');
 
 const setupAuth = require('web_service/auth/auth.js');
 const publicWebExpressRouter = require('web_service/public_web/public_web_express_router.js');
@@ -14,6 +15,7 @@ const webServer = {
     } = setupAuth(publicWebExpressRouter);
 
     // arbitrate what GET / resolves to based on auth result
+    app.use(cookieParser(process.env.COOKIE_SECRET));
     app.get(
       '/',
       authenticationFork(

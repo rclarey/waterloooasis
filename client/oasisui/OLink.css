@@ -37,19 +37,23 @@
 }
 
 .olink__dark.olink__inactive {
-  opacity: 0.2;
+  opacity: 0.5;
 }
 
 .olink__dark.olink__inactive:hover {
-  opacity: 0.27;
+  opacity: 0.85;
 }
 
 .olink__dark.olink__inactive:active {
-  opacity: 0.4;
+  opacity: 0.85;
 }
 
 .olink__small {
   font-size: 14px;
+}
+
+.olink__medium {
+  font-size: 20px;
 }
 
 .olink__large {

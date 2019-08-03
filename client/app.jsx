@@ -23,7 +23,7 @@ ReactDOM.render(
         <Trending path="trending" />
         <MyJobs path="myjobs" />
         <MyComments path="mycomments" />
-        <Redirect from="/" to="trending" />
+        <Redirect noThrow from="/" to="trending" />
       </Home>
       <Company path="jobs/:shortName/" />
       <Job path="jobs/:shortName/:jobCode/" />

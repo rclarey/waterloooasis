@@ -17,10 +17,12 @@ function Home({ children }) {
         </div>
       </header>
       <section className="home__tabcontent">
-        <Suspense fallback={<Spinner size={75} centre={true} />}>
-          {children}
-          <div className="home__eol" />
-        </Suspense>
+        <div className="home__scrollpositioner">
+          <Suspense fallback={<Spinner size={75} centre={true} />}>
+            {children}
+          </Suspense>
+        </div>
+        <div className="home__eol" />
       </section>
     </main>
   );
