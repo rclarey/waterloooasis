@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.13, for macos10.14 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.16, for osx10.14 (x86_64)
 --
 -- Host: localhost    Database: waterloo_oasis_dev
 -- ------------------------------------------------------
--- Server version	8.0.13
+-- Server version	8.0.16
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -37,7 +37,7 @@ CREATE TABLE `comment` (
   CONSTRAINT `comment_fk_1` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`),
   CONSTRAINT `comment_fk_2` FOREIGN KEY (`parent_id`) REFERENCES `comment` (`id`),
   CONSTRAINT `comment_fk_3` FOREIGN KEY (`job_id`) REFERENCES `job` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,7 @@ CREATE TABLE `comment` (
 
 LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
-INSERT INTO `comment` VALUES (1,1,'2019-06-11 21:11:01','Coding challenge out yet?',5,NULL,2),(2,2,'2019-06-12 20:11:01','Yeah. I\'ve heard they happen on a rolling basis tho so keep that in mind.',5,1,2),(3,3,'2019-06-10 20:11:01','Anyone have experience interviewing here?',2,NULL,2),(4,4,'2019-06-10 10:11:01','I\'ve interned here before if anyone has questions',3,NULL,2);
+INSERT INTO `comment` VALUES (1,1,'2019-06-11 21:11:01','Coding challenge out yet?',5,NULL,2),(2,2,'2019-06-12 20:11:01','Yeah. I\'ve heard they happen on a rolling basis tho so keep that in mind.',5,1,2),(3,3,'2019-06-10 20:11:01','Anyone have experience interviewing here?',2,NULL,2),(4,4,'2019-06-10 10:11:01','I\'ve interned here before if anyone has questions',3,NULL,2),(5,11,'2019-05-11 10:11:01','Hello?',2,NULL,2);
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,12 +94,13 @@ CREATE TABLE `job` (
   `description` varchar(512) NOT NULL,
   `company_id` int(11) NOT NULL,
   `term_id` int(11) NOT NULL,
+  `last_updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `company_id` (`company_id`),
   KEY `term_id` (`term_id`),
   CONSTRAINT `job_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`),
   CONSTRAINT `job_ibfk_2` FOREIGN KEY (`term_id`) REFERENCES `term` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,7 +109,7 @@ CREATE TABLE `job` (
 
 LOCK TABLES `job` WRITE;
 /*!40000 ALTER TABLE `job` DISABLE KEYS */;
-INSERT INTO `job` VALUES (2,'8azgnmhT','Software Engineering Intern','Interview selections complete',2,9001,'At Mercari, our mission is to create value in a global marketplace where anyone can buy & sell, and we pride ourselves in taking on a challenge. We are looking for new members to join us in achieving this goal under our values - Go Bold, All for One, and Be Professional.\n株式会社メルカリでは「新たな価値を生みだす世界的なマーケットプレイスを創る」というミッションを掲げ、あらゆる挑戦をしています。「Go Bold - 大胆にやろう」「All for One - 全ては成功のために」「Be Professional - プロフェッショナルであれ」という3つのバリューのもと、ミッション達成を共に目指していける仲間を募集しています。',1,1),(3,'V3XI1QvR','Software Engineering Intern','Interview selections complete',2,7500,'desc',2,1),(4,'kPYAIoy1','Software Engineering Intern','Coding challenge out',2,7500,'desc',3,1),(5,'g-4HuUAh','Backend Engineering Intern','Applications available',1,8000,'desc',4,1),(6,'_NAqzKrA','Systems and Infrastructure Engineering Intern','Rankings out',3,7800,'desc',5,1),(7,'as7qzKrA','Software Engineering Intern','Applications available',1,7200,'desc',6,1),(8,'9HNk_-q2','Site Reliability Engineering Intern','Interviews selections complete',2,7400,'desc',7,1);
+INSERT INTO `job` VALUES (2,'8azgnmhT','Software Engineering Intern','Interview selections complete',2,9001,'At Mercari, our mission is to create value in a global marketplace where anyone can buy & sell, and we pride ourselves in taking on a challenge. We are looking for new members to join us in achieving this goal under our values - Go Bold, All for One, and Be Professional.\n株式会社メルカリでは「新たな価値を生みだす世界的なマーケットプレイスを創る」というミッションを掲げ、あらゆる挑戦をしています。「Go Bold - 大胆にやろう」「All for One - 全ては成功のために」「Be Professional - プロフェッショナルであれ」という3つのバリューのもと、ミッション達成を共に目指していける仲間を募集しています。',1,1,'2019-08-03 15:21:55'),(3,'V3XI1QvR','Software Engineering Intern','Interview selections complete',2,7500,'desc',2,1,'2019-08-03 16:21:55'),(4,'kPYAIoy1','Software Engineering Intern','Coding challenge out',2,7500,'desc',3,1,'2019-08-03 15:21:55'),(5,'g-4HuUAh','Backend Engineering Intern','Applications available',1,8000,'desc',4,1,'2019-08-03 15:21:55'),(6,'_NAqzKrA','Systems and Infrastructure Engineering Intern','Rankings out',3,7800,'desc',5,1,'2019-08-03 15:21:55'),(7,'as7qzKrA','Software Engineering Intern','Applications available',1,7200,'desc',6,1,'2019-08-03 15:21:55'),(8,'9HNk_-q2','Site Reliability Engineering Intern','Interviews selections complete',2,7400,'desc',7,1,'2019-08-03 15:21:55');
 /*!40000 ALTER TABLE `job` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -223,6 +224,35 @@ INSERT INTO `user` VALUES (1,'FuriousRaccoon','','','',1),(2,'HissingWalrus','',
 UNLOCK TABLES;
 
 --
+-- Table structure for table `user_favourite_jobs`
+--
+
+DROP TABLE IF EXISTS `user_favourite_jobs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `user_favourite_jobs` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `job_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `job_id` (`job_id`),
+  CONSTRAINT `user_favourite_jobs_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `user_favourite_jobs_ibfk_2` FOREIGN KEY (`job_id`) REFERENCES `job` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_favourite_jobs`
+--
+
+LOCK TABLES `user_favourite_jobs` WRITE;
+/*!40000 ALTER TABLE `user_favourite_jobs` DISABLE KEYS */;
+INSERT INTO `user_favourite_jobs` VALUES (1,11,3),(2,11,5);
+/*!40000 ALTER TABLE `user_favourite_jobs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `verification`
 --
 
@@ -239,7 +269,7 @@ CREATE TABLE `verification` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `code_UNIQUE` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -248,6 +278,7 @@ CREATE TABLE `verification` (
 
 LOCK TABLES `verification` WRITE;
 /*!40000 ALTER TABLE `verification` DISABLE KEYS */;
+INSERT INTO `verification` VALUES (30,'sj7chen@edu.uwaterloo.ca','Zs9Fb3YvORkX9Skkk36ZiyhiPR75nfg6LtTUHdDXO2mZrf0S6FmibLqHfGpufADrB4gpCMzgJ16Qt9FYhVWXccNuNxdgInEyERSYbAU2e7zBgWy2BtuA/1QpRu6z7kPYo97yHC0f6jPKCp0OVfSRRXrPUzfVpRatUkgFgkXDiLJkROQhaSZ03UqGoa07vaLTuyvGGOBNrQg78us5CyBlG1HhCKyFcgTS3hDdAH8wWHdb+bQQA9j1mpHI0hpMRRDg9vlx+VepIZxGVPnHjXgkP+jLQk3MNxla9D0Ust8pHUKjWmGsVtsWEWoh4PZq8gbNXjmw27bAJNVZ+NaTKjK8PA==','gJF5Qq/A0P8ZW13pH/ZtlXjsV6md8j957GeB8dhWAak=','QszhnjdV570LeIUXG26-4MFeBz7o8Xt1kHXrImV6u_gj','2019-08-03 15:57:29');
 /*!40000 ALTER TABLE `verification` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -260,4 +291,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-07-30  0:14:31
+-- Dump completed on 2019-08-03 20:37:08

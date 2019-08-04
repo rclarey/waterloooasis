@@ -10,11 +10,11 @@ function serveApp(_, res) {
   res.sendFile('web_service/static/app.html', { root: '.' });
 }
 
-function jobQuery(whereClause = '') {
+function jobQuery(whereClause = '', orderClause = '') {
   return `
 select job.*, company.name, company.short_name,
 (select count(*) from comment where job_id = job.id) as comments
-from job inner join company on job.company_id = company.id ${whereClause};`;
+from job inner join company on job.company_id = company.id ${whereClause} ${orderClause};`;
 }
 
 function jsonifyJob(row) {
@@ -65,8 +65,11 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
     });
   });
 
+  // ***** HOME API *****
+  // TRENDING
+  // TODO: add some pagination, and more sophisticated means of organizing tredning
   router.get('/api/trending', (_, res) => {
-    const q = jobQuery();
+    const q = jobQuery('', 'ORDER BY last_updated desc');
     pool.query(q, (err, rows) => {
       if (err) {
         return;
@@ -74,6 +77,84 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
       res.json(rows.map(jsonifyJob));
     });
   });
+
+  // MYJOBS
+  router.get('/api/myjobs', (req, res) => {
+    const q = `
+      select job.*, company.name, company.short_name,
+      (select count(*) from comment where job_id = job.id) as comments
+      from job inner join company on job.company_id = company.id
+      inner join (select job_id from user_favourite_jobs where user_id = ?) as favourites where job.id = favourites.job_id`;
+    pool.query(q, [req.user.id], (err, rows) => {
+      if (err) {
+        return;
+      }
+      res.json(rows.map(jsonifyJob));
+    });
+  });
+
+  // MYCOMMENTS
+  router.get('/api/mycomments', (req, res) => {
+    const q = `select comment.*, user.username 
+                from comment inner join user on comment.author_id = user.id 
+                where author_id = ? order by date_time desc;`;
+    pool.query(q, [req.user.id], (err, rows) => {
+      if (err) {
+        return;
+      }
+      const comments = [];
+      rows.forEach(row => {
+        comments.push({
+          ...row,
+          author: {
+            name: row.username,
+          },
+          timeString: timeString(row.date_time),
+          replies: [],
+        });
+      });
+      res.json(comments);
+    });
+  });
+
+  // TODO: MOVE FAVOURITING SOMEWHERE ELSE?
+  router.post('/api/favourites', (req, res) => {
+    /*
+    req.body = 
+    {
+      user_id : int
+      job_id : int
+      is_favourite: bool
+    }
+    */
+
+    if (
+      !(
+        'user_id' in req.body &&
+        'job_id' in req.body &&
+        'is_favourite' in req.body
+      )
+    ) {
+      res.sendStatus(400);
+    }
+
+    let query =
+      'DELETE FROM waterloo_oasis_dev.user_favourite_jobs WHERE user_id = ? AND job_id = ?';
+    if (req.body.is_favourite) {
+      query =
+        'INSERT INTO waterloo_oasis_dev.user_favourite_jobs (user_id, job_id) VALUES(?, ?);';
+    }
+    pool.query(query, [req.body.user_id, req.body.job_id], function(err) {
+      if (err) {
+        res.sendStatus(400);
+      } else {
+        /* Manage your results here */
+        res.sendStatus(200);
+      }
+    });
+  });
+
+  // ***** END OF HOME API *****
 
   router.get('/api/job/:shortCode', (req, res) => {
     const jobq = jobQuery('where job.short_code = ?');
