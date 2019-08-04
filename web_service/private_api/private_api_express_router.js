@@ -1,7 +1,7 @@
 const cookieParser = require('cookie-parser');
 
 const expressUtils = require('shared/util/expressUtils');
-const { pool, query } = require('shared/util/db.js');
+const { pool, query, timeString } = require('shared/util/db.js');
 
 const setupJobs = require('web_service/private_api/jobs.js');
 const searchRouter = require('web_service/private_api/search_routes');
@@ -9,13 +9,6 @@ const setupComments = require('web_service/private_api/comments.js');
 
 function serveApp(_, res) {
   res.sendFile('web_service/static/app.html', { root: '.' });
-}
-
-function jobQuery(whereClause = '', orderClause = '') {
-  return `
-select job.*, company.name, company.short_name,
-(select count(*) from comment where job_id = job.id) as comments
-from job inner join company on job.company_id = company.id ${whereClause} ${orderClause};`;
 }
 
 function jsonifyJob(row) {
@@ -69,15 +62,42 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
 
   // ***** HOME API *****
   // TRENDING
-  // TODO: add some pagination, and more sophisticated means of organizing tredning
-  router.get('/api/trending', (_, res) => {
-    const q = jobQuery('', 'ORDER BY last_updated desc');
-    pool.query(q, (err, rows) => {
-      if (err) {
-        return;
-      }
-      res.json(rows.map(jsonifyJob));
-    });
+  // TODO: add some pagination, and more sophisticated means of organizing trending
+  router.get('/api/trending', async (_, res) => {
+    const queryStr = `
+      SELECT job.*, company.name, company.short_name
+      FROM job INNER JOIN company ON job.company_id = company.id`;
+
+    try {
+      const jobs = await query(queryStr);
+      res.status(200).json(
+        jobs.map(job => {
+          const rating =
+            job.num_reviewers === 0
+              ? 0
+              : Number((job.total_rating / job.num_reviewers).toPrecision(3));
+          return {
+            rating,
+            company: {
+              name: job.name,
+              shortName: job.short_name,
+            },
+            id: job.id,
+            shortCode: job.short_code,
+            title: job.title,
+            status: job.status,
+            statusStage: job.status_stage,
+            location: job.location,
+            description: job.description,
+            numReviewers: job.num_reviewers,
+            numComments: job.num_comments,
+            numFollows: job.num_follows,
+          };
+        }),
+      );
+    } catch (err) {
+      res.status(500).json({ reason: 'Something went wrong' });
+    }
   });
 
   // MYJOBS
@@ -157,47 +177,6 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
   });
 
   // ***** END OF HOME API *****
-
-  router.get('/api/job/:shortCode', (req, res) => {
-    const jobq = jobQuery('where job.short_code = ?');
-    pool.query(jobq, [req.params.shortCode], (jobErr, [job]) => {
-      if (jobErr) {
-        return;
-      }
-
-      const commentq =
-        'select comment.*, user.username from comment inner join user on comment.author_id = user.id where job_id = ? order by id;';
-      pool.query(commentq, [job.id], (commentErr, rows) => {
-        if (commentErr) {
-          return;
-        }
-
-        const map = {};
-        const replies = [];
-        const comments = [];
-        rows.forEach(row => {
-          const comment = {
-            ...row,
-            author: {
-              name: row.username,
-            },
-            id: job.id,
-            shortCode: job.short_code,
-            title: job.title,
-            status: job.status,
-            statusStage: job.status_stage,
-            location: job.location,
-            description: job.description,
-            numReviewers: job.num_reviewers,
-            numComments: job.num_comments,
-            numFollows: job.num_follows,
-          };
-        }),
-      );
-    } catch (err) {
-      res.status(500).json({ reason: 'Something went wrong' });
-    }
-  });
 
   // router.get('/api/job/:shortCode', (req, res) => {
   //   const jobq = jobQuery('where job.short_code = ?');
