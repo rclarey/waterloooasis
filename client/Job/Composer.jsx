@@ -30,7 +30,7 @@ function Composer({ jobId, companyId, patchComments }) {
       inputRef.current.value = '';
       patchComments(comment);
     } catch (e) {
-      console.log(e);
+      // TODO: error handling
     }
   }, [inputRef.current]);
 
