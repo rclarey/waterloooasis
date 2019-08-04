@@ -1,12 +1,13 @@
 import React, { memo, useCallback, useRef, useState } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import OButton from 'oasisui/OButton.jsx';
+import { post } from 'utils.js';
 
 import 'Job/Composer.css';
 
-function Composer() {
+function Composer({ jobId, companyId, patchComments }) {
   const inputRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
   const [focussed, setFocussed] = useState(false);
@@ -19,8 +20,18 @@ function Composer() {
     }
   }, [setDisabled, inputRef.current]);
 
-  const onSubmit = useCallback(() => {
-    alert(inputRef.current.value);
+  const onSubmit = useCallback(async () => {
+    try {
+      const { comment } = await post('/comment', {
+        jobId,
+        companyId,
+        text: inputRef.current.value,
+      });
+      inputRef.current.value = '';
+      patchComments(comment);
+    } catch (e) {
+      console.log(e);
+    }
   }, [inputRef.current]);
 
   return (
@@ -30,6 +41,7 @@ function Composer() {
       })}
     >
       <textarea
+        placeholder="What are your thoughts?"
         ref={inputRef}
         onChange={onChange}
         onFocus={setFocussed.bind(null, true)}
@@ -42,5 +54,10 @@ function Composer() {
     </div>
   );
 }
+Composer.propTypes = {
+  jobId: PropTypes.number.isRequired,
+  companyId: PropTypes.number.isRequired,
+  patchComments: PropTypes.func.isRequired,
+};
 
 export default memo(Composer);

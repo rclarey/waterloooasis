@@ -42,22 +42,25 @@ function timeString(datetime) {
   const minutes = Math.floor(diff / 60000);
 
   if (years > 0) {
-    return `${years}y`;
+    return `${years} year${years > 1 ? 's' : ''} ago`;
   }
   if (months > 0) {
-    return `${months}mo`;
+    return `${months} month${months > 1 ? 's' : ''} ago`;
   }
   if (weeks > 0) {
-    return `${weeks}w`;
+    return `${weeks} week${weeks > 1 ? 's' : ''} ago`;
   }
   if (days > 0) {
-    return `${days}d`;
+    return `${days} day${days > 1 ? 's' : ''} ago`;
   }
   if (hours > 0) {
-    return `${hours}h`;
+    return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  }
+  if (minutes > 0) {
+    return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
   }
 
-  return `${minutes || 1}m`;
+  return 'just now';
 }
 
 module.exports = {

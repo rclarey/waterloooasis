@@ -2,7 +2,6 @@ import React, { Suspense, useState } from 'react';
 import PropTypes from 'prop-types';
 import useFetch from 'fetch-suspense';
 
-// import Comment from 'shared/Comment.jsx';
 import CommentSection from 'Job/CommentSection.jsx';
 import JobTile from 'shared/JobTile.jsx';
 import OButton from 'oasisui/OButton.jsx';
@@ -104,17 +103,12 @@ function JobContent({ shortCode }) {
           </header>
           <div className="job__bottomcontent">
             <TabSwitch tab={commentTab}>
-              <CommentSection jobCode={shortCode} />
+              <Suspense fallback={<Spinner size={75} centre={true} />}>
+                <CommentSection jobId={job.id} companyId={job.company.id} />
+              </Suspense>
               <>reviews</>
             </TabSwitch>
           </div>
-          {/*   {job.comments.map((comment, i) => ( */}
-          {/*     <Comment */}
-          {/*       key={comment.id} */}
-          {/*       comment={comment} */}
-          {/*       last={i === job.comments.length - 1} */}
-          {/*     /> */}
-          {/*   ))} */}
         </section>
       </div>
       <OButton alt={true} text="Update" />

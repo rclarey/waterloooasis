@@ -1,14 +1,11 @@
 import useFetch from 'fetch-suspense';
 
-// TODO: have this injected into the bundle via webpack during build
-const API_URL = 'http://localhost:3000/api';
-
 export function useApi(route, opts) {
-  return useFetch(`${API_URL}${route}`, opts);
+  return useFetch(`/api${route}`, opts);
 }
 
 export async function post(route, body) {
-  const res = await fetch(`${API_URL}${route}`, {
+  const res = await fetch(`/api${route}`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',

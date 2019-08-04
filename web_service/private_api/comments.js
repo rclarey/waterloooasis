@@ -79,10 +79,14 @@ async function getCommentsForJobAndCompany(req, res) {
 }
 
 async function createComment(req, res) {
-  const queryStr = `
+  const insertQuery = `
       INSERT INTO comment
       (company_id, job_id, parent_id, author_id, date_time, edited, text)
       VALUES(?, ?, ?, ?, NOW(), ?, ?)`;
+  const selectQuery = `
+    SELECT comment.*, user.username FROM comment
+    LEFT JOIN user on user.id = comment.author_id
+    WHERE comment.id = ?`;
 
   try {
     const { text, companyId, jobId, parentId } = req.body;
@@ -93,7 +97,7 @@ async function createComment(req, res) {
       const authorId = req.user.id;
       const edited = 0; /* This can be done in the future */
 
-      await query(queryStr, [
+      const { insertId } = await query(insertQuery, [
         companyId,
         jobId,
         parentId,
@@ -101,7 +105,8 @@ async function createComment(req, res) {
         edited,
         text,
       ]);
-      res.status(200).json({ ok: true });
+      const comment = (await query(selectQuery, [insertId]))[0];
+      res.status(200).json({ comment: formatComment(comment) });
     }
   } catch (e) {
     res.status(500).send({ reason: 'Something went wrong' });
@@ -140,7 +145,7 @@ async function toggleLiked(req, res) {
 
 function setupComments(router) {
   router.post('/api/comment', createComment);
-  router.get('/api/comments', getCommentsForJobAndCompany);
+  router.post('/api/comments', getCommentsForJobAndCompany);
   router.post('/api/like', toggleLiked);
 }
 

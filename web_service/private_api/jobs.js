@@ -2,7 +2,7 @@ const { query } = require('shared/util/db.js');
 
 async function getJob(req, res) {
   const queryStr = `
-    SELECT job.*, company.name, company.short_name
+    SELECT job.*, company.name, company.short_name, company.id as company_id
     FROM job INNER JOIN company ON job.company_id = company.id
     WHERE job.short_code = ?`;
 
@@ -24,6 +24,7 @@ async function getJob(req, res) {
     res.status(200).json({
       rating,
       company: {
+        id: job.company_id,
         name: job.name,
         shortName: job.short_name,
       },
