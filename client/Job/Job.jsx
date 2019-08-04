@@ -7,6 +7,7 @@ import JobTile from 'shared/JobTile.jsx';
 import OButton from 'oasisui/OButton.jsx';
 import OFakeLink from 'oasisui/OFakeLink.jsx';
 import Spinner from 'shared/Spinner.jsx';
+import { maskSetState } from 'utils.js';
 
 import 'Job/Job.css';
 
@@ -55,19 +56,19 @@ function JobContent({ shortCode }) {
         <section className="job__info">
           <header className="job__infotabs">
             <OFakeLink
-              onClick={setInfoTab.bind(null, 0)}
+              onClick={maskSetState.bind(null, setInfoTab, 0)}
               medium={true}
               text="Description"
               isInactive={infoTab !== 0}
             />
             <OFakeLink
-              onClick={setInfoTab.bind(null, 1)}
+              onClick={maskSetState.bind(null, setInfoTab, 1)}
               medium={true}
               text="More Info"
               isInactive={infoTab !== 1}
             />
             <OFakeLink
-              onClick={setInfoTab.bind(null, 2)}
+              onClick={maskSetState.bind(null, setInfoTab, 2)}
               medium={true}
               text="Benefits"
               isInactive={infoTab !== 2}
@@ -89,13 +90,13 @@ function JobContent({ shortCode }) {
         <section className="job__commentsection">
           <header className="job__commenttabs">
             <OFakeLink
-              onClick={setCommentTab.bind(null, 0)}
+              onClick={maskSetState.bind(null, setCommentTab, 0)}
               text="Discussion"
               large={true}
               isInactive={commentTab !== 0}
             />
             <OFakeLink
-              onClick={setCommentTab.bind(null, 1)}
+              onClick={maskSetState.bind(null, setCommentTab, 1)}
               text="Reviews"
               large={true}
               isInactive={commentTab !== 1}

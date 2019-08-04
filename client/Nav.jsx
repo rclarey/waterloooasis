@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from '@reach/router';
 import * as axios from 'axios';
 import * as u from 'shared/util/u';
@@ -7,14 +7,19 @@ import { post } from 'utils.js';
 
 import 'Nav.css';
 
-document.addEventListener('keydown', e => {
-  const searchBar = document.getElementById('searchBar');
+function focusSearch(el, e) {
+  const activeTag = document.activeElement.tagName;
 
-  if (e.code === 'KeyF' && !e.metaKey && document.activeElement !== searchBar) {
+  if (
+    e.code === 'KeyF' &&
+    !e.metaKey &&
+    activeTag !== 'INPUT' &&
+    activeTag !== 'TEXTAREA'
+  ) {
     e.preventDefault();
-    searchBar.focus();
+    el.focus();
   }
-});
+}
 
 async function signOut() {
   try {
@@ -32,15 +37,17 @@ async function search(query) {
 }
 
 function Nav() {
+  const inputRef = useRef(null);
   const [query, setQuery] = useState('');
   const [searchFocused, setSearchFocused] = useState('');
+
   const updateQuery = useCallback(e => setQuery(e.target.value), []);
-  const onFocusSearch = () => {
+  const onFocusSearch = useCallback(() => {
     setSearchFocused(true);
     setTimeout(() => {
       setSearchFocused(false);
     }, 1000);
-  };
+  }, []);
   const submitQuery = useCallback(
     e => {
       e.preventDefault();
@@ -48,6 +55,17 @@ function Nav() {
     },
     [query],
   );
+
+  useEffect(() => {
+    const listener = focusSearch.bind(null, inputRef.current);
+    if (inputRef.current !== null) {
+      document.addEventListener('keydown', listener);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', listener);
+    };
+  }, [inputRef.current]);
 
   return (
     <>
@@ -57,7 +75,7 @@ function Nav() {
         </Link>
         <form className="nav__search-form" onSubmit={submitQuery}>
           <input
-            id="searchBar"
+            ref={inputRef}
             className={`nav__search-input ${
               searchFocused ? 'nav__search-input-shadow' : ''
             }`}

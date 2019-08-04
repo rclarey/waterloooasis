@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import OButton from 'oasisui/OButton.jsx';
-import { post } from 'utils.js';
+import { maskSetState, post } from 'utils.js';
 
 import 'Job/Composer.css';
 
@@ -44,8 +44,8 @@ function Composer({ jobId, companyId, patchComments }) {
         placeholder="What are your thoughts?"
         ref={inputRef}
         onChange={onChange}
-        onFocus={setFocussed.bind(null, true)}
-        onBlur={setFocussed.bind(null, false)}
+        onFocus={maskSetState.bind(null, setFocussed, true)}
+        onBlur={maskSetState.bind(null, setFocussed, false)}
         className="composer__textarea"
       />
       <div className="composer__buttons">
