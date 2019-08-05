@@ -2,6 +2,7 @@
 .composer__container {
   border: 1px solid lightgray;
   border-radius: 5px;
+  display: inline-block;
 }
 .composer__container.composer__container--active {
   border-color: gray;
@@ -14,7 +15,6 @@
   font-size: 14px;
   max-width: 978px;
   min-height: 120px;
-  min-width: 978px;
   outline: none;
   padding: 5px 10px;
 }

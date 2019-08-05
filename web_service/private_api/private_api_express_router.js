@@ -64,34 +64,62 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
   // TRENDING
   // TODO: add some pagination, and more sophisticated means of organizing trending
   router.get('/api/trending', async (_, res) => {
-    const queryStr = `
-      SELECT job.*, company.name, company.short_name
-      FROM job INNER JOIN company ON job.company_id = company.id`;
+    const selectJobs = `
+      SELECT job.*, company.name, company.short_name FROM job
+      INNER JOIN company ON job.company_id = company.id`;
+    const selectRating = `
+      SELECT job.id, COUNT(rating) as num_reviewers, SUM(rating) as total_rating
+      FROM job LEFT JOIN ratings ON job.id = ratings.job_id
+      GROUP BY job.id`;
+    const selectComment = `
+      SELECT job.id, COUNT(comment.id) as num_comments FROM job
+      LEFT JOIN comment ON job.id = comment.job_id
+      GROUP BY job.id`;
+    const selectFollows = `
+      SELECT job.id, COUNT(following.id) as num_follows FROM job
+      LEFT JOIN following ON job.id = following.job_id
+      GROUP BY job.id`;
 
     try {
-      const jobs = await query(queryStr);
+      const jobs = await query(selectJobs);
+      const ratings = await query(selectRating);
+      const comments = await query(selectComment);
+      const follows = await query(selectFollows);
       res.status(200).json(
-        jobs.map(job => {
-          const rating =
-            job.num_reviewers === 0
+        jobs.map((job, i) => {
+          const { num_reviewers, total_rating } = ratings[i];
+          const { num_comments } = comments[i];
+          const { num_follows } = follows[i];
+
+          const totalRating =
+            num_reviewers === 0
               ? 0
-              : Number((job.total_rating / job.num_reviewers).toPrecision(3));
+              : Number((total_rating / num_reviewers).toPrecision(3));
+
+          const statusString = `${job.status}${
+            job.status_round > 1 ? ` (round ${job.status_round})` : ''
+          }`;
+
           return {
-            rating,
+            totalRating,
             company: {
+              id: job.company_id,
               name: job.name,
               shortName: job.short_name,
             },
             id: job.id,
             shortCode: job.short_code,
             title: job.title,
-            status: job.status,
+            status: {
+              string: statusString,
+              round: job.status_round,
+            },
             statusStage: job.status_stage,
             location: job.location,
             description: job.description,
-            numReviewers: job.num_reviewers,
-            numComments: job.num_comments,
-            numFollows: job.num_follows,
+            numReviewers: num_reviewers,
+            numComments: num_comments,
+            numFollows: num_follows,
           };
         }),
       );

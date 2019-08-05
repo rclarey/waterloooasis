@@ -7,7 +7,13 @@ import { maskSetState, post } from 'utils.js';
 
 import 'Job/Composer.css';
 
-function Composer({ jobId, companyId, patchComments }) {
+function Composer({
+  jobId,
+  companyId,
+  parentId = null,
+  patchComments,
+  width = 978,
+}) {
   const inputRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
   const [focussed, setFocussed] = useState(false);
@@ -25,6 +31,7 @@ function Composer({ jobId, companyId, patchComments }) {
       const { comment } = await post('/comment', {
         jobId,
         companyId,
+        parentId,
         text: inputRef.current.value,
       });
       inputRef.current.value = '';
@@ -41,6 +48,7 @@ function Composer({ jobId, companyId, patchComments }) {
       })}
     >
       <textarea
+        style={{ width: `${width}px` }}
         placeholder="What are your thoughts?"
         ref={inputRef}
         onChange={onChange}
@@ -58,6 +66,8 @@ Composer.propTypes = {
   jobId: PropTypes.number.isRequired,
   companyId: PropTypes.number.isRequired,
   patchComments: PropTypes.func.isRequired,
+  parentId: PropTypes.number,
+  width: PropTypes.number,
 };
 
 export default memo(Composer);

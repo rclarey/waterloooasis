@@ -67,11 +67,11 @@ function JobTile({ job, big = false }) {
       </div>
       <div className="jobtile__rightcontent">
         <div className={`jobtile__status jobtile__status--${job.statusStage}`}>
-          {job.status}
+          {job.status.string}
         </div>
         <div className="jobtile__location">{job.location}</div>
         <div className="jobtile__rating">
-          <MemoedRatingStars rating={job.rating} />
+          <MemoedRatingStars rating={job.totalRating} />
           <span>{job.numReviewers}</span>
         </div>
       </div>

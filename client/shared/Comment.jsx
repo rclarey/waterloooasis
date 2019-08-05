@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
+import Composer from 'Job/Composer.jsx';
 import { post } from 'utils.js';
 
 import 'shared/Comment.css';
@@ -9,6 +10,9 @@ import 'shared/Comment.css';
 function Comment({ comment }) {
   const [liked, setLiked] = useState(comment.liked);
   const [likes, setLikes] = useState(comment.likes);
+  const [replies, setReplies] = useState(comment.replies);
+  const [composerOpen, setComposerOpen] = useState(false);
+
   const onLike = useCallback(async () => {
     let value;
     try {
@@ -24,6 +28,15 @@ function Comment({ comment }) {
     }
   }, [setLiked, comment.id]);
 
+  const onReplyToggle = useCallback(() => {
+    setComposerOpen(old => !old);
+  }, []);
+
+  const patchReplies = useCallback(reply => {
+    setReplies(old => [reply].concat(old));
+    setComposerOpen(false);
+  }, []);
+
   const likeClass = classnames('comment__like', {
     'comment__like--liked': liked,
   });
@@ -38,11 +51,24 @@ function Comment({ comment }) {
         <span className={likeClass} onClick={onLike}>
           {liked ? 'Liked' : 'Like'}
         </span>
-        <span className="comment__reply">Reply</span>
+        <span className="comment__reply" onClick={onReplyToggle}>
+          Reply
+        </span>
       </div>
-      {comment.replies.length > 0 ? (
+      {replies.length > 0 || composerOpen ? (
         <div className="comment__replycontainer">
-          {comment.replies.map((reply, i) => (
+          {composerOpen ? (
+            <div className="comment__replycomposer">
+              <Composer
+                width={400}
+                jobId={comment.jobId}
+                companyId={comment.companyId}
+                parentId={comment.id}
+                patchComments={patchReplies}
+              />
+            </div>
+          ) : null}
+          {replies.map((reply, i) => (
             <Comment
               key={reply.text}
               comment={reply}
