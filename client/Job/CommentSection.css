@@ -1,0 +1,27 @@
+.commentsection__sortby {
+  padding: 10px 0;
+  margin-top: 10px;
+  border-bottom: 1px solid lightgray;
+}
+
+.commentsection__nocomments {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #959595;
+}
+
+.commentsection__nocomments > p {
+  margin-top: 0;
+}
+
+.commentsection__noneheader {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.commentsection__list {
+  margin-top: 20px;
+}

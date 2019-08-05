@@ -43,7 +43,7 @@ async function onSubmit(info) {
 function SignUp() {
   const [passwordRef, setPasswordRef] = useState(null);
   const validateConfirm = useCallback(
-    validateConfirmPassword.bind(passwordRef),
+    validateConfirmPassword.bind(null, passwordRef),
     [passwordRef],
   );
   return (

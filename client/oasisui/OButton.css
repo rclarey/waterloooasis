@@ -31,6 +31,7 @@
 .obutton__light.obutton__cta {
   color: #007FF5;
   background-color: #FFFFFF;
+  border: none;
 }
 
 .obutton__light.obutton__alt {
@@ -64,6 +65,7 @@
 .obutton__dark.obutton__cta {
   color: #FFFFFF;
   background-color: #007FF5;
+  border: none;
 }
 
 .obutton__dark.obutton__alt {

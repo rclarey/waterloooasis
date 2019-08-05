@@ -278,7 +278,7 @@ const signinStrategy = new SignInSignUpStrategy(
   },
 );
 
-function authenticationFork(success, failure) {
+function authenticationFork(passport, success, failure) {
   return function forkMiddleware(req, res, next) {
     passport.authenticate('jwt', (err, user) => {
       if (err) {
@@ -383,7 +383,7 @@ module.exports = function setupAuth(router) {
   router.post('/api/retryemail', resendVerification);
 
   return {
-    authenticationFork,
+    authenticationFork: authenticationFork.bind(null, passport),
     authenticate: passport.authenticate('jwt', {
       session: false,
     }),

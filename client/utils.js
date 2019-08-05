@@ -1,14 +1,11 @@
 import useFetch from 'fetch-suspense';
 
-// TODO: have this injected into the bundle via webpack during build
-const API_URL = 'http://localhost:3000/api';
-
 export function useApi(route, opts) {
-  return useFetch(`${API_URL}${route}`, opts);
+  return useFetch(`/api${route}`, opts);
 }
 
 export async function post(route, body) {
-  const res = await fetch(`${API_URL}${route}`, {
+  const res = await fetch(`/api${route}`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -23,4 +20,13 @@ export async function post(route, body) {
   }
 
   return json;
+}
+
+// this is so that react won't spit out an error message thinking we're trying
+// to pass a second arg to the function returned by useState when using bind
+// e.g.
+//   BAD: <button onClick={setThing.bind(null, 1)} />
+//   GOOD: <button onClick={maskSetState.bind(null, setThing, 1)} />
+export function maskSetState(f, n) {
+  f(n);
 }

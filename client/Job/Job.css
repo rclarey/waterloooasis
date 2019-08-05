@@ -1,30 +1,102 @@
 .job__container {
-  margin: 0 auto;
-  padding-top: 140px;
-  width: 1080px;
+  display: grid;
+  grid-template-columns: 1fr 1000px 1fr;
+  position: fixed;
+  top: 100px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: 40px;
+  overflow-y: auto;
 }
 
-.job__info {
+.job__container > .obutton__container {
+  margin-left: 15px;
+  margin-top: 12px;
+  width: 70px;
+}
+
+.job__content {
+}
+
+.job__buttons {
+  margin: 30px 0;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.job__tile, .job__info {
   display: grid;
   grid-template-columns: 100px auto;
   grid-column-gap: 30px;
   grid-row-gap: 30px;
 }
 
+.job__info {
+  height: 200px;
+}
+
+.job__infocontent {
+  overflow-y: auto;
+}
+
+.job__infocontent p {
+  margin-top: 0;
+}
+
 .job__logo {
 }
 
-.job__subheader {
-  font-size: 20px;
-  min-width: 130px;
+.job__divider {
+  margin: 15px 0;
+  border-top: 1px solid lightgray;
 }
 
-.job__description > p {
-  margin-top: 0;
+.job__commenttabs {
+  margin: 15px auto;
+}
+.job__commenttabs > * {
+  display: inline;
+  margin-right: 20px;
 }
 
 .job__commentsection {
   margin: 20px 0;
   border-radius: 5px;
-  border: 1px solid lightgrey;
+}
+
+.job__modal {
+  width: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.job__modal select {
+  font-size: 16px;
+}
+
+.job__modalheader {
+  font-size: 24px;
+  color: #007FF5;
+}
+
+.job__statuspicker {
+  margin: 30px 0;
+}
+
+.job__statusselect {
+  margin-right: 20px;
+}
+
+.job__roundpicker {
+  margin-left: 10px;
+}
+
+.job__stars {
+  margin: 30px 0;
+}
+
+.job__star {
+  display: inline;
 }

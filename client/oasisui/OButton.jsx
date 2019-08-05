@@ -4,7 +4,16 @@ import * as classNames from 'classnames';
 
 import 'oasisui/OButton.css';
 
-function OButton({ text, alt, light, large, disabled }) {
+function OButton({
+  text,
+  alt,
+  light,
+  large,
+  disabled,
+  onClick,
+  onMouseEnter,
+  onMouseLeave,
+}) {
   const classes = classNames('obutton__container', {
     obutton__alt: alt,
     obutton__cta: !alt,
@@ -14,7 +23,13 @@ function OButton({ text, alt, light, large, disabled }) {
     obutton__small: !large,
   });
   return (
-    <button disabled={disabled} className={classes}>
+    <button
+      disabled={disabled}
+      className={classes}
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       {text}
     </button>
   );
@@ -26,6 +41,9 @@ OButton.propTypes = {
   light: PropTypes.bool,
   large: PropTypes.bool,
   disabled: PropTypes.bool,
+  onClick: PropTypes.func,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
 };
 
 export default memo(OButton);
