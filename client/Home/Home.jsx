@@ -41,6 +41,7 @@ function Home({ children, query }) {
 }
 Home.propTypes = {
   children: PropTypes.node.isRequired,
+  query: PropTypes.string,
 };
 
 function TabLink(props) {
@@ -56,12 +57,12 @@ function TabLink(props) {
   );
 }
 
-async function SearchResults({ query }) {
+function SearchResults({ query }) {
   const results = useFetch(`/api/search?queryString=${query}`);
-  const processedResults = results.data.map(result => result._source);
+  const processedResults = results.map(result => result._source);
 
   return (
-    <>
+    <div>
       {processedResults.map(job => (
         <Link
           to={`/jobs/${job.company.shortName}/${job.shortCode}`}
@@ -71,7 +72,7 @@ async function SearchResults({ query }) {
         </Link>
       ))}
       <div className="trending__overlay" />
-    </>
+    </div>
   );
 }
 
