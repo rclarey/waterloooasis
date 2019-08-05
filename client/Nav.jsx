@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from '@reach/router';
-import * as axios from 'axios';
-import * as u from 'shared/util/u';
+import PropTypes from 'prop-types';
 
 import { post } from 'utils.js';
 
@@ -30,18 +29,16 @@ async function signOut() {
   }
 }
 
-async function search(query) {
-  const results = (await axios.get(`/api/search?queryString=${query}`)).data;
-  // TODO: remove log statement.
-  u.log(results.map(result => result._source.company.name));
-}
-
-function Nav() {
+function Nav({ searchUpdate }) {
   const inputRef = useRef(null);
   const [query, setQuery] = useState('');
   const [searchFocused, setSearchFocused] = useState('');
 
-  const updateQuery = useCallback(e => setQuery(e.target.value), []);
+  const updateQuery = useCallback(e => {
+    const query = e.target.value;
+    setQuery(query);
+    searchUpdate(query);
+  }, []);
   const onFocusSearch = useCallback(() => {
     setSearchFocused(true);
     setTimeout(() => {
@@ -51,7 +48,6 @@ function Nav() {
   const submitQuery = useCallback(
     e => {
       e.preventDefault();
-      search(query);
     },
     [query],
   );
@@ -99,5 +95,8 @@ function Nav() {
     </>
   );
 }
+Nav.propTypes = {
+  searchUpdate: PropTypes.func.isRequired,
+};
 
 export default Nav;
