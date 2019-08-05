@@ -11,23 +11,23 @@ function serveApp(_, res) {
   res.sendFile('web_service/static/app.html', { root: '.' });
 }
 
-function jsonifyJob(row) {
-  return {
-    company: {
-      name: row.name,
-      shortName: row.short_name,
-    },
-    id: row.id,
-    shortCode: row.short_code,
-    title: row.title,
-    status: row.status,
-    statusStage: row.status_stage,
-    pay: row.pay,
-    description: row.description,
-    squares: 774,
-    commentCount: row.comments,
-  };
-}
+// function jsonifyJob(row) {
+//   return {
+//     company: {
+//       name: row.name,
+//       shortName: row.short_name,
+//     },
+//     id: row.id,
+//     shortCode: row.short_code,
+//     title: row.title,
+//     status: row.status,
+//     statusStage: row.status_stage,
+//     pay: row.pay,
+//     description: row.description,
+//     squares: 774,
+//     commentCount: row.comments,
+//   };
+// }
 
 function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
   const router = expressUtils.createRouter();
@@ -70,15 +70,15 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
     const selectRating = `
       SELECT job.id, COUNT(rating) as num_reviewers, SUM(rating) as total_rating
       FROM job LEFT JOIN ratings ON job.id = ratings.job_id
-      GROUP BY job.id`;
+      GROUP BY job.id ORDER BY job.id`;
     const selectComment = `
       SELECT job.id, COUNT(comment.id) as num_comments FROM job
       LEFT JOIN comment ON job.id = comment.job_id
-      GROUP BY job.id`;
+      GROUP BY job.id ORDER BY job.id`;
     const selectFollows = `
       SELECT job.id, COUNT(following.id) as num_follows FROM job
       LEFT JOIN following ON job.id = following.job_id
-      GROUP BY job.id`;
+      GROUP BY job.id ORDER BY job.id`;
 
     try {
       const jobs = await query(selectJobs);

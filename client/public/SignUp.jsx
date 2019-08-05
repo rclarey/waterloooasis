@@ -54,7 +54,7 @@ function SignUp() {
         names={['watiam', 'password', 'confirm']}
         onSubmit={onSubmit}
       >
-        <FormRow>
+        <FormRow className="auth__emailrow">
           <Field
             placeholder="WatIAM ID"
             name="watiam"
