@@ -17,14 +17,9 @@ import 'app.css';
 function Entry() {
   const [query, updateQuery] = useState('');
 
-  const searchUpdate = (newQuery) => {
-    console.log('update!');
-    updateQuery(newQuery);
-  }
-
   return (
     <>
-      <Nav searchUpdate={searchUpdate}/>
+      <Nav searchUpdate={updateQuery} />
       <Router>
         <Home path="/" query={query}>
           <Trending path="trending" />

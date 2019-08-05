@@ -4,7 +4,4 @@ import 'regenerator-runtime/runtime';
 
 import Entry from 'Entry.jsx';
 
-ReactDOM.render(
-  <Entry />,
-  document.getElementById('app'),
-);
+ReactDOM.render(<Entry />, document.getElementById('app'));

@@ -10,14 +10,7 @@ import JobTile from 'shared/JobTile.jsx';
 import 'Home/Home.css';
 
 function Home({ children, query }) {
-  console.log(query);
-  const body = query === '' ? (
-    <>
-      {children}
-    </>
-  ) : (
-    <SearchResults query={query} />
-  )
+  const body = query === '' ? <>{children}</> : <SearchResults query={query} />;
 
   return (
     <main className="home__container">
@@ -75,5 +68,8 @@ function SearchResults({ query }) {
     </div>
   );
 }
+SearchResults.propTypes = {
+  query: PropTypes.string,
+};
 
 export default memo(Home);
