@@ -129,18 +129,73 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
   });
 
   // MYJOBS
-  router.get('/api/myjobs', (req, res) => {
-    const q = `
-      select job.*, company.name, company.short_name,
-      (select count(*) from comment where job_id = job.id) as comments
-      from job inner join company on job.company_id = company.id
-      inner join (select job_id from user_favourite_jobs where user_id = ?) as favourites where job.id = favourites.job_id`;
-    pool.query(q, [req.user.id], (err, rows) => {
-      if (err) {
-        return;
-      }
-      res.json(rows.map(jsonifyJob));
-    });
+  router.get('/api/myjobs', async (req, res) => {
+    const selectJobs = `
+      SELECT job.*, company.name, company.short_name FROM job
+      INNER JOIN company ON job.company_id = company.id
+      INNER JOIN following on job.id = following.job_id AND following.user_id = ?`;
+    const selectRating = `
+      SELECT job.id, COUNT(rating) as num_reviewers, SUM(rating) as total_rating
+      FROM job LEFT JOIN ratings ON job.id = ratings.job_id
+      INNER JOIN following on job.id = following.job_id AND following.user_id = ?
+      GROUP BY job.id`;
+    const selectComment = `
+      SELECT job.id, COUNT(comment.id) as num_comments FROM job
+      LEFT JOIN comment ON job.id = comment.job_id
+      INNER JOIN following on job.id = following.job_id AND following.user_id = ?
+      GROUP BY job.id`;
+    const selectFollows = `
+      SELECT job.id, COUNT(following.id) as num_follows FROM job
+      LEFT JOIN following as f_count ON job.id = f_count.job_id
+      INNER JOIN following on job.id = following.job_id AND following.user_id = ?
+      GROUP BY job.id`;
+    try {
+      const userId = req.user.id;
+      const jobs = await query(selectJobs, [userId]);
+      const ratings = await query(selectRating, [userId]);
+      const comments = await query(selectComment, [userId]);
+      const follows = await query(selectFollows, [userId]);
+      res.status(200).json(
+        jobs.map((job, i) => {
+          const { num_reviewers, total_rating } = ratings[i];
+          const { num_comments } = comments[i];
+          const { num_follows } = follows[i];
+
+          const totalRating =
+            num_reviewers === 0
+              ? 0
+              : Number((total_rating / num_reviewers).toPrecision(3));
+
+          const statusString = `${job.status}${
+            job.status_round > 1 ? ` (round ${job.status_round})` : ''
+          }`;
+
+          return {
+            totalRating,
+            company: {
+              id: job.company_id,
+              name: job.name,
+              shortName: job.short_name,
+            },
+            id: job.id,
+            shortCode: job.short_code,
+            title: job.title,
+            status: {
+              string: statusString,
+              round: job.status_round,
+            },
+            statusStage: job.status_stage,
+            location: job.location,
+            description: job.description,
+            numReviewers: num_reviewers,
+            numComments: num_comments,
+            numFollows: num_follows,
+          };
+        }),
+      );
+    } catch (e) {
+      res.status(500).json({ reason: 'Something went wrong' });
+    }
   });
 
   // MYCOMMENTS
