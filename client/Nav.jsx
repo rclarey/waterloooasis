@@ -31,17 +31,21 @@ async function signOut() {
 }
 
 async function search(query) {
-  const results = (await axios.get(`/api/search?queryString=${query}`)).data;
-  // TODO: remove log statement.
-  u.log(results.map(result => result._source.company.name));
+
 }
 
-function Nav() {
+function Nav({ searchUpdate }) {
   const inputRef = useRef(null);
   const [query, setQuery] = useState('');
   const [searchFocused, setSearchFocused] = useState('');
 
-  const updateQuery = useCallback(e => setQuery(e.target.value), []);
+  const updateQuery = useCallback(
+    e => {
+      const query = e.target.value;
+      setQuery(query);
+      searchUpdate(query);
+    },
+    []);
   const onFocusSearch = useCallback(() => {
     setSearchFocused(true);
     setTimeout(() => {
