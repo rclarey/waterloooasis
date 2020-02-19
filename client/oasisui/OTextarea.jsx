@@ -9,7 +9,14 @@ function OTextarea({
   rowsMin,
   prompt,
   identifier,
+  maxLength,
 }) {
+
+  const [charStr, setCharStr] = useState( '' + maxLength + ' characters remaining' );
+
+  const handleInput = event => {
+    setCharStr('' + (maxLength - event.currentTarget.value.length) + ' characters remaining' );
+  };
 
   return (
     <>
@@ -19,7 +26,10 @@ function OTextarea({
           rowsMin={rowsMin}
           identifier={identifier}
           placeholder={prompt}
+          maxLength= { "" + maxLength }
+          onInput={handleInput}
         />
+        <p className="otextarea__charlimit">{charStr} </p>
       </div>
     </>
   );
@@ -28,6 +38,7 @@ OTextarea.propTypes = {
   rowsMin: PropTypes.number.isRequired,
   prompt: PropTypes.string.isRequired,
   identifier: PropTypes.string.isRequired,
+  maxLength:PropTypes.number.isRequired,
 };
 
 export default OTextarea;

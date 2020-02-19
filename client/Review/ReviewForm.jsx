@@ -143,6 +143,7 @@ function ReviewForm() {
         <p className="reviewform__prompt">Position Information</p>
         <ODropdown prompt="Company Name" identifier="companyInput" options={faculties} />
         <OTextField prompt="Position" identifier="positionInput" />
+        <OTextField prompt="City" identifier="cityInput" />
         <div className="reviewform__flexbox">
           <OCombobox prompt="Season" identifier="seasonInput" options={seasons}/>
           <OCombobox prompt="Year" identifier="yearInput" options={years}/>
@@ -152,12 +153,14 @@ function ReviewForm() {
           rowsMin={4}
           prompt="Tell us about your recruitment experience"
           identifier="recruitmentExperienceInput"
+          maxLength={512}
         />
         <p className="reviewform__prompt">Interview Experience</p>
         <FormControl component="fieldset">
           <RadioGroup name="interviewStateGroup" onChange={interviewHandleChange}>
             {interviewOptions.map(option => (
               <FormControlLabel
+                key={option.value}
                 value={option.value}
                 control={<Radio color="primary" />}
                 label={option.label}
@@ -171,11 +174,13 @@ function ReviewForm() {
               rowsMin={4}
               prompt="Tell us about your interview (e.g. number of rounds, types of interviews, etc.)"
               identifier="interviewExperienceInput"
+              maxLength={512}
             />
             <p className="reviewform__prompt">Internship Experience</p>
             <RadioGroup name="internshipStateGroup" onChange={internshipHandleChange}>
               {internshipOptions.map(option => (
                 <FormControlLabel
+                  key={option.value}
                   value={option.value}
                   control={<Radio color="primary" />}
                   label={option.label}
@@ -188,6 +193,7 @@ function ReviewForm() {
                   rowsMin={4}
                   prompt="Tell us about your internship (e.g. your responsibilities, intern events, etc.)"
                   identifier="internshipExperienceInput"
+                  maxLength={512}
                 />
               </Collapse>
             </div>
