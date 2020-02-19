@@ -11,7 +11,6 @@
   margin-bottom: 120px;
   align-items: left;
   justify-content: center;
-  border-radius: 5px;
   letter-spacing: 0.02em;
   cursor: pointer;
   user-select: none;
@@ -30,6 +29,10 @@
   outline: none;
 }
 
+.reviewform__section {
+  margin-top: 20px;
+}
+
 .reviewform__prompt {
   margin-top: 20px;
   font-size: 18px;
@@ -43,6 +46,9 @@
 
 .reviewform__flexbox {
   display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
+  margin-left: 0px;
+  width: 700px;
+  align-items: left;
+  justify-content: flex-start;
+  text-align:left;
 }

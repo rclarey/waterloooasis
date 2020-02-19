@@ -1,0 +1,11 @@
+.otextfield__container {
+  align-items: left;
+  justify-content: left;
+  border-radius: 5px;
+  borderRadius: 3px;
+  margin-top:12px;
+  margin-bottom:12px;
+  letter-spacing: 0.02em;
+  border-color: black;
+  width:300px;
+}

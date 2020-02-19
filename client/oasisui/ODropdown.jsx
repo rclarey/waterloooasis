@@ -24,7 +24,7 @@ function ODropdown({
           style={{fontSize: '16px'}}
           id={identifier}
           freeSolo
-          options={top100Films.map(option => option.title)}
+          options={options}
           renderInput={params => (
             <TextField {...params} label={prompt} margin="normal" variant="outlined" fullWidth />
           )}
@@ -34,7 +34,7 @@ function ODropdown({
   );
 }
 ODropdown.propTypes = {
-  options: PropTypes.arrayOf(PropTypes.string.isRequired),
+  options: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   prompt: PropTypes.string.isRequired,
   identifier: PropTypes.string.isRequired,
 };
