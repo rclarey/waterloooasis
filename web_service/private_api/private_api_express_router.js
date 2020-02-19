@@ -46,6 +46,8 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
 
   router.get('/trending', serveApp);
   router.get('/myjobs', serveApp);
+  router.get('/myreviews', serveApp);
+  router.get('/writereview', serveApp);
   router.get('/mycomments', serveApp);
   router.get('/jobs/*', serveApp);
   router.get('/jobs/*/*', serveApp);
@@ -197,6 +199,25 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
       res.status(500).json({ reason: 'Something went wrong' });
     }
   });
+
+  // MYREVIEWS
+  router.get('/api/myreviews', async (req, res) => {
+    const q = `
+      SELECT review.*, company.*
+      FROM review AS review
+      INNER JOIN company AS company ON review.company_id = company.id
+      WHERE review.user_id = ? ORDER BY date_time desc`;
+
+    try {
+      const userId = req.user.id;
+
+      const reviews = await query(selectJobs, [userId]);
+
+      res.status(200).json(reviews);
+    } catch(e) {
+      res.status(500).json({ reason: 'Something went wrong' });
+    }
+  })
 
   // MYCOMMENTS
   router.get('/api/mycomments', (req, res) => {
