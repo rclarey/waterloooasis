@@ -348,6 +348,11 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
     });
   });
 
+  // TODO: Finish /api/review
+  router.post('/api/review', (req, res) => {
+    res.status(201).json({ reason: 'Success' });
+  });
+
   return router;
 }
 

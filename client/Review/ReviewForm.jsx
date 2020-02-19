@@ -1,6 +1,7 @@
 import React, { memo, useState, useCallback } from 'react';
 import useFetch from 'fetch-suspense';
 import { Link, navigate } from '@reach/router';
+import { post } from 'utils.js';
 
 import 'Home/Trending.css';
 import 'Job/Job.css';
@@ -131,6 +132,23 @@ function ReviewForm() {
     setRating(ind);
   }, []);
 
+  const submitForm = async event => {
+    try {
+      setError('Submitting form');
+      await post('/review', {
+        a : "a", b: "b"
+      });
+      window.location.pathname = '/myreviews';
+    } catch (error) {
+      if (error.reason) {
+        setError(error.reason);
+      } else {
+        console.log(error);
+        setError('Something went wrong. Please try again later');
+      }
+    }
+  };
+
   // TODO: fix this
   return (
     <>
@@ -216,7 +234,7 @@ function ReviewForm() {
         </div>
         <div className="reviewform__section">
           <p>{error}</p>
-          <OButton text="Submit" />
+          <OButton text="Submit" onClick={submitForm}/>
         </div>
       </div>
       <div className="trending__overlay" />
