@@ -534,7 +534,7 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
         parseInt(body.rating)
       ]);
 
-      res.status(400).json({ reason: 'Success' });
+      res.status(201).json({ reason: 'Success' });
 
     } catch (e) {
       res.status(400).json({ reason: 'Something went wrong' });
