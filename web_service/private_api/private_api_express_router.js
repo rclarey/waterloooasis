@@ -349,8 +349,158 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
   });
 
   // TODO: Finish /api/review
-  router.post('/api/review', (req, res) => {
-    res.status(201).json({ reason: 'Success' });
+  router.post('/api/review', async (req, res) => {
+    const body = req.body;
+    const user_id = req.user.id;
+
+    const faculties = [
+      'AHS',
+      'ART',
+      'ENG',
+      'ENV',
+      'MATH',
+      'SCI',
+    ];
+    if (!(faculties.includes(body.faculty))) {
+      res.status(400).json({ reason: 'Invalid faculty.' });
+      return;
+    }
+
+    const studyTerms = [
+      '1A',
+      '1B',
+      '2A',
+      '2B',
+      '3A',
+      '3B',
+      '4A',
+      '4B',
+    ];
+    if (!(studyTerms.includes(body.term))) {
+      res.status(400).json({ reason: 'Invalid study term.' });
+      return;
+    }
+
+    const applicationSources = [
+      'Jobmine/WaterlooWorks',
+      'Referral',
+      'External Job Board',
+      'Job Fair',
+      'Company Website',
+      'Cold Email',
+      'Other',
+    ];
+    if (!(applicationSources.includes(body.appSource))) {
+      res.status(400).json({ reason: 'Invalid application source.' });
+      return;
+    }
+
+    if (body.company.length > 128) {
+      res.status(400).json({ reason: 'Company name is too long.' });
+      return;
+    }
+
+    if (body.position.length > 128) {
+      res.status(400).json({ reason: 'Position name is too long.' });
+      return;
+    }
+
+    if (body.city.length > 128) {
+      res.status(400).json({ reason: 'City name is too long.' });
+      return;
+    }
+
+    const seasons = [
+      'Winter',
+      'Summer',
+      'Fall'
+    ];
+
+    if (!(seasons.includes(body.season))) {
+      res.status(400).json({ reason: 'Invalid season.' });
+      return;
+    }
+
+    const years = [
+      '2019',
+      '2018',
+      '2017',
+      '2016',
+      '2015',
+      '2014',
+      '2013',
+      '2012',
+      '2011',
+      '2010',
+    ];
+
+    if (!(years.includes(body.year))) {
+      res.status(400).json({ reason: 'Invalid season.' });
+      return;
+    }
+
+    const states = ['1', '2', '3'];
+
+    if (!(states.includes(body.interviewState))) {
+      res.status(400).json({ reason: 'Invalid interview state.' });
+      return;
+    }
+
+    if (!(states.includes(body.internshipState))) {
+      res.status(400).json({ reason: 'Invalid internship state.' });
+      return;
+    }
+
+    if (body.recruitmentExperience.length > 512) {
+      res.status(400).json({ reason: 'Recruitment experience is too long.' });
+      return;
+    }
+
+    if (body.interviewExperience.length > 512) {
+      res.status(400).json({ reason: 'Interview experience is too long.' });
+      return;
+    }
+
+    if (body.internshipExperience.length > 512) {
+      res.status(400).json({ reason: 'Internship experience is too long.' });
+      return;
+    }
+
+    const ratings = [0, 1, 2, 3, 4];
+
+    if (!(ratings.includes(body.rating))) {
+      res.status(400).json({ reason: 'Invalid rating.' });
+      return;
+    }
+
+    try {
+      // This is terrible
+      const insertCompanyQuery = `
+        INSERT IGNORE INTO company (name)
+        VALUES (?)
+      `;
+
+      await query(insertCompanyQuery, [body.company]);
+
+      const selectCompanyQuery = `
+        SELECT *
+        FROM company
+        WHERE name = ?
+      `;
+
+      const companyList = await query(selectCompanyQuery, [body.company]);
+
+      if (!companyList) {
+        throw {};
+      }
+
+      const company = companyList[0];
+
+      res.status(400).json({ reason: 'Success' });
+
+    } catch (e) {
+      res.status(400).json({ reason: 'Something went wrong' });
+    }
   });
 
   return router;

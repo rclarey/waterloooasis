@@ -106,8 +106,8 @@ function ReviewForm() {
     {value: "3", label:"Not offered an internship"},
   ];
 
-  const [interviewState, setInterviewState] = useState('0');
-  const [internshipState, setInternshipState] = useState('0');
+  const [interviewState, setInterviewState] = useState('3');
+  const [internshipState, setInternshipState] = useState('3');
 
   const interviewHandleChange = event => {
     setInterviewState(event.target.value);
@@ -117,7 +117,7 @@ function ReviewForm() {
     setInternshipState(event.target.value);
   };
 
-  const currentRating = 0;
+  const currentRating = -1;
   const inds = [0, 1, 2, 3, 4];
   const [rating, setRating] = useState(currentRating);
   const [displayRating, setDisplayRating] = useState(currentRating);
@@ -135,9 +135,23 @@ function ReviewForm() {
   const submitForm = async event => {
     try {
       setError('Submitting form');
-      await post('/review', {
-        a : "a", b: "b"
-      });
+      const body = {
+         faculty: document.getElementById('facultyInput') ? document.getElementById('facultyInput').value : "",
+         term: document.getElementById('termInput') ? document.getElementById('termInput').value : "",
+         appSource: document.getElementById('appSourceInput') ? document.getElementById('appSourceInput').value : "",
+         company: document.getElementById('companyInput') ? document.getElementById('companyInput').value : "",
+         position: document.getElementById('positionInput') ? document.getElementById('positionInput').value : "",
+         city: document.getElementById('cityInput') ? document.getElementById('cityInput').value : "",
+         season: document.getElementById('seasonInput') ? document.getElementById('seasonInput').value : "",
+         year: document.getElementById('yearInput') ? document.getElementById('yearInput').value : "",
+         recruitmentExperience: document.getElementById('recruitmentExperienceInput') ? document.getElementById('recruitmentExperienceInput').value : "",
+         interviewState: interviewState,
+         interviewExperience: document.getElementById('interviewExperienceInput') ? document.getElementById('interviewExperienceInput').value : "",
+         internshipState: internshipState,
+         internshipExperience: document.getElementById('internshipExperienceInput') ? document.getElementById('internshipExperienceInput').value : "",
+         rating: rating
+       };
+      await post('/review', body);
       window.location.pathname = '/myreviews';
     } catch (error) {
       if (error.reason) {

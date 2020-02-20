@@ -24,7 +24,7 @@ function OTextarea({
         <TextareaAutosize
           style={{width: '100%', fontSize: '16px'}}
           rowsMin={rowsMin}
-          identifier={identifier}
+          id={identifier}
           placeholder={prompt}
           maxLength= { "" + maxLength }
           onInput={handleInput}
