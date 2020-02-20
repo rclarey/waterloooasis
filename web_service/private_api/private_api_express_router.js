@@ -395,18 +395,18 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
       return;
     }
 
-    if (body.company.length > 128) {
-      res.status(400).json({ reason: 'Company name is too long.' });
+    if (body.company.length < 1 || body.company.length > 128) {
+      res.status(400).json({ reason: 'Invalid company.' });
       return;
     }
 
-    if (body.position.length > 128) {
-      res.status(400).json({ reason: 'Position name is too long.' });
+    if (body.position.length < 1 || body.position.length > 128) {
+      res.status(400).json({ reason: 'Invalid position.' });
       return;
     }
 
-    if (body.city.length > 128) {
-      res.status(400).json({ reason: 'City name is too long.' });
+    if (body.city.length < 1 || body.city.length > 32) {
+      res.status(400).json({ reason: 'Invalid city.' });
       return;
     }
 
@@ -495,6 +495,44 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
       }
 
       const company = companyList[0];
+
+      const insertReviewQuery = `
+        INSERT INTO review (
+          user_id,
+          company_id,
+          position,
+          faculty,
+          term,
+          year,
+          season,
+          city,
+          app_source,
+          recruitment_review,
+          interview_review,
+          internship_review,
+          internship_state,
+          interview_state,
+          rating
+        ) VALUES ( ? , ? , ? , ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+
+      await query(insertReviewQuery, [
+        user_id,
+        company.id,
+        body.position,
+        body.faculty,
+        body.term,
+        parseInt(body.year),
+        body.season,
+        body.city,
+        body.appSource,
+        body.recruitmentReview,
+        body.interviewReview,
+        body.internshipReview,
+        parseInt(body.internshipState),
+        parseInt(body.interviewState),
+        parseInt(body.rating)
+      ]);
 
       res.status(400).json({ reason: 'Success' });
 
