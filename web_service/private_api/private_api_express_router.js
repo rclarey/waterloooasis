@@ -202,11 +202,11 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
 
   // MYREVIEWS
   router.get('/api/myreviews', async (req, res) => {
-    const q = `
+    const selectJobs = `
       SELECT review.*, company.*
       FROM review AS review
       INNER JOIN company AS company ON review.company_id = company.id
-      WHERE review.user_id = ? ORDER BY date_time desc`;
+      WHERE review.user_id = ?`;
 
     try {
       const userId = req.user.id;

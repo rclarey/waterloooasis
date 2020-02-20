@@ -41,4 +41,4 @@ ORadioButton.propTypes = {
   identifier: PropTypes.string.isRequired,
 };
 
-export default memo(ORadioButton);
+export default ORadioButton;

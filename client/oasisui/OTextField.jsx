@@ -27,4 +27,4 @@ OTextField.propTypes = {
   identifier: PropTypes.string.isRequired,
 };
 
-export default memo(OTextField);
+export default OTextField;

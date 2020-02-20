@@ -32,4 +32,4 @@ OCombobox.propTypes = {
   identifier: PropTypes.string.isRequired,
 };
 
-export default memo(OCombobox);
+export default OCombobox;

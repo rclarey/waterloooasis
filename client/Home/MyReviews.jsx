@@ -6,11 +6,12 @@ import 'Home/Trending.css';
 import 'Job/Job.css';
 
 import OButton from 'oasisui/OButton.jsx';
+import ReviewTile from 'Review/ReviewTile.jsx';
 
 import 'Review/ReviewForm.css';
 
 function MyReviews() {
-  //const myreviews = useFetch('api/myreviews');
+  const myreviews = useFetch('api/myreviews');
 
   // TODO: fix this
   return (
@@ -20,7 +21,13 @@ function MyReviews() {
           <OButton text="Write a Review" />
         </Link>
       </div>
-      <MemoedNoReviews />
+      {myreviews.length > 0 ? (
+        myreviews.map(review => (
+          <ReviewTile review={review} />
+        ))
+      ) : (
+        <MemoedNoReviews />
+      )}
       <div className="trending__overlay" />
     </>
   );
