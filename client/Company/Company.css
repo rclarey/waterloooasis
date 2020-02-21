@@ -64,6 +64,9 @@
 
 .company__row {
   display: flex;
+  text-align: center;
+  align-items:center;
+  margin:auto;
   margin-top:10px;
   justify-content:space-evenly;
   height: 260px;
