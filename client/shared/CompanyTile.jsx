@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from '@reach/router';
 
 import 'shared/CompanyTile.css';
 
@@ -46,11 +47,11 @@ function CompanyTile({ company, big = false }) {
   return (
     <div className={`companytile__container${big ? ' companytile--big' : ''}`}>
       <div className="companytile__leftcontent">
-        <h3 className="companytile__companyname">{company.company.name}</h3>
+          <h3 className="companytile__companyname">{company.name}</h3>
         <div className="companytile__interactions">
           <div className="companytile__discussion">
             <span className="companytile__interactions-text">
-              {`Reviews: ${company.numComments}`}
+              {`Reviews: ${company.numRatings}`}
             </span>
             <img
               className="companytile__interactions-img"
@@ -61,8 +62,7 @@ function CompanyTile({ company, big = false }) {
       </div>
       <div className="companytile__rightcontent">
         <div className="companytile__rating">
-          <MemoedRatingStars rating={company.totalRating} />
-          <span>{company.numReviewers}</span>
+          <MemoedRatingStars rating={company.totalRating/company.numRatings} />
         </div>
       </div>
     </div>

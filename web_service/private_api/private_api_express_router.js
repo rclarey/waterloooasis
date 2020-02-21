@@ -482,7 +482,7 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
         VALUES (?)
       `;
 
-      await query(insertCompanyQuery, [body.company]);
+      await query(insertCompanyQuery, [body.company.trim()]);
 
       const selectCompanyQuery = `
         SELECT *
@@ -490,7 +490,7 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
         WHERE name = ?
       `;
 
-      const companyList = await query(selectCompanyQuery, [body.company]);
+      const companyList = await query(selectCompanyQuery, [body.company.trim()]);
 
       if (!companyList) {
         throw {};
@@ -546,11 +546,11 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
   // Trending Companies
   router.get('/api/companytrending', async (req, res) => {
     const selectCompanyTrending = `
-      SELECT c.id as id, COUNT(*) as numRatings, SUM(rating) as totalRating
+      SELECT c.id as id, c.name as name, COUNT(*) as numRatings, SUM(rating) as totalRating
       FROM company as c
       INNER JOIN review as r
       ON c.id = r.company_id
-      GROUP BY c.id
+      GROUP BY c.id, c.name
       LIMIT 10
     `;
 
@@ -559,6 +559,66 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
       const companyTrending = await query(selectCompanyTrending, []);
 
       res.status(200).json(companyTrending);
+    } catch(e) {
+      res.status(500).json({ reason: 'Something went wrong' });
+    }
+  });
+
+  // Company
+  router.get('/api/company/:id', async (req, res) => {
+      const selectCompany = `
+        SELECT
+          c.name as name,
+          COUNT(*) as numRatings,
+          SUM(rating) as totalRating
+        FROM company as c
+        INNER JOIN review as r
+        ON c.id = r.company_id
+        WHERE c.id = ?
+        GROUP BY c.id, c.name
+      `;
+
+      try {
+        if (!req.params.id) {
+          throw { badRequest: true };
+        }
+
+        const companyOverview = await query(selectCompany, [req.params.id]);
+
+        res.status(200).json(companyOverview);
+      } catch(e) {
+        res.status(500).json({ reason: 'Something went wrong' });
+      }
+    });
+
+  // Company Reviews
+  router.get('/api/reviews/:id', async (req, res) => {
+    const selectCompanyReviews = `
+      SELECT
+        r.position,
+        r.faculty,
+        r.term,
+        r.year,
+        r.season,
+        r.city,
+        r.app_source,
+        r.recruitment_review,
+        r.interview_review,
+        r.internship_review,
+        r.internship_state,
+        r.interview_state,
+        r.rating,
+        c.name
+      FROM review as r INNER JOIN company as c ON r.company_id = id
+      WHERE company_id = ?
+    `;
+
+    try {
+      if (!req.params.id) {
+        throw { badRequest: true };
+      }
+      const companyReviews = await query(selectCompanyReviews, [req.params.id]);
+      res.status(200).json(companyReviews);
     } catch(e) {
       res.status(500).json({ reason: 'Something went wrong' });
     }

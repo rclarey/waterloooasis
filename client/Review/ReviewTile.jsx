@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from '@reach/router';
 
 import 'Review/ReviewTile.css';
 
@@ -77,7 +78,12 @@ function ReviewTile({ review }) {
     <div className="reviewtile__container">
       <div className={`reviewtile__infosect`}>
         <div className="reviewtile__leftcontent">
-          <h3 className="reviewtile__companyname">{review.name}</h3>
+          <Link
+            to={`/company/${review.id}`}
+            key={review.id}
+          >
+            <h3 className="reviewtile__companyname">{review.name}</h3>
+          </Link>
           <h4 className="reviewtile__jobtitle">{review.position}</h4>
           <h4 className="reviewtile__usertitle">{`Written by a student in ${review.term} ${review.faculty}`}</h4>
         </div>
