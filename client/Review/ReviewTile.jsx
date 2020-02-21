@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
-import 'shared/JobTile.css';
+import 'Review/ReviewTile.css';
 
 function ratingRange(pos, rating) {
   const n = rating - pos;
@@ -24,11 +24,11 @@ function ratingRange(pos, rating) {
 function RatingStars({ rating }) {
   const inds = [0, 1, 2, 3, 4];
   return (
-    <span className="jobtile__stars">
+    <span className="reviewtile__stars">
       {inds.map(i => (
         <img
           key={i}
-          className="jobtile__star"
+          className="reviewtile__star"
           src={`/svg/star-${ratingRange(i, rating)}.svg`}
         />
       ))}
@@ -43,35 +43,86 @@ const MemoedRatingStars = memo(RatingStars);
 function reviewStatus(review) {
   if (review.interview_state == 1) {
     if (review.internship_state == 1) {
-      return 'Offered and accepted an internship';
+      return {
+        state : 1,
+        val : 'Offered and accepted an internship'
+      };
     } else if (review.internship_state == 2) {
-      return 'Offered an internship but did not accept it';
+      return {
+        state : 2,
+        val : 'Offered an internship but did not accept it'
+      };
     } else if (review.internship_state == 1) {
-      return 'Interviewed but did not receive an offer';
+      return {
+        state : 2,
+        val : 'Interviewed but did not receive an offer'
+      };
     }
   } else if (review.interview_state == 2) {
-    return 'Not offered an interview';
+    return {
+      state : 3,
+      val : 'Not offered an interview'
+    };
   } else if (review.interview_state == 3) {
-    return 'Not contacted by recruiter';
+    return {
+      state : 3,
+      val : 'Not contacted by recruiter'
+    };
   }
 }
 
 function ReviewTile({ review }) {
+  const status = reviewStatus(review);
   return (
-    <div className={`jobtile__container`}>
-      <div className="jobtile__leftcontent">
-        <h3 className="jobtile__companyname">{review.name}</h3>
-        <h4 className="jobtile__jobtitle">{review.position}</h4>
-      </div>
-      <div className="jobtile__rightcontent">
-        <div className="jobtile__status">
-          {review.position}
+    <div className="reviewtile__container">
+      <div className={`reviewtile__infosect`}>
+        <div className="reviewtile__leftcontent">
+          <h3 className="reviewtile__companyname">{review.name}</h3>
+          <h4 className="reviewtile__jobtitle">{review.position}</h4>
+          <h4 className="reviewtile__usertitle">{`Written by a student in ${review.term} ${review.faculty}`}</h4>
         </div>
-        <div className="jobtile__location">{review.city}</div>
-        <div className="jobtile__rating">
-          <MemoedRatingStars rating={review.rating} />
+        <div className="reviewtile__rightcontent">
+          <div className={`reviewtile__status reviewtile__status--${status.state}`}>
+            {status.val}
+          </div>
+          <div className="reviewtile__location">{review.city}</div>
+          <div className="reviewtile__rating">
+            <MemoedRatingStars rating={review.rating} />
+          </div>
         </div>
       </div>
+      <div className="reviewtile__reviews">
+        <h4 className="reviewtile__reviewheader">Recruitment Experience</h4>
+        { (review.recruitment_review != null
+          && review.recruitment_review.length > 0)
+          ? (<p className="reviewtile__reviewcontent">{review.recruitment_review}</p>)
+          : (<p className="reviewtile__reviewcontent">No comment</p>)
+        }
+      </div>
+      { review.interviewState == 1
+        ? (
+          <div className="reviewtile__reviews">
+            <h4 className="reviewtile__reviewheader">Interview Experience</h4>
+            { (review.interview_review != null
+              && review.interview_review.length > 0)
+              ? (<p className="reviewtile__reviewcontent">{review.interview_review}</p>)
+              : (<p className="reviewtile__reviewcontent">No comment</p>)
+            }
+          </div>)
+        : (<> </>)
+      }
+      { (review.interviewState == 1 && review.internshipState == 1)
+        ? (
+          <div className="reviewtile__reviews">
+            <h4 className="reviewtile__reviewheader">Internship Experience</h4>
+            { (review.internship_review != null
+              && review.internship_review.length > 0)
+              ? (<p className="reviewtile__reviewcontent">{review.internship_review}</p>)
+              : (<p className="reviewtile__reviewcontent">No comment</p>)
+            }
+          </div>)
+        : (<> </>)
+      }
     </div>
   );
 }
