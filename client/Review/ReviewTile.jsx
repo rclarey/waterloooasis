@@ -99,7 +99,7 @@ function ReviewTile({ review }) {
           : (<p className="reviewtile__reviewcontent">No comment</p>)
         }
       </div>
-      { review.interviewState == 1
+      { review.interview_state == 1
         ? (
           <div className="reviewtile__reviews">
             <h4 className="reviewtile__reviewheader">Interview Experience</h4>
@@ -111,7 +111,7 @@ function ReviewTile({ review }) {
           </div>)
         : (<> </>)
       }
-      { (review.interviewState == 1 && review.internshipState == 1)
+      { (review.interview_state == 1 && review.internship_state == 1)
         ? (
           <div className="reviewtile__reviews">
             <h4 className="reviewtile__reviewheader">Internship Experience</h4>

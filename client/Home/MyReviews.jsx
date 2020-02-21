@@ -12,6 +12,7 @@ import 'Review/ReviewForm.css';
 
 function MyReviews() {
   const myreviews = useFetch('api/myreviews');
+  console.log(myreviews);
 
   // TODO: fix this
   return (

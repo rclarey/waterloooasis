@@ -45,12 +45,14 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
   setupJobs(router);
 
   router.get('/trending', serveApp);
+  router.get('/companytrending', serveApp);
   router.get('/myjobs', serveApp);
   router.get('/myreviews', serveApp);
   router.get('/writereview', serveApp);
   router.get('/mycomments', serveApp);
   router.get('/jobs/*', serveApp);
   router.get('/jobs/*/*', serveApp);
+  router.get('/company/*', serveApp);
 
   router.use('/api/search', searchRouter);
 
@@ -538,6 +540,27 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
 
     } catch (e) {
       res.status(400).json({ reason: 'Something went wrong' });
+    }
+  });
+
+  // Trending Companies
+  router.get('/api/companytrending', async (req, res) => {
+    const selectCompanyTrending = `
+      SELECT c.id as id, COUNT(*) as numRatings, SUM(rating) as totalRating
+      FROM company as c
+      INNER JOIN review as r
+      ON c.id = r.company_id
+      GROUP BY c.id
+      LIMIT 10
+    `;
+
+    try {
+
+      const companyTrending = await query(selectCompanyTrending, []);
+
+      res.status(200).json(companyTrending);
+    } catch(e) {
+      res.status(500).json({ reason: 'Something went wrong' });
     }
   });
 

@@ -1,0 +1,121 @@
+.companytile__container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  padding: 15px 0;
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
+}
+.companytile--big.companytile__container {
+  padding: 0;
+  opacity: 1;
+}
+
+.companytile__container:hover {
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.companytile__leftcontent {
+}
+
+.companytile__companyname {
+  color: #2C2C2C;
+  font-size: 48px;
+  letter-spacing: -0.02em;
+}
+.companytile--big .companytile__companyname {
+  font-size: 50px;
+  letter-spacing: -0.02em;
+}
+
+.companytile__jobtitle {
+  color: rgba(44, 44, 44, 0.5);
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  font-weight: normal;
+}
+.companytile--big .companytile__jobtitle {
+  font-size: 24px;
+}
+
+.companytile__interactions {
+  display: flex;
+  flex-direction: row;
+  font-size: 14px;
+  font-weight: 900;
+  color: #D2D2D2;
+  margin-left: 5px;
+  margin-top: 10px;
+}
+.companytile--big .companytile__interactions {
+  font-size: 16px;
+}
+
+.companytile__interactions-text {
+  display: inline-block;
+}
+
+.companytile__interactions-img {
+  display: inline-block;
+  margin-right: 3px;
+}
+
+.companytile__discussion {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.companytile__squares {
+  display: flex;
+  align-items: center;
+}
+
+.companytile__rightcontent {
+  margin-top: 15px;
+  text-align: right;
+}
+
+.companytile__status {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.companytile__status--1 {
+  color: #00B401;
+}
+.companytile__status--2 {
+  color: #FF9533;
+}
+.companytile__status--3 {
+  color: #E10000;
+}
+.companytile--big .companytile__status {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.companytile__location {
+  color: rgba(44, 44, 44, 0.5);
+  letter-spacing: -0.02em;
+  font-size: 20px;
+  font-weight: bold;
+}
+.companytile--big .companytile__pay {
+  font-size: 20px;
+}
+
+.companytile__rating {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.companytile__stars {
+}
+
+.companytile__star {
+  display: inline;
+}
