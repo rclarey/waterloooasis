@@ -157,7 +157,6 @@ function ReviewForm() {
       if (error.reason) {
         setError(error.reason);
       } else {
-        console.log(error);
         setError('Something went wrong. Please try again later');
       }
     }

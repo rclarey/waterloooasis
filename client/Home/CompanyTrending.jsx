@@ -8,7 +8,6 @@ import 'Home/CompanyTrending.css';
 
 function CompanyTrending() {
   const trending = useFetch('api/companytrending');
-  console.log(trending);
 
   return (
     <>

@@ -28,6 +28,12 @@
   letter-spacing: -0.02em;
 }
 
+.reviewtile__companyname__small {
+  color: #2C2C2C;
+  font-size: 34px;
+  letter-spacing: -0.02em;
+}
+
 .reviewtile__reviewheader {
   color: #2C2C2C;
   font-size: 20px;

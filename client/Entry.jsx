@@ -32,7 +32,7 @@ function Entry() {
           <CompanyTrending path="companytrending" />
           <Redirect noThrow from="/" to="trending" />
         </Home>
-        <Company path="company/:companyCode/" />
+        <Company path="company/:companyId/" />
         <Job path="jobs/:shortName/:jobCode/" />
         <ReviewForm path="writereview" />
         <FourOhFour default />

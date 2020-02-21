@@ -609,7 +609,7 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
         r.interview_state,
         r.rating,
         c.name
-      FROM review as r INNER JOIN company as c ON r.company_id = id
+      FROM review as r INNER JOIN company as c ON r.company_id = c.id
       WHERE company_id = ?
     `;
 

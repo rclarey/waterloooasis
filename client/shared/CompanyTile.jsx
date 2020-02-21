@@ -43,7 +43,6 @@ const MemoedRatingStars = memo(RatingStars);
 
 function CompanyTile({ company, big = false }) {
 
-  console.log(company);
   return (
     <div className={`companytile__container${big ? ' companytile--big' : ''}`}>
       <div className="companytile__leftcontent">

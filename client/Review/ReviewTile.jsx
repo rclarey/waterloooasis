@@ -72,68 +72,78 @@ function reviewStatus(review) {
   }
 }
 
-function ReviewTile({ review }) {
+function ReviewTile({ review, doRedirect = true}) {
   const status = reviewStatus(review);
   return (
-    <div className="reviewtile__container">
-      <div className={`reviewtile__infosect`}>
-        <div className="reviewtile__leftcontent">
-          <Link
-            to={`/company/${review.id}`}
-            key={review.id}
-          >
-            <h3 className="reviewtile__companyname">{review.name}</h3>
-          </Link>
-          <h4 className="reviewtile__jobtitle">{review.position}</h4>
-          <h4 className="reviewtile__usertitle">{`Written by a student in ${review.term} ${review.faculty}`}</h4>
-        </div>
-        <div className="reviewtile__rightcontent">
-          <div className={`reviewtile__status reviewtile__status--${status.state}`}>
-            {status.val}
+    <>
+      <div className="reviewtile__container">
+        <div className={`reviewtile__infosect`}>
+          <div className="reviewtile__leftcontent">
+            { doRedirect
+              ?
+                (<Link
+                  to={`/company/${review.id}`}
+                  key={review.id}
+                >
+                  <h3 className="reviewtile__companyname">{review.name}</h3>
+                </Link>)
+              :
+                (
+                  <h3 className="reviewtile__companyname__small">{review.name}</h3>
+                )
+            }
+            <h4 className="reviewtile__jobtitle">{review.position}</h4>
+            <h4 className="reviewtile__usertitle">{`Written by a student in ${review.term} ${review.faculty}`}</h4>
           </div>
-          <div className="reviewtile__location">{review.city}</div>
-          <div className="reviewtile__rating">
-            <MemoedRatingStars rating={review.rating} />
+          <div className="reviewtile__rightcontent">
+            <div className={`reviewtile__status reviewtile__status--${status.state}`}>
+              {status.val}
+            </div>
+            <div className="reviewtile__location">{review.city}</div>
+            <div className="reviewtile__rating">
+              <MemoedRatingStars rating={review.rating} />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="reviewtile__reviews">
-        <h4 className="reviewtile__reviewheader">Recruitment Experience</h4>
-        { (review.recruitment_review != null
-          && review.recruitment_review.length > 0)
-          ? (<p className="reviewtile__reviewcontent">{review.recruitment_review}</p>)
-          : (<p className="reviewtile__reviewcontent">No comment</p>)
+        <div className="reviewtile__reviews">
+          <h4 className="reviewtile__reviewheader">Recruitment Experience</h4>
+          { (review.recruitment_review != null
+            && review.recruitment_review.length > 0)
+            ? (<p className="reviewtile__reviewcontent">{review.recruitment_review}</p>)
+            : (<p className="reviewtile__reviewcontent">No comment</p>)
+          }
+        </div>
+        { review.interview_state == 1
+          ? (
+            <div className="reviewtile__reviews">
+              <h4 className="reviewtile__reviewheader">Interview Experience</h4>
+              { (review.interview_review != null
+                && review.interview_review.length > 0)
+                ? (<p className="reviewtile__reviewcontent">{review.interview_review}</p>)
+                : (<p className="reviewtile__reviewcontent">No comment</p>)
+              }
+            </div>)
+          : (<> </>)
+        }
+        { (review.interview_state == 1 && review.internship_state == 1)
+          ? (
+            <div className="reviewtile__reviews">
+              <h4 className="reviewtile__reviewheader">Internship Experience</h4>
+              { (review.internship_review != null
+                && review.internship_review.length > 0)
+                ? (<p className="reviewtile__reviewcontent">{review.internship_review}</p>)
+                : (<p className="reviewtile__reviewcontent">No comment</p>)
+              }
+            </div>)
+          : (<> </>)
         }
       </div>
-      { review.interview_state == 1
-        ? (
-          <div className="reviewtile__reviews">
-            <h4 className="reviewtile__reviewheader">Interview Experience</h4>
-            { (review.interview_review != null
-              && review.interview_review.length > 0)
-              ? (<p className="reviewtile__reviewcontent">{review.interview_review}</p>)
-              : (<p className="reviewtile__reviewcontent">No comment</p>)
-            }
-          </div>)
-        : (<> </>)
-      }
-      { (review.interview_state == 1 && review.internship_state == 1)
-        ? (
-          <div className="reviewtile__reviews">
-            <h4 className="reviewtile__reviewheader">Internship Experience</h4>
-            { (review.internship_review != null
-              && review.internship_review.length > 0)
-              ? (<p className="reviewtile__reviewcontent">{review.internship_review}</p>)
-              : (<p className="reviewtile__reviewcontent">No comment</p>)
-            }
-          </div>)
-        : (<> </>)
-      }
-    </div>
+    </>
   );
 }
 ReviewTile.propTypes = {
   review: PropTypes.object.isRequired,
+  doRedirect: PropTypes.bool
 };
 
 export default ReviewTile;
