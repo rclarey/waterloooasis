@@ -470,7 +470,7 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
       return;
     }
 
-    const ratings = [0, 1, 2, 3, 4, 5];
+    const ratings = [1, 2, 3, 4, 5];
 
     if (!(ratings.includes(body.rating))) {
       res.status(400).json({ reason: 'Invalid rating.' });
