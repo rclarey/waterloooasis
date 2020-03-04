@@ -423,6 +423,8 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
       return;
     }
 
+
+    // TODO: fix this later
     const years = [
       '2019',
       '2018',
@@ -437,7 +439,7 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
     ];
 
     if (!(years.includes(body.year))) {
-      res.status(400).json({ reason: 'Invalid season.' });
+      res.status(400).json({ reason: 'Invalid year.' });
       return;
     }
 
@@ -468,7 +470,7 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
       return;
     }
 
-    const ratings = [0, 1, 2, 3, 4];
+    const ratings = [0, 1, 2, 3, 4, 5];
 
     if (!(ratings.includes(body.rating))) {
       res.status(400).json({ reason: 'Invalid rating.' });
@@ -528,9 +530,9 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
         body.season,
         body.city,
         body.appSource,
-        body.recruitmentReview,
-        body.interviewReview,
-        body.internshipReview,
+        body.recruitmentExperience,
+        body.interviewExperience,
+        body.internshipExperience,
         parseInt(body.internshipState),
         parseInt(body.interviewState),
         parseInt(body.rating)
