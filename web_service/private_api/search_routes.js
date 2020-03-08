@@ -1,13 +1,12 @@
 const expressUtils = require('shared/util/expressUtils');
 const u = require('shared/util/u');
+const { query } = require('shared/util/db.js');
 
 const searchRouter = (() => {
   const router = expressUtils.createRouter();
 
   router.get('/:query', async (req, res) => {
     u.log('HIT ENDPOINT!');
-    const {query} = req.params;
-    u.log(`query: ${query}`);
     
     const selectCompanyByQuery = `
       SELECT
@@ -22,11 +21,11 @@ const searchRouter = (() => {
     `;
 
     try {
-      if (!query) {
+      if (!req.params.query) {
         throw { badRequest: true };
       }
 
-      const companyOverview = await query(selectCompanyByQuery, [`%${query}%`]);
+      const companyOverview = await query(selectCompanyByQuery, [`%${req.params.query}%`]);
 
       res.status(200).json(companyOverview);
     } catch(e) {
