@@ -17,9 +17,8 @@ function Home({ children, query }) {
       <header className="home__tabs">
         <div className="home__tabpos">
           <TabLink to="/trending" text="Trending" />
+          <TabLink to="/companytrending" text="Companies" />
           <TabLink to="/myjobs" text="My Jobs" />
-          {/* TODO: UPDATE Company Trending Text */}
-          <TabLink to="/companytrending" text="Trending NEW" />
           <TabLink to="/myreviews" text="My Reviews" />
           {/*<TabLink to="/mycomments" text="My Comments" />*/}
         </div>
@@ -54,22 +53,24 @@ function TabLink(props) {
 }
 
 function SearchResults({ query }) {
-  const results = useFetch(`/api/search?queryString=${query}`);
-  const processedResults = results.map(result => result._source);
+  
 
-  return (
-    <div>
-      {processedResults.map(job => (
-        <Link
-          to={`/jobs/${job.company.shortName}/${job.shortCode}`}
-          key={job.id}
-        >
-          <JobTile job={job} />
-        </Link>
-      ))}
-      <div className="trending__overlay" />
-    </div>
-  );
+  // const results = useFetch(`/api/search?queryString=${query}`);
+  // const processedResults = results.map(result => result._source);
+
+  // return (
+  //   <div>
+  //     {processedResults.map(job => (
+  //       <Link
+  //         to={`/jobs/${job.company.shortName}/${job.shortCode}`}
+  //         key={job.id}
+  //       >
+  //         <JobTile job={job} />
+  //       </Link>
+  //     ))}
+  //     <div className="trending__overlay" />
+  //   </div>
+  // );
 }
 SearchResults.propTypes = {
   query: PropTypes.string,
