@@ -1,11 +1,18 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
+import useFetch from 'fetch-suspense';
+import { useParams } from '@reach/router';
 
 function SearchResults({ query }) {
+  const results = useFetch(`api/search/${query}`);
+  console.log(results);
+
   return (
-    <div>
-      Working!
-    </div>
+    <>
+      {results.map(result => (
+        <div>{result}</div>
+      ))}
+    </>
   );
 
   // const results = useFetch(`/api/search?queryString=${query}`);

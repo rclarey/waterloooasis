@@ -1,46 +1,87 @@
 const expressUtils = require('shared/util/expressUtils');
-const { Client } = require('@elastic/elasticsearch');
 const u = require('shared/util/u');
 
 const searchRouter = (() => {
   const router = expressUtils.createRouter();
 
-  const client = new Client({ node: 'http://localhost:9200' });
-
-  router.get('/', async (req, res) => {
-    const { queryString } = req.query;
-    // TODO: remove log statements.
-    u.log('******');
-    u.log(queryString);
+  router.get('/:query', async (req, res) => {
+    u.log('HIT ENDPOINT!');
+    const {query} = req.params;
+    u.log(`query: ${query}`);
+    
+    const selectCompanyByQuery = `
+      SELECT
+        c.name as name,
+        COUNT(*) as numRatings,
+        SUM(rating) as totalRating
+      FROM company as c
+      INNER JOIN review as r
+      ON c.id = r.company_id
+      WHERE LOWER(c.name) LIKE ?
+      GROUP BY c.id, c.name
+    `;
 
     try {
-      const results = (await client.search({
-        index: 'jobs',
-        body: {
-          query: {
-            nested: {
-              path: 'company',
-              query: {
-                bool: {
-                  must: [
-                    { match_phrase_prefix: { 'company.name': queryString } },
-                  ],
-                },
-              },
-            },
-          },
-        },
-      })).body.hits.hits;
+      if (!query) {
+        throw { badRequest: true };
+      }
 
-      // TODO: remove log statements.
-      u.log(results);
-      res.send(results);
-    } catch (e) {
-      res.send(e);
+      const companyOverview = await query(selectCompanyByQuery, [`%${query}%`]);
+
+      res.status(200).json(companyOverview);
+    } catch(e) {
+      res.status(500).json({ reason: 'Something went wrong' });
     }
   });
 
   return router;
 })();
+
+
+// ************
+// TODO: ElasticSearch! Some old boilerplate code below.
+// ************
+
+// const { Client } = require('@elastic/elasticsearch');
+// const searchRouter = (() => {
+//   const router = expressUtils.createRouter();
+
+//   const client = new Client({ node: 'http://localhost:9200' });
+
+//   router.get('/', async (req, res) => {
+//     const { queryString } = req.query;
+//     // TODO: remove log statements.
+//     u.log('******');
+//     u.log(queryString);
+
+//     try {
+//       const results = (await client.search({
+//         index: 'jobs',
+//         body: {
+//           query: {
+//             nested: {
+//               path: 'company',
+//               query: {
+//                 bool: {
+//                   must: [
+//                     { match_phrase_prefix: { 'company.name': queryString } },
+//                   ],
+//                 },
+//               },
+//             },
+//           },
+//         },
+//       })).body.hits.hits;
+
+//       // TODO: remove log statements.
+//       u.log(results);
+//       res.send(results);
+//     } catch (e) {
+//       res.send(e);
+//     }
+//   });
+
+//   return router;
+// })();
 
 module.exports = searchRouter;
