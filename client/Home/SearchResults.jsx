@@ -4,14 +4,14 @@ import useFetch from 'fetch-suspense';
 import { useParams } from '@reach/router';
 
 function SearchResults({ query }) {
-  const results = useFetch(`api/search/${query}`);
+  const results = useFetch(`/api/search/${query}`);
   console.log(results);
 
   return (
     <>
-      {results.map(result => (
+      {/* {results.map(result => (
         <div>{result}</div>
-      ))}
+      ))} */}
     </>
   );
 
