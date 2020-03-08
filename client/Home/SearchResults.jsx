@@ -1,7 +1,10 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import useFetch from 'fetch-suspense';
-import { useParams } from '@reach/router';
+import { Link } from '@reach/router';
+
+import CompanyTile from 'shared/CompanyTile.jsx';
+import JobTile from 'shared/JobTile.jsx';
 
 function SearchResults({ query }) {
   const results = useFetch(`/api/search/${query}`);
@@ -9,28 +12,25 @@ function SearchResults({ query }) {
 
   return (
     <>
-      {/* {results.map(result => (
-        <div>{result}</div>
-      ))} */}
+      {results.companies.map(company => (
+        <Link
+          to={`/company/${company.id}`}
+          key={company.id}
+        >
+          <CompanyTile company={company} />
+        </Link>
+      ))}
+      {results.jobs.map(job => (
+        <Link
+          to={`/jobs/${job.company.shortName}/${job.shortCode}`}
+          key={job.id}
+        >
+          <JobTile job={job} />
+        </Link>
+      ))}
+      <div className="trending__overlay" />
     </>
   );
-
-  // const results = useFetch(`/api/search?queryString=${query}`);
-  // const processedResults = results.map(result => result._source);
-
-  // return (
-  //   <div>
-  //     {processedResults.map(job => (
-  //       <Link
-  //         to={`/jobs/${job.company.shortName}/${job.shortCode}`}
-  //         key={job.id}
-  //       >
-  //         <JobTile job={job} />
-  //       </Link>
-  //     ))}
-  //     <div className="trending__overlay" />
-  //   </div>
-  // );
   }
 SearchResults.propTypes = {
   query: PropTypes.string,
