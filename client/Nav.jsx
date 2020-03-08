@@ -47,7 +47,7 @@ function Nav() {
   const submitQuery = useCallback(
     e => {
       e.preventDefault();
-      navigate(`/search?q=${query}`);
+      navigate(`/search/${query}`);
     },
     [query],
   );
