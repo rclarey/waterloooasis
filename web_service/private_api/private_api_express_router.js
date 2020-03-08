@@ -50,11 +50,13 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
   router.get('/myreviews', serveApp);
   router.get('/writereview', serveApp);
   router.get('/mycomments', serveApp);
+  router.get('/search', serveApp);
   router.get('/jobs/*', serveApp);
   router.get('/jobs/*/*', serveApp);
   router.get('/company/*', serveApp);
 
-  router.use('/api/search', searchRouter);
+  // TODO: use ElasticSearch
+  // router.use('/api/search', searchRouter);
 
   router.get('/api/users', (_, res) => {
     const select_query = 'SELECT * FROM waterloo_oasis_dev.user';
