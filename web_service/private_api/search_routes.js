@@ -30,6 +30,7 @@ const searchRouter = (() => {
 
       res.status(200).json(companyOverview);
     } catch(e) {
+      u.log(e);
       res.status(500).json({ reason: 'Something went wrong' });
     }
   });
