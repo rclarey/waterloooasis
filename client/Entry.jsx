@@ -9,6 +9,7 @@ import Job from 'Job/Job.jsx';
 import MyComments from 'Home/MyComments.jsx';
 import MyJobs from 'Home/MyJobs.jsx';
 import Nav from 'Nav.jsx';
+import SearchResults from 'Home/SearchResults.jsx';
 import Trending from 'Home/Trending.jsx';
 import CompanyTrending from 'Home/CompanyTrending.jsx';
 import MyReviews from 'Home/MyReviews.jsx';
@@ -18,13 +19,12 @@ import 'global.css';
 import 'app.css';
 
 function Entry() {
-  const [query, updateQuery] = useState('');
-
   return (
     <>
-      <Nav searchUpdate={updateQuery} />
+      <Nav />
       <Router>
-        <Home path="/" query={query}>
+        <Home path="/" >
+          <SearchResults path="search" />
           <Trending path="trending" />
           <MyJobs path="myjobs" />
           <MyComments path="mycomments" />

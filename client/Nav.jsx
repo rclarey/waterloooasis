@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Link } from '@reach/router';
+import { Link, navigate } from '@reach/router';
 import PropTypes from 'prop-types';
 
 import { post } from 'utils.js';
@@ -29,7 +29,7 @@ async function signOut() {
   }
 }
 
-function Nav({ searchUpdate }) {
+function Nav() {
   const inputRef = useRef(null);
   const [query, setQuery] = useState('');
   const [searchFocused, setSearchFocused] = useState('');
@@ -37,7 +37,6 @@ function Nav({ searchUpdate }) {
   const updateQuery = useCallback(e => {
     const query = e.target.value;
     setQuery(query);
-    searchUpdate(query);
   }, []);
   const onFocusSearch = useCallback(() => {
     setSearchFocused(true);
@@ -48,6 +47,7 @@ function Nav({ searchUpdate }) {
   const submitQuery = useCallback(
     e => {
       e.preventDefault();
+      navigate(`/search?q=${query}`);
     },
     [query],
   );
@@ -95,8 +95,5 @@ function Nav({ searchUpdate }) {
     </>
   );
 }
-Nav.propTypes = {
-  searchUpdate: PropTypes.func.isRequired,
-};
 
 export default Nav;

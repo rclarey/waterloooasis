@@ -9,17 +9,14 @@ import JobTile from 'shared/JobTile.jsx';
 
 import 'Home/Home.css';
 
-function Home({ children, query }) {
-  const body = query === '' ? <>{children}</> : <SearchResults query={query} />;
-
+function Home({ children }) {
   return (
     <main className="home__container">
       <header className="home__tabs">
         <div className="home__tabpos">
           <TabLink to="/trending" text="Trending" />
+          <TabLink to="/companytrending" text="Companies" />
           <TabLink to="/myjobs" text="My Jobs" />
-          {/* TODO: UPDATE Company Trending Text */}
-          <TabLink to="/companytrending" text="Trending NEW" />
           <TabLink to="/myreviews" text="My Reviews" />
           {/*<TabLink to="/mycomments" text="My Comments" />*/}
         </div>
@@ -27,7 +24,7 @@ function Home({ children, query }) {
       <section className="home__tabcontent">
         <div className="home__scrollpositioner">
           <Suspense fallback={<Spinner size={75} centre={true} />}>
-            {body}
+            {children}
           </Suspense>
         </div>
         <div className="home__eol" />
@@ -37,7 +34,6 @@ function Home({ children, query }) {
 }
 Home.propTypes = {
   children: PropTypes.node.isRequired,
-  query: PropTypes.string,
 };
 
 function TabLink(props) {
@@ -52,27 +48,5 @@ function TabLink(props) {
     </div>
   );
 }
-
-function SearchResults({ query }) {
-  const results = useFetch(`/api/search?queryString=${query}`);
-  const processedResults = results.map(result => result._source);
-
-  return (
-    <div>
-      {processedResults.map(job => (
-        <Link
-          to={`/jobs/${job.company.shortName}/${job.shortCode}`}
-          key={job.id}
-        >
-          <JobTile job={job} />
-        </Link>
-      ))}
-      <div className="trending__overlay" />
-    </div>
-  );
-}
-SearchResults.propTypes = {
-  query: PropTypes.string,
-};
 
 export default memo(Home);
