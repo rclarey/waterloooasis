@@ -121,7 +121,7 @@
 }
 
 .jobtile__star {
-  display: inline;
+  display: inline-block;
   width: 26px;
   height: 26px;
 }
