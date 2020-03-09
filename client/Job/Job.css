@@ -99,4 +99,6 @@
 
 .job__star {
   display: inline;
+  width: 26px;
+  height: 26px;
 }
