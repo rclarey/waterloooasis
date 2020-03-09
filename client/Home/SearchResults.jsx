@@ -2,13 +2,14 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import useFetch from 'fetch-suspense';
 import { Link } from '@reach/router';
+import queryString from 'query-string';
 
 import CompanyTile from 'shared/CompanyTile.jsx';
 import JobTile from 'shared/JobTile.jsx';
 
-function SearchResults({ query }) {
-  const results = useFetch(`/api/search/${query}`);
-  console.log(results);
+function SearchResults() {
+  const queryParams = queryString.parse(location.search);
+  const results = useFetch(`/api/search/${queryParams.q}`);
 
   return (
     <>
@@ -31,9 +32,6 @@ function SearchResults({ query }) {
       <div className="trending__overlay" />
     </>
   );
-  }
-SearchResults.propTypes = {
-  query: PropTypes.string,
-};
+}
 
 export default memo(SearchResults);

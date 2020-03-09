@@ -50,7 +50,7 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
   router.get('/myreviews', serveApp);
   router.get('/writereview', serveApp);
   router.get('/mycomments', serveApp);
-  router.get('/search/*', serveApp);
+  router.get('/search', serveApp);
   router.get('/jobs/*', serveApp);
   router.get('/jobs/*/*', serveApp);
   router.get('/company/*', serveApp);

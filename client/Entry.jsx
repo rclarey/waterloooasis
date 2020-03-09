@@ -24,7 +24,7 @@ function Entry() {
       <Nav />
       <Router>
         <Home path="/" >
-          <SearchResults path="search/:query" />
+          <SearchResults path="search" />
           <Trending path="trending" />
           <MyJobs path="myjobs" />
           <MyComments path="mycomments" />
