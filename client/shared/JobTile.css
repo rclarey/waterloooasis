@@ -66,6 +66,14 @@
   align-items: center;
 }
 
+.jobtile__follows-container {
+  margin-right: 9px;
+}
+
+.jobtile__reviewers-img {
+  margin-bottom: 1px;
+}
+
 .jobtile__rightcontent {
   margin-top: 15px;
   text-align: right;
