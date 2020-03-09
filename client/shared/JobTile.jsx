@@ -47,7 +47,7 @@ function JobTile({ job, big = false }) {
         <h3 className="jobtile__companyname">{job.company.name}</h3>
         <h4 className="jobtile__jobtitle">{job.title}</h4>
         <div className="jobtile__interactions">
-          <div className="jobtile__discussion">
+          <div className="jobtile__interactions-container">
             <img
               className="jobtile__interactions-img"
               src="/svg/comments.svg"
@@ -56,12 +56,19 @@ function JobTile({ job, big = false }) {
               {job.numComments}
             </span>
           </div>
-          <div className="jobtile__squares">
+          <div className="jobtile__interactions-container jobtile__follows-container">
             <img
               className="jobtile__interactions-img"
-              src="/svg/applications.svg"
+              src="/svg/follows.svg"
             />
             <span className="jobtile__interactions-text">{job.numFollows}</span>
+          </div>
+          <div className="jobtile__interactions-container">
+            <img
+              className="jobtile__interactions-img jobtile__reviewers-img"
+              src="/svg/reviewers.svg"
+            />
+            <span className="jobtile__interactions-text">{job.numReviewers}</span>
           </div>
         </div>
       </div>
@@ -72,7 +79,6 @@ function JobTile({ job, big = false }) {
         <div className="jobtile__location">{job.location}</div>
         <div className="jobtile__rating">
           <MemoedRatingStars rating={job.totalRating} />
-          <span>{job.numReviewers}</span>
         </div>
       </div>
     </div>

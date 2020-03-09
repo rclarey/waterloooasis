@@ -60,15 +60,18 @@
   margin-right: 3px;
 }
 
-.jobtile__discussion {
+.jobtile__interactions-container {
   margin-right: 10px;
   display: flex;
   align-items: center;
 }
 
-.jobtile__squares {
-  display: flex;
-  align-items: center;
+.jobtile__follows-container {
+  margin-right: 9px;
+}
+
+.jobtile__reviewers-img {
+  margin-bottom: 1px;
 }
 
 .jobtile__rightcontent {
@@ -114,9 +117,10 @@
 }
 
 .jobtile__stars {
-  margin-right: 10px;
 }
 
 .jobtile__star {
-  display: inline;
+  display: inline-block;
+  width: 26px;
+  height: 26px;
 }
