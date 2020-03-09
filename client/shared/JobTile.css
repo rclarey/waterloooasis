@@ -60,13 +60,8 @@
   margin-right: 3px;
 }
 
-.jobtile__discussion {
+.jobtile__interactions-container {
   margin-right: 10px;
-  display: flex;
-  align-items: center;
-}
-
-.jobtile__squares {
   display: flex;
   align-items: center;
 }
