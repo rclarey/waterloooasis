@@ -1,8 +1,10 @@
-.odropdown__container {
+.otextfield__container {
   align-items: left;
   justify-content: left;
   border-radius: 5px;
   borderRadius: 3px;
+  padding-top:12px;
+  padding-bottom:12px;
   letter-spacing: 0.02em;
   border-color: black;
   width:300px;

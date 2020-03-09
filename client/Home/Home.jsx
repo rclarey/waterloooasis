@@ -18,6 +18,9 @@ function Home({ children, query }) {
         <div className="home__tabpos">
           <TabLink to="/trending" text="Trending" />
           <TabLink to="/myjobs" text="My Jobs" />
+          {/* TODO: UPDATE Company Trending Text */}
+          <TabLink to="/companytrending" text="Trending NEW" />
+          <TabLink to="/myreviews" text="My Reviews" />
           {/*<TabLink to="/mycomments" text="My Comments" />*/}
         </div>
       </header>

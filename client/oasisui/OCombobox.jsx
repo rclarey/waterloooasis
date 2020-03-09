@@ -5,17 +5,11 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import 'oasisui/ODropdown.css';
 
-function ODropdown({
+function OCombobox({
   options,
   prompt,
   identifier,
 }) {
-
-  const top100Films = [
-    { title: 'The Shawshank Redemption', year: 1994 },
-    { title: 'The Godfather', year: 1972 },
-    { title: 'The Godfather: Part II', year: 1974 },
-  ];
 
   return (
     <>
@@ -23,7 +17,6 @@ function ODropdown({
         <Autocomplete
           style={{fontSize: '16px'}}
           id={identifier}
-          freeSolo
           options={options}
           renderInput={params => (
             <TextField {...params} label={prompt} margin="normal" variant="outlined" fullWidth />
@@ -33,11 +26,10 @@ function ODropdown({
     </>
   );
 }
-ODropdown.propTypes = {
+OCombobox.propTypes = {
   options: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   prompt: PropTypes.string.isRequired,
   identifier: PropTypes.string.isRequired,
 };
 
-
-export default ODropdown;
+export default OCombobox;

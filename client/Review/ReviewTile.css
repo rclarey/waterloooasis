@@ -1,0 +1,117 @@
+.reviewtile__container {
+  padding: 18px 0;
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
+}
+
+.reviewtile__infosect {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.reviewtile__container:hover {
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.reviewtile__rightcontent {
+  margin-top: 15px;
+  text-align: right;
+}
+
+.reviewtile__leftcontent {
+}
+
+.reviewtile__companyname {
+  color: #2C2C2C;
+  font-size: 48px;
+  letter-spacing: -0.02em;
+}
+
+.reviewtile__companyname__small {
+  color: #2C2C2C;
+  font-size: 34px;
+  letter-spacing: -0.02em;
+}
+
+.reviewtile__reviewheader {
+  color: #2C2C2C;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+
+.reviewtile__reviewcontent {
+  color: #000000;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  margin-top: 3px;
+  margin-bottom:3px;
+}
+
+
+.reviewtile__reviewparagraph {
+  color: #2C2C2C;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+}
+
+.reviewtile__status {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.reviewtile__location {
+  color: rgba(44, 44, 44, 0.5);
+  letter-spacing: -0.02em;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.reviewtile__rating {
+  align-items: right;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.reviewtile__jobtitle {
+  color: rgba(44, 44, 44, 0.5);
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  font-weight: normal;
+}
+
+.reviewtile__status--1 {
+  color: #00B401;
+}
+
+.reviewtile__status--2 {
+  color: #FF9533;
+}
+
+.reviewtile__status--3 {
+  color: #E10000;
+}
+
+.reviewtile__usertitle {
+  color: #D3D3D3;
+  font-size: 16px;
+  margin-top: 10px;
+  letter-spacing: -0.02em;
+  font-weight: normal;
+}
+
+
+.reviewtile__stars {
+}
+
+.reviewtile__star {
+  display: inline;
+}
+
+.reviewtile__reviews {
+  margin-top:10px;
+}
+

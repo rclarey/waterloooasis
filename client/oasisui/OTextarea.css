@@ -1,0 +1,10 @@
+.otextarea__container {
+  font-size:16px;
+  width:100%;
+}
+
+.otextarea__charlimit {
+  font-size:12px;
+  width:100%;
+  text-align:right;
+}

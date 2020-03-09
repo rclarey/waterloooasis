@@ -1,0 +1,74 @@
+.company__container {
+  display: grid;
+  grid-template-columns: 1fr 1000px 1fr;
+  position: fixed;
+  top: 100px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: 40px;
+  overflow-y: auto;
+}
+
+.company__content {
+}
+
+.company__companyname {
+  color: #2C2C2C;
+  font-size: 48px;
+  letter-spacing: -0.02em;
+}
+
+.company__stars {
+}
+
+.company__star {
+  display: inline;
+}
+
+.company__reviews {
+  margin-top:10px;
+}
+
+.company__rating {
+  align-items: center;
+  display: flex;
+  justify-content: flex-begin;
+  margin-top: 8px;
+}
+
+.company__modalheader {
+  font-size: 24px;
+  color: #007FF5;
+}
+
+.company__modalcontainer {
+  margin-top:14px;
+}
+
+.company__statistics {
+  font-size: 20px;
+  text-align: center;
+}
+
+.company__header {
+  font-size: 18px;
+  color: #2C2C2C;
+}
+
+.company__chart {
+  height: 270px;
+  width: 400px;
+  margin: 0 auto;
+}
+
+.company__row {
+  display: flex;
+  text-align: center;
+  align-items:center;
+  margin:auto;
+  margin-top:10px;
+  justify-content:space-evenly;
+  height: 260px;
+  width: 800px;
+}

@@ -45,10 +45,14 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
   setupJobs(router);
 
   router.get('/trending', serveApp);
+  router.get('/companytrending', serveApp);
   router.get('/myjobs', serveApp);
+  router.get('/myreviews', serveApp);
+  router.get('/writereview', serveApp);
   router.get('/mycomments', serveApp);
   router.get('/jobs/*', serveApp);
   router.get('/jobs/*/*', serveApp);
+  router.get('/company/*', serveApp);
 
   router.use('/api/search', searchRouter);
 
@@ -198,6 +202,25 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
     }
   });
 
+  // MYREVIEWS
+  router.get('/api/myreviews', async (req, res) => {
+    const selectJobs = `
+      SELECT review.*, company.*
+      FROM review AS review
+      INNER JOIN company AS company ON review.company_id = company.id
+      WHERE review.user_id = ?`;
+
+    try {
+      const userId = req.user.id;
+
+      const reviews = await query(selectJobs, [userId]);
+
+      res.status(200).json(reviews);
+    } catch(e) {
+      res.status(500).json({ reason: 'Something went wrong' });
+    }
+  })
+
   // MYCOMMENTS
   router.get('/api/mycomments', (req, res) => {
     const q = `select comment.*, user.username 
@@ -325,6 +348,282 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
         res.sendStatus(200);
       }
     });
+  });
+
+  // TODO: Finish /api/review
+  router.post('/api/review', async (req, res) => {
+    const body = req.body;
+    const user_id = req.user.id;
+
+    const faculties = [
+      'AHS',
+      'ART',
+      'ENG',
+      'ENV',
+      'MATH',
+      'SCI',
+    ];
+    if (!(faculties.includes(body.faculty))) {
+      res.status(400).json({ reason: 'Invalid faculty.' });
+      return;
+    }
+
+    const studyTerms = [
+      '1A',
+      '1B',
+      '2A',
+      '2B',
+      '3A',
+      '3B',
+      '4A',
+      '4B',
+    ];
+    if (!(studyTerms.includes(body.term))) {
+      res.status(400).json({ reason: 'Invalid study term.' });
+      return;
+    }
+
+    const applicationSources = [
+      'Jobmine/WaterlooWorks',
+      'Referral',
+      'External Job Board',
+      'Job Fair',
+      'Company Website',
+      'Cold Email',
+      'Other',
+    ];
+    if (!(applicationSources.includes(body.appSource))) {
+      res.status(400).json({ reason: 'Invalid application source.' });
+      return;
+    }
+
+    if (body.company.length < 1 || body.company.length > 128) {
+      res.status(400).json({ reason: 'Invalid company.' });
+      return;
+    }
+
+    if (body.position.length < 1 || body.position.length > 128) {
+      res.status(400).json({ reason: 'Invalid position.' });
+      return;
+    }
+
+    if (body.city.length < 1 || body.city.length > 32) {
+      res.status(400).json({ reason: 'Invalid city.' });
+      return;
+    }
+
+    const seasons = [
+      'Winter',
+      'Summer',
+      'Fall'
+    ];
+
+    if (!(seasons.includes(body.season))) {
+      res.status(400).json({ reason: 'Invalid season.' });
+      return;
+    }
+
+
+    // TODO: fix this later
+    const years = [
+      '2019',
+      '2018',
+      '2017',
+      '2016',
+      '2015',
+      '2014',
+      '2013',
+      '2012',
+      '2011',
+      '2010',
+    ];
+
+    if (!(years.includes(body.year))) {
+      res.status(400).json({ reason: 'Invalid year.' });
+      return;
+    }
+
+    const states = ['1', '2', '3'];
+
+    if (!(states.includes(body.interviewState))) {
+      res.status(400).json({ reason: 'Invalid interview state.' });
+      return;
+    }
+
+    if (!(states.includes(body.internshipState))) {
+      res.status(400).json({ reason: 'Invalid internship state.' });
+      return;
+    }
+
+    if (body.recruitmentExperience.length > 512) {
+      res.status(400).json({ reason: 'Recruitment experience is too long.' });
+      return;
+    }
+
+    if (body.interviewExperience.length > 512) {
+      res.status(400).json({ reason: 'Interview experience is too long.' });
+      return;
+    }
+
+    if (body.internshipExperience.length > 512) {
+      res.status(400).json({ reason: 'Internship experience is too long.' });
+      return;
+    }
+
+    const ratings = [1, 2, 3, 4, 5];
+
+    if (!(ratings.includes(body.rating))) {
+      res.status(400).json({ reason: 'Invalid rating.' });
+      return;
+    }
+
+    try {
+      // This is terrible
+      const insertCompanyQuery = `
+        INSERT IGNORE INTO company (name)
+        VALUES (?)
+      `;
+
+      await query(insertCompanyQuery, [body.company.trim()]);
+
+      const selectCompanyQuery = `
+        SELECT *
+        FROM company
+        WHERE name = ?
+      `;
+
+      const companyList = await query(selectCompanyQuery, [body.company.trim()]);
+
+      if (!companyList) {
+        throw {};
+      }
+
+      const company = companyList[0];
+
+      const insertReviewQuery = `
+        INSERT INTO review (
+          user_id,
+          company_id,
+          position,
+          faculty,
+          term,
+          year,
+          season,
+          city,
+          app_source,
+          recruitment_review,
+          interview_review,
+          internship_review,
+          internship_state,
+          interview_state,
+          rating
+        ) VALUES ( ? , ? , ? , ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+
+      await query(insertReviewQuery, [
+        user_id,
+        company.id,
+        body.position,
+        body.faculty,
+        body.term,
+        parseInt(body.year),
+        body.season,
+        body.city,
+        body.appSource,
+        body.recruitmentExperience,
+        body.interviewExperience,
+        body.internshipExperience,
+        parseInt(body.internshipState),
+        parseInt(body.interviewState),
+        parseInt(body.rating)
+      ]);
+
+      res.status(201).json({ reason: 'Success' });
+
+    } catch (e) {
+      res.status(400).json({ reason: 'Something went wrong' });
+    }
+  });
+
+  // Trending Companies
+  router.get('/api/companytrending', async (req, res) => {
+    const selectCompanyTrending = `
+      SELECT c.id as id, c.name as name, COUNT(*) as numRatings, SUM(rating) as totalRating
+      FROM company as c
+      INNER JOIN review as r
+      ON c.id = r.company_id
+      GROUP BY c.id, c.name
+      LIMIT 10
+    `;
+
+    try {
+
+      const companyTrending = await query(selectCompanyTrending, []);
+
+      res.status(200).json(companyTrending);
+    } catch(e) {
+      res.status(500).json({ reason: 'Something went wrong' });
+    }
+  });
+
+  // Company
+  router.get('/api/company/:id', async (req, res) => {
+      const selectCompany = `
+        SELECT
+          c.name as name,
+          COUNT(*) as numRatings,
+          SUM(rating) as totalRating
+        FROM company as c
+        INNER JOIN review as r
+        ON c.id = r.company_id
+        WHERE c.id = ?
+        GROUP BY c.id, c.name
+      `;
+
+      try {
+        if (!req.params.id) {
+          throw { badRequest: true };
+        }
+
+        const companyOverview = await query(selectCompany, [req.params.id]);
+
+        res.status(200).json(companyOverview);
+      } catch(e) {
+        res.status(500).json({ reason: 'Something went wrong' });
+      }
+    });
+
+  // Company Reviews
+  router.get('/api/reviews/:id', async (req, res) => {
+    const selectCompanyReviews = `
+      SELECT
+        r.position,
+        r.faculty,
+        r.term,
+        r.year,
+        r.season,
+        r.city,
+        r.app_source,
+        r.recruitment_review,
+        r.interview_review,
+        r.internship_review,
+        r.internship_state,
+        r.interview_state,
+        r.rating,
+        c.name
+      FROM review as r INNER JOIN company as c ON r.company_id = c.id
+      WHERE company_id = ?
+    `;
+
+    try {
+      if (!req.params.id) {
+        throw { badRequest: true };
+      }
+      const companyReviews = await query(selectCompanyReviews, [req.params.id]);
+      res.status(200).json(companyReviews);
+    } catch(e) {
+      res.status(500).json({ reason: 'Something went wrong' });
+    }
   });
 
   return router;

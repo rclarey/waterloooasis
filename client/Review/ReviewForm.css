@@ -1,0 +1,54 @@
+
+.reviewform__header {
+  font-size: 24px;
+}
+
+.reviewform__container {
+  text-align: left;
+  margin-top: 120px;
+  margin-left: 120px;
+  margin-right: 120px;
+  margin-bottom: 120px;
+  align-items: left;
+  justify-content: center;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  user-select: none;
+  background: none;
+  outline: none;
+}
+
+.reviewform__prompt__header {
+  margin-top: 20px;
+  font-size: 21px;
+  justify-content: center;
+  border-radius: 5px;
+  letter-spacing: 0.02em;
+  font-weight: bold;
+  background: none;
+  outline: none;
+}
+
+.reviewform__section {
+  margin-top: 20px;
+}
+
+.reviewform__prompt {
+  margin-top: 20px;
+  font-size: 18px;
+  justify-content: center;
+  border-radius: 5px;
+  letter-spacing: 0.02em;
+  font-weight: bold;
+  background: none;
+  outline: none;
+}
+
+.reviewform__flexbox {
+  display: flex;
+  margin-left: 0px;
+  width: 700px;
+  align-items: left;
+  justify-content: flex-start;
+  text-align:left;
+}

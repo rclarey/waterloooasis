@@ -10,6 +10,9 @@ import MyComments from 'Home/MyComments.jsx';
 import MyJobs from 'Home/MyJobs.jsx';
 import Nav from 'Nav.jsx';
 import Trending from 'Home/Trending.jsx';
+import CompanyTrending from 'Home/CompanyTrending.jsx';
+import MyReviews from 'Home/MyReviews.jsx';
+import ReviewForm from 'Review/ReviewForm.jsx';
 
 import 'global.css';
 import 'app.css';
@@ -25,10 +28,13 @@ function Entry() {
           <Trending path="trending" />
           <MyJobs path="myjobs" />
           <MyComments path="mycomments" />
+          <MyReviews path="myreviews" />
+          <CompanyTrending path="companytrending" />
           <Redirect noThrow from="/" to="trending" />
         </Home>
-        <Company path="jobs/:shortName/" />
+        <Company path="company/:companyId/" />
         <Job path="jobs/:shortName/:jobCode/" />
+        <ReviewForm path="writereview" />
         <FourOhFour default />
       </Router>
     </>

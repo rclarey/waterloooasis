@@ -1,0 +1,24 @@
+.myreviews__nojobs {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.myreviews__noneheader {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.myreviews__writereview__container {
+  text-align: center;
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  letter-spacing: 0.02em;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  background: none;
+  outline: none;
+}
