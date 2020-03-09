@@ -56,7 +56,7 @@ function JobTile({ job, big = false }) {
               {job.numComments}
             </span>
           </div>
-          <div className="jobtile__interactions-container">
+          <div className="jobtile__interactions-container jobtile__follows-container">
             <img
               className="jobtile__interactions-img"
               src="/svg/follows.svg"
@@ -65,7 +65,7 @@ function JobTile({ job, big = false }) {
           </div>
           <div className="jobtile__interactions-container">
             <img
-              className="jobtile__interactions-img"
+              className="jobtile__interactions-img jobtile__reviewers-img"
               src="/svg/reviewers.svg"
             />
             <span className="jobtile__interactions-text">{job.numReviewers}</span>
