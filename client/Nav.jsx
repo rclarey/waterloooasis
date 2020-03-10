@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 
 import { post } from 'utils.js';
 
+import OButton from 'oasisui/OButton.jsx';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
 import 'Nav.css';
 
 function focusSearch(el, e) {
@@ -33,6 +37,7 @@ function Nav() {
   const inputRef = useRef(null);
   const [query, setQuery] = useState('');
   const [searchFocused, setSearchFocused] = useState('');
+  const [anchorEl, setAnchorEl] = useState('');
 
   const updateQuery = useCallback(e => {
     const query = e.target.value;
@@ -63,6 +68,14 @@ function Nav() {
     };
   }, [inputRef.current]);
 
+    const handleClick = event => {
+      setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+
   return (
     <>
       <nav className="nav__container">
@@ -87,9 +100,20 @@ function Nav() {
             src="/svg/search.svg"
           />
         </form>
-        <a className="nav__profile" href="#" onClick={signOut}>
+
+        <a className="nav__profile" href="#" onClick={handleClick}>
           <img src="/svg/profile.svg" />
         </a>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={signOut}>Logout</MenuItem>
+        </Menu>
+
       </nav>
       <div className="nav__overlay" />
     </>
