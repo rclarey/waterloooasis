@@ -226,8 +226,6 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
     }
   })
 
-
-  
   // MYCOMMENTS
   router.get('/api/mycomments', (req, res) => {
     const q = `select comment.*, user.username 
