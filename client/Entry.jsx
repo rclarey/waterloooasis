@@ -25,12 +25,13 @@ function Entry() {
       <Router>
         <Home path="/" >
           <SearchResults path="search" />
-          <Trending path="trending" />
-          <MyJobs path="myjobs" />
-          <MyComments path="mycomments" />
+          {/* Removing since deprecated for now */}
+          {/* <Trending path="trending" />  */}
+          {/* <MyJobs path="myjobs" />  */}
+          {/* <MyComments path="mycomments" />  */}
+          <Redirect noThrow from="/" to="companytrending" /> 
           <MyReviews path="myreviews" />
           <CompanyTrending path="companytrending" />
-          <Redirect noThrow from="/" to="trending" />
         </Home>
         <Company path="company/:companyId/" />
         <Job path="jobs/:shortName/:jobCode/" />
