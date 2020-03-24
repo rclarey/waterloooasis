@@ -8,7 +8,7 @@ import { post } from 'utils.js';
 import 'public/auth.css';
 
 // pretty sure WatIAM ids are strictly alphanumeric
-const watiamIdPattern = /[a-zA-Z0-9]+/;
+const watiamIdPattern = /[a-zA-Z0-9\.]+/;
 async function validateWatiamId(watiamId) {
   const result = watiamIdPattern.exec(watiamId);
   if (result === null || result[0].length !== watiamId.length) {
