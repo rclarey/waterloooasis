@@ -142,10 +142,13 @@ async function rateJob(req, res) {
 }
 
 function setupJobs(router) {
+  /* ******* DEPRECATING ******* */
+  /*
   router.get('/api/jobs/:shortCode', getJob);
   router.post('/api/follow', toggleFollowed);
   router.post('/api/updatestatus', updateStatus);
   router.post('/api/ratejob', rateJob);
+  */
 }
 
 module.exports = setupJobs;

@@ -66,6 +66,8 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
     });
   });
 
+  /* ******* DEPRECATING ******* */
+  /*
   // ***** HOME API *****
   // TRENDING
   // TODO: add some pagination, and more sophisticated means of organizing trending
@@ -203,6 +205,7 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
       res.status(500).json({ reason: 'Something went wrong' });
     }
   });
+  */
 
   // MYREVIEWS
   router.get('/api/myreviews', async (req, res) => {
