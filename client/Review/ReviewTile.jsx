@@ -99,6 +99,14 @@ function ReviewTile({ review, doRedirect = true}) {
             <div className={`reviewtile__status reviewtile__status--${status.state}`}>
               {status.val}
             </div>
+            { (review.interview_state == 1
+               && review.internship_state == 1
+               && review.monthly_salary != 0)
+              ? (
+                  <div className="reviewtile__location">{`$${review.monthly_salary}/month`}</div>
+                )
+              : (<> </>)
+            }
             <div className="reviewtile__location">{review.city}</div>
             <div className="reviewtile__rating">
               <MemoedRatingStars rating={review.rating} />
@@ -132,6 +140,18 @@ function ReviewTile({ review, doRedirect = true}) {
               { (review.internship_review != null
                 && review.internship_review.length > 0)
                 ? (<p className="reviewtile__reviewcontent">{review.internship_review}</p>)
+                : (<p className="reviewtile__reviewcontent">No comment</p>)
+              }
+            </div>)
+          : (<> </>)
+        }
+        { (review.interview_state == 1 && review.internship_state == 2)
+          ? (
+            <div className="reviewtile__reviews">
+              <h4 className="reviewtile__reviewheader">Reason For Declining Offer</h4>
+              { (review.reject_internship_review != null
+                && review.reject_internship_review.length > 0)
+                ? (<p className="reviewtile__reviewcontent">{review.reject_internship_review}</p>)
                 : (<p className="reviewtile__reviewcontent">No comment</p>)
               }
             </div>)

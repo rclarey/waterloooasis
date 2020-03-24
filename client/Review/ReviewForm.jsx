@@ -150,7 +150,9 @@ function ReviewForm() {
          interviewExperience: document.getElementById('interviewExperienceInput') ? document.getElementById('interviewExperienceInput').value : "",
          internshipState: internshipState,
          internshipExperience: document.getElementById('internshipExperienceInput') ? document.getElementById('internshipExperienceInput').value : "",
-         rating: rating
+         rating: rating,
+         salary: document.getElementById('salaryInput') ? document.getElementById('salaryInput').value : "0",
+         rejectInternshipExperience: document.getElementById('rejectInternshipInput') ? document.getElementById('rejectInternshipInput').value : ""
        };
       await post('/review', body);
       window.location.pathname = '/myreviews';
@@ -225,6 +227,15 @@ function ReviewForm() {
                   rowsMin={4}
                   prompt="Tell us about your internship (e.g. your responsibilities, intern events, etc.)"
                   identifier="internshipExperienceInput"
+                  maxLength={512}
+                />
+                <OTextField prompt="Monthly Salary (CAD)" identifier="salaryInput" />
+              </Collapse>
+              <Collapse in={internshipState == "2"}>
+                <OTextarea
+                  rowsMin={4}
+                  prompt="Are there any particular reasons why you turned down the offer?"
+                  identifier="rejectInternshipInput"
                   maxLength={512}
                 />
               </Collapse>

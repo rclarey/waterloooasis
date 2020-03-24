@@ -475,6 +475,16 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
       return;
     }
 
+    if (body.rejectInternshipExperience.length > 512) {
+      res.status(400).json({ reason: 'Reason for rejecting an internship offer is too long.' });
+      return;
+    }
+
+    if ( !isNaN(parseInt(body.salary)) && parseInt(body.salary) < 0) {
+      res.status(400).json({ reason: 'Negative salary entered.' });
+      return;
+    }
+
     const ratings = [1, 2, 3, 4, 5];
 
     if (!(ratings.includes(body.rating))) {
@@ -521,9 +531,13 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
           internship_review,
           internship_state,
           interview_state,
-          rating
-        ) VALUES ( ? , ? , ? , ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          rating,
+          monthly_salary,
+          reject_internship_review
+        ) VALUES ( ? , ? , ? , ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `;
+
+      console.log(body);
 
       await query(insertReviewQuery, [
         user_id,
@@ -540,12 +554,15 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
         body.internshipExperience,
         parseInt(body.internshipState),
         parseInt(body.interviewState),
-        parseInt(body.rating)
+        parseInt(body.rating),
+        isNaN(parseInt(body.salary)) ? 0 : parseInt(body.salary),
+        body.rejectInternshipExperience
       ]);
 
       res.status(201).json({ reason: 'Success' });
 
     } catch (e) {
+      console.log(e);
       res.status(400).json({ reason: 'Something went wrong' });
     }
   });
@@ -614,6 +631,8 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
         r.internship_review,
         r.internship_state,
         r.interview_state,
+        r.monthly_salary,
+        r.reject_internship_review,
         r.rating,
         c.name
       FROM review as r INNER JOIN company as c ON r.company_id = c.id
