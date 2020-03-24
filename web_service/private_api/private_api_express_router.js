@@ -45,7 +45,6 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
   setupJobs(router);
 
   router.get('/trending', serveApp);
-  router.get('/companytrending', serveApp);
   router.get('/myjobs', serveApp);
   router.get('/myreviews', serveApp);
   router.get('/writereview', serveApp);
@@ -551,7 +550,7 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
   });
 
   // Trending Companies
-  router.get('/api/companytrending', async (req, res) => {
+  router.get('/api/trending', async (req, res) => {
     const selectCompanyTrending = `
       SELECT c.id as id, c.name as name, COUNT(*) as numRatings, SUM(rating) as totalRating
       FROM company as c
