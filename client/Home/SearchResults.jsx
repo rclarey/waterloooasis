@@ -21,14 +21,15 @@ function SearchResults() {
           <CompanyTile company={company} />
         </Link>
       ))}
-      {results.jobs.map(job => (
+      {/* NO MORE JOB POSTINGS */}
+      {/* {results.jobs.map(job => (
         <Link
           to={`/jobs/${job.company.shortName}/${job.shortCode}`}
           key={job.id}
         >
           <JobTile job={job} />
         </Link>
-      ))}
+      ))} */}
       <div className="trending__overlay" />
     </>
   );
