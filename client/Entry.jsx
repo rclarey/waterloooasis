@@ -29,9 +29,9 @@ function Entry() {
           {/* <Trending path="trending" />  */}
           {/* <MyJobs path="myjobs" />  */}
           {/* <MyComments path="mycomments" />  */}
-          <Redirect noThrow from="/" to="companytrending" /> 
+          <Redirect noThrow from="/" to="trending" />
           <MyReviews path="myreviews" />
-          <CompanyTrending path="companytrending" />
+          <CompanyTrending path="trending" />
         </Home>
         <Company path="company/:companyId/" />
         <Job path="jobs/:shortName/:jobCode/" />

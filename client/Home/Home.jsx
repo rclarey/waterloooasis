@@ -17,7 +17,7 @@ function Home({ children }) {
           {/* Removing since deprecated for now */}
           {/* <TabLink to="/trending" text="Trending" /> 
           <TabLink to="/myjobs" text="My Jobs" /> */}
-          <TabLink to="/companytrending" text="Companies" /> 
+          <TabLink to="/trending" text="Companies" />
           <TabLink to="/myreviews" text="My Reviews" />
           {/*<TabLink to="/mycomments" text="My Comments" />*/}
         </div>
