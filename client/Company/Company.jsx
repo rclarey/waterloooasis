@@ -241,6 +241,7 @@ function getSalaries(reviews) {
 function CompanyContent({ companyId }) {
   const companyList = useFetch(`/api/company/${companyId}`);
   const reviews = useFetch(`/api/reviews/${companyId}`);
+  const isFollowing = useFetch(`/api/follow/${companyId}`);
 
   if (!companyList || !reviews) {
     return <Spinner size={75} centre={true} />;
@@ -254,6 +255,29 @@ function CompanyContent({ companyId }) {
   const conversionStats = getConversionStats(reviews);
   const salary = getSalaries(reviews);
 
+  const [following, setFollowing] = useState(isFollowing.length > 0);
+  const [hovering, setHovering] = useState(false);
+
+  const toggleFollowing = useCallback(async () => {
+      try {
+        setFollowing(old => {
+          post(`/follow/${companyId}`, { value: !old });
+          return !old;
+        });
+      } catch (e) {
+        // TODO: better handling. for now toggle it back since we failed
+        setFollowing(old => !old);
+      }
+    });
+    const toggleHover = useCallback(e => {
+      if (e.type === 'mouseenter') {
+        setHovering(true);
+      }
+      if (e.type === 'mouseleave') {
+        setHovering(false);
+      }
+    });
+
   return (
     <>
       <div className="company__content">
@@ -264,10 +288,30 @@ function CompanyContent({ companyId }) {
         </div>
         { (salary > 0)
           ? (
-              <h4 className="company__salary">{`Average Salary: ${salary}/month`}</h4>
+              <h4 className="company__salary">
+                {`Average Salary: `}
+                <span className="company__salaryvalue">
+                  {`$${salary}/month`}
+                </span>
+              </h4>
             )
           : (<> </>)
         }
+
+        <div className="company__follow">
+          {following ? (
+            <OButton
+              alt={true}
+              text={hovering ? 'Unfollow' : 'Following'}
+              onClick={toggleFollowing}
+              onMouseEnter={toggleHover}
+              onMouseLeave={toggleHover}
+            />
+          ) : (
+            <OButton text="Follow" onClick={toggleFollowing} />
+          )}
+        </div>
+
         <div className="company__modalcontainer">
           <h4 className="company__modalheader">Statistics</h4>
            <div className="company__statistics">

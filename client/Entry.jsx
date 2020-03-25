@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Redirect, Router } from '@reach/router';
+import { Redirect, Router, Switch } from '@reach/router';
 import 'regenerator-runtime/runtime';
 
 import Company from 'Company/Company.jsx';
@@ -12,6 +12,7 @@ import Nav from 'Nav.jsx';
 import SearchResults from 'Home/SearchResults.jsx';
 import Trending from 'Home/Trending.jsx';
 import CompanyTrending from 'Home/CompanyTrending.jsx';
+import Following from 'Home/Following.jsx';
 import MyReviews from 'Home/MyReviews.jsx';
 import ReviewForm from 'Review/ReviewForm.jsx';
 
@@ -30,6 +31,7 @@ function Entry() {
           {/* <MyJobs path="myjobs" />  */}
           {/* <MyComments path="mycomments" />  */}
           <Redirect noThrow from="/" to="trending" />
+          <Following path="following" />
           <MyReviews path="myreviews" />
           <CompanyTrending path="trending" />
         </Home>

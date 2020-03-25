@@ -19,12 +19,21 @@
    letter-spacing: -0.02em;
  }
 
- .company__salary {
-    color: 	rgba(44, 44, 44, 0.5);
-    padding-top: 15px;
-    font-size: 25px;
-    letter-spacing: -0.02em;
-  }
+.company__salary {
+  color: 	rgba(44, 44, 44, 0.5);
+  padding-top: 15px;
+  font-size: 25px;
+  letter-spacing: -0.02em;
+}
+
+.company__salaryvalue {
+  color: 	#228B22;
+}
+
+.company__follow {
+  padding-top: 15px;
+  padding-bottom:15px;
+}
 
 .company__stars {
 }

@@ -588,6 +588,85 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
     }
   });
 
+  // Companies that the user is following
+  router.get('/api/following', async (req, res) => {
+    const selectFollowingCompanies = `
+      SELECT c.id as id, c.name as name, COUNT(*) as numRatings, SUM(rating) as totalRating
+      FROM company as c, review as r, following as f
+      WHERE
+        c.id = r.company_id
+        AND f.company_id = c.id
+        AND f.user_id = ?
+      GROUP BY c.id, c.name
+    `;
+
+    try {
+      const userId = req.user.id;
+
+      const followingCompanies = await query(selectFollowingCompanies, [userId]);
+
+      res.status(200).json(followingCompanies);
+    } catch(e) {
+      res.status(500).json({ reason: 'Something went wrong' });
+    }
+  });
+
+  // Set a company to be followed or unfollowed by a user
+  router.post('/api/follow/:id', async (req, res) => {
+    try {
+      if (
+        !(
+          'value' in req.body
+        )
+      ) {
+        res.status(400).json({ reason: 'No value was passed.' });
+        return;
+      }
+
+      const value = req.body.value;
+
+      const companyId = parseInt(req.params.id);
+
+      const userId = req.user.id;
+      let queryValue = "";
+
+      if (value) {
+        queryValue = `
+          INSERT INTO following (user_id, company_id) VALUES (? , ?)
+        `;
+      } else {
+        queryValue = `
+          DELETE FROM following WHERE user_id = ? AND company_id = ?
+        `;
+      }
+
+      const followingCompanies = await query(queryValue, [userId, companyId]);
+
+      res.status(200).json(followingCompanies);
+    } catch(e) {
+      res.status(500).json({ reason: 'Something went wrong' });
+    }
+  });
+
+  // Check to see if a user follows that company
+  router.get('/api/follow/:id', async (req, res) => {
+    try {
+
+      const companyId = parseInt(req.params.id);
+      const userId = req.user.id;
+      const queryValue = `
+         SELECT * FROM following WHERE user_id = ? AND company_id = ?
+       `;
+
+
+      const followingCompany = await query(queryValue, [userId, companyId]);
+
+      res.status(200).json(followingCompany);
+    } catch(e) {
+      res.status(500).json({ reason: 'Something went wrong' });
+    }
+  });
+
   // Company
   router.get('/api/company/:id', async (req, res) => {
       const selectCompany = `
