@@ -41,7 +41,20 @@ function ratingRange(pos, rating) {
 }
 
 function ReviewForm() {
-  //const myreviews = useFetch('api/myreviews');
+
+  let companies = [];
+
+  fetch('api/company')
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      data.forEach(d => {
+        companies.push(d["name"]);
+      });
+
+    });
 
   const [error, setError] = useState('Thank you for writing a review!');
 
@@ -173,7 +186,7 @@ function ReviewForm() {
         <OCombobox prompt="Term Before Internship" identifier="termInput" options={studyTerms}/>
         <OCombobox prompt="Application Method" identifier="appSourceInput" options={applicationSources}/>
         <p className="reviewform__prompt">Position Information</p>
-        <ODropdown prompt="Company Name" identifier="companyInput" options={faculties} />
+        <ODropdown prompt="Company Name" identifier="companyInput" options={companies} />
         <OTextField prompt="Position" identifier="positionInput" />
         <OTextField prompt="City" identifier="cityInput" />
         <div className="reviewform__flexbox">

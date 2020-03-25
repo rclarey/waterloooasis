@@ -597,6 +597,24 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
       }
     });
 
+  // List of All Companies
+    router.get('/api/company', async (req, res) => {
+        const selectCompany = `
+          SELECT
+            c.name
+          FROM company as c
+        `;
+
+        try {
+
+          const companies = await query(selectCompany, []);
+
+          res.status(200).json(companies);
+        } catch(e) {
+          res.status(500).json({ reason: 'Something went wrong' });
+        }
+      });
+
   // Company Reviews
   router.get('/api/reviews/:id', async (req, res) => {
     const selectCompanyReviews = `
