@@ -632,7 +632,7 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
 
       if (value) {
         queryValue = `
-          INSERT INTO following (user_id, company_id) VALUES (? , ?)
+          INSERT IGNORE INTO following (user_id, company_id) VALUES (? , ?)
         `;
       } else {
         queryValue = `
