@@ -46,6 +46,7 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
 
   router.get('/trending', serveApp);
   router.get('/myjobs', serveApp);
+  router.get('/following', serveApp);
   router.get('/myreviews', serveApp);
   router.get('/writereview', serveApp);
   router.get('/mycomments', serveApp);
