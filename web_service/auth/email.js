@@ -73,8 +73,8 @@ function html(href) {
 module.exports = async function sendVerificationEmail(to, code) {
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
+    port: 465,
+    secure: true,
     auth: {
       user: process.env.MAILER_USER,
       pass: process.env.MAILER_PW,

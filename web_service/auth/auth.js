@@ -201,7 +201,7 @@ function extractJwtFromCookie(req) {
 }
 
 const badCharsPattern = /[^a-zA-Z0-9.@]/;
-const wellFormedPattern = /[a-zA-Z0-9]+@edu\.uwaterloo\.ca/;
+const wellFormedPattern = /[a-zA-Z0-9\.]+@edu\.uwaterloo\.ca/;
 function validateEmail(email) {
   const badChars = badCharsPattern.exec(email) !== null;
   const formResult = wellFormedPattern.exec(email);
