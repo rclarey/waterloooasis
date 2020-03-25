@@ -12,7 +12,6 @@ import 'Home/SearchResults.css';
 function SearchResults() {
   const queryParams = queryString.parse(location.search);
   const results = useFetch(`/api/search/${queryParams.q}`);
-  console.log(results);
 
   return (
     <>
