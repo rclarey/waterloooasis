@@ -167,7 +167,6 @@ function getAppStats(reviews) {
   return results;
 }
 
-
 function getConversionStats(reviews) {
   let stateCount = {
     'Rejected' : 0,
@@ -219,6 +218,26 @@ function getConversionStats(reviews) {
   return results;
 }
 
+function getSalaries(reviews) {
+  let i = 0;
+  let count = 0;
+  let sum = 0;
+  for (i = 0; i < reviews.length; ++i ) {
+    if (reviews[i].interview_state == 1
+        && reviews[i].internship_state == 1
+        && reviews[i].monthly_salary != 0) {
+      count += 1;
+      sum += reviews[i].monthly_salary;
+    }
+  }
+
+  if (count <= 0) {
+    return 0;
+  }
+
+  return Math.round(sum/count);
+}
+
 function CompanyContent({ companyId }) {
   const companyList = useFetch(`/api/company/${companyId}`);
   const reviews = useFetch(`/api/reviews/${companyId}`);
@@ -233,6 +252,7 @@ function CompanyContent({ companyId }) {
   const termStats = getTermStats(reviews);
   const appSourceStats = getAppStats(reviews);
   const conversionStats = getConversionStats(reviews);
+  const salary = getSalaries(reviews);
 
   return (
     <>
@@ -242,6 +262,12 @@ function CompanyContent({ companyId }) {
           <MemoedRatingStars rating={company.totalRating/company.numRatings} />
           <span>{company.numRatings}</span>
         </div>
+        { (salary > 0)
+          ? (
+              <h4 className="company__salary">{`Average Salary: ${salary}/month`}</h4>
+            )
+          : (<> </>)
+        }
         <div className="company__modalcontainer">
           <h4 className="company__modalheader">Statistics</h4>
            <div className="company__statistics">

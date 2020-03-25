@@ -14,10 +14,17 @@
 }
 
 .company__companyname {
-  color: #2C2C2C;
-  font-size: 48px;
-  letter-spacing: -0.02em;
-}
+   color: #2C2C2C;
+   font-size: 48px;
+   letter-spacing: -0.02em;
+ }
+
+ .company__salary {
+    color: 	rgba(44, 44, 44, 0.5);
+    padding-top: 15px;
+    font-size: 25px;
+    letter-spacing: -0.02em;
+  }
 
 .company__stars {
 }
