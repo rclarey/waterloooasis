@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { Link } from '@reach/router';
 import useFetch from 'fetch-suspense';
 
@@ -7,7 +7,16 @@ import CompanyTile from 'shared/CompanyTile.jsx';
 import 'Home/Following.css';
 
 function Following() {
-  const following = useFetch('api/following');
+  const [following, setFollowing] = useState([]);
+
+  fetch('api/following', {cache: "no-cache"})
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      setFollowing(data);
+    });
 
   return (
     <>
