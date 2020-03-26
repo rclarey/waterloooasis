@@ -53,7 +53,7 @@ function reviewStatus(review) {
         state : 2,
         val : 'Offered an internship but did not accept it'
       };
-    } else if (review.internship_state == 1) {
+    } else if (review.internship_state == 3) {
       return {
         state : 2,
         val : 'Interviewed but did not receive an offer'
