@@ -84,7 +84,7 @@ module.exports = async function sendVerificationEmail(to, code) {
   const href = `https://www.uwoasis.com/verify?v=${code}`;
   await transporter.sendMail({
     to,
-    from: '"Waterloo Oasis Support" <support@uwoasis.com>',
+    from: '"Team Waterloo Oasis <team.waterloo.oasis@gmail.com>',
     subject: 'Please verify your email address',
     html: html(href),
   });
