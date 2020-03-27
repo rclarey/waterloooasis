@@ -5,14 +5,20 @@ const { query } = require('shared/util/db.js');
 const searchRouter = (() => {
   const router = expressUtils.createRouter();
 
+  router.get('/', async (req, res) => {
+
+     try {
+       res.status(200).json({
+         companies: []
+       });
+     } catch(e) {
+       res.status(500).json({ reason: 'Something went wrong' });
+     }
+   });
+
+
   router.get('/:query', async (req, res) => {
 
-    if ( !req.params.query || req.params.query.length === 0) {
-      res.status(200).json({
-        companies: []
-      });
-    }
-    
     const selectCompanyByQuery = `
       SELECT
         c.name as name,
