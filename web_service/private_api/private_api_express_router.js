@@ -575,7 +575,7 @@ function privateApiExpressRouter(authenticate, authenticateWithRedirect) {
       INNER JOIN review as r
       ON c.id = r.company_id
       GROUP BY c.id, c.name
-      LIMIT 10
+      LIMIT 150
     `;
 
     try {
