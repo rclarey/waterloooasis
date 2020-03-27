@@ -107,7 +107,7 @@ function ReviewTile({ review, doRedirect = true}) {
                 )
               : (<> </>)
             }
-            <div className="reviewtile__location">{review.city}</div>
+            <div className="reviewtile__location">{`${review.city}, ${review.season} ${review.year}`}</div>
             <div className="reviewtile__rating">
               <MemoedRatingStars rating={review.rating} />
             </div>
