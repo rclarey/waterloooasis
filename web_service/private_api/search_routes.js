@@ -6,6 +6,12 @@ const searchRouter = (() => {
   const router = expressUtils.createRouter();
 
   router.get('/:query', async (req, res) => {
+
+    if ( !req.params.query || req.params.query.length === 0) {
+      res.status(200).json({
+        companies: []
+      });
+    }
     
     const selectCompanyByQuery = `
       SELECT
